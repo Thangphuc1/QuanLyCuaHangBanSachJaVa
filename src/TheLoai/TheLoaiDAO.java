@@ -1,13 +1,82 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package TheLoai;
 
 /**
  *
  * @author ASUS
  */
+import java.util.*;
+import java.sql.*;
+/**
+ *
+ * @author Quyen
+ */
+
 public class TheLoaiDAO {
     
+    public ArrayList<TheLoai> loadTheLoai(){
+        String qry = "select * from TheLoai";
+        ArrayList<TheLoai> dstl = new ArrayList<TheLoai>();
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);
+            ResultSet rs = st.executeQuery();){
+            
+            while(rs.next()){
+                TheLoai tl = new TheLoai(
+                        rs.getString("MaTheLoai"),
+                        rs.getString("TenTheLoai")
+                );
+                dstl.add(tl);
+            }
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return dstl;
+    }
+    
+    public boolean insertTheLoai(TheLoai tl){
+        String qry = "insert into TheLoai values (?,?,?,?,?)";
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
+            st.setString(1, tl.getMatl());
+            st.setString(2, tl.getTentl());
+            
+            st.executeUpdate();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean deleteTheLoai(String ma){
+        String qry = "Delete from TheLoai where MaTheLoai = ?";
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
+            st.setString(1, ma);
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean updateTheLoai(TheLoai tl){
+        String qry = "update TheLoai set MaTheLoai = ?, TenTheLoai = ? where MaTheLoai = ?";
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
+            st.setString(1, tl.getMatl());
+            st.setString(2, tl.getTentl());
+            st.setString(3, tl.getMatl());
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
