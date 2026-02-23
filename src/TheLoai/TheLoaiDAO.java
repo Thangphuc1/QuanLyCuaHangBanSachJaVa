@@ -14,7 +14,7 @@ import java.sql.*;
 public class TheLoaiDAO {
     
     public ArrayList<TheLoai> loadTheLoai(){
-        String qry = "select * from TheLoai";
+        String qry = "select * from theloai";
         ArrayList<TheLoai> dstl = new ArrayList<TheLoai>();
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);
@@ -35,7 +35,7 @@ public class TheLoaiDAO {
     }
     
     public boolean insertTheLoai(TheLoai tl){
-        String qry = "insert into TheLoai values (?,?,?,?,?)";
+        String qry = "insert into theloai values (?,?)";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -51,7 +51,7 @@ public class TheLoaiDAO {
     }
     
     public boolean deleteTheLoai(String ma){
-        String qry = "Delete from TheLoai where MaTheLoai = ?";
+        String qry = "Delete from theloai where MaTheLoai = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -65,7 +65,7 @@ public class TheLoaiDAO {
     }
     
     public boolean updateTheLoai(TheLoai tl){
-        String qry = "update TheLoai set MaTheLoai = ?, TenTheLoai = ? where MaTheLoai = ?";
+        String qry = "update theloai set MaTheLoai = ?, TenTheLoai = ? where MaTheLoai = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
