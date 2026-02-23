@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package Sach;
 
 import java.util.*;
@@ -12,19 +8,46 @@ import java.sql.*;
  */
 public class SachDAO {
     
+    public static ArrayList<Sach> loadSach(){
+        ArrayList<Sach> dss = new ArrayList<Sach>();
+        String qry = "select * from sach";
+        try ( Connection conn = DBConnection.getDBConnection();
+              PreparedStatement st = conn.prepareStatement(qry);
+              ResultSet rs = st.executeQuery()){
+            
+            while(rs.next()){
+                Sach s = new Sach(
+                rs.getString("MaSach"),
+                rs.getString("TenSach"),
+                rs.getString("MaTacGia"),
+                rs.getString("MaTheLoai"),
+                rs.getInt("NamXuatBan"),
+                rs.getString("MaNXB"),
+                rs.getInt("DonGia"),
+                rs.getInt("SoLuongTon")
+                );
+                dss.add(s);
+            }
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return dss;
+    }
+    
     public static Boolean insertSach(Sach sach){
         String qry = "insert into Sach values(?,?,?,?,?,?,?,?)";
-        try{
-            Connection conn = DBConnection.getDBConnection();
-            PreparedStatement st = conn.prepareStatement(qry);
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
             st.setString(1,sach.getMasach());
             st.setString(2,sach.getTensach());
             st.setString(3,sach.getMatg());
             st.setString(4,sach.getMatl());
-            st.setString(5,Integer.toString(sach.getNamxuatban()));
+            st.setInt(5,sach.getNamxuatban());
             st.setString(6,sach.getManxb());
-            st.setString(7,Integer.toString(sach.getDongia()));
-            st.setString(8,Integer.toString(sach.getSoluongton()));
+            st.setInt(7,sach.getDongia());
+            st.setInt(8,sach.getSoluongton());
             
             int rowsinserted = st.executeUpdate();
             if (rowsinserted > 0) {
@@ -39,9 +62,9 @@ public class SachDAO {
     
     public static Boolean deleteSach(String masach){
         String qry = "delete from Sach where MaSach = (?)";
-        try{
-            Connection conn = DBConnection.getDBConnection();
-            PreparedStatement st = conn.prepareStatement(qry);
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
             st.setString(1,masach);
             
             int rowsdeleted = st.executeUpdate();
@@ -57,17 +80,17 @@ public class SachDAO {
     
     public static Boolean updateSach(Sach sach){
         String qry = "update Sach set MaSach = ?, TenSach = ?, MaTacGia = ?, MaTheLoai = ?, NamXuatBan = ?, MaNXB = ?, DonGia = ?, SoLuongTon = ? Where MaSach = ?";
-        try{
-            Connection conn = DBConnection.getDBConnection();
-            PreparedStatement st = conn.prepareStatement(qry);
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
             st.setString(1,sach.getMasach());
             st.setString(2,sach.getTensach());
             st.setString(3,sach.getMatg());
             st.setString(4,sach.getMatl());
-            st.setString(5,Integer.toString(sach.getNamxuatban()));
+            st.setInt(5,sach.getNamxuatban());
             st.setString(6,sach.getManxb());
-            st.setString(7,Integer.toString(sach.getDongia()));
-            st.setString(8,Integer.toString(sach.getSoluongton()));
+            st.setInt(7,sach.getDongia());
+            st.setInt(8,sach.getSoluongton());
             st.setString(9,sach.getMasach());
             
             int rowupdate = st.executeUpdate();
