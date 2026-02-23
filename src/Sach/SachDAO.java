@@ -4,7 +4,7 @@ import java.util.*;
 import java.sql.*;
 /**
  *
- * @author ASUS
+ * @author Quyen
  */
 public class SachDAO {
     
@@ -49,10 +49,7 @@ public class SachDAO {
             st.setInt(7,sach.getDongia());
             st.setInt(8,sach.getSoluongton());
             
-            int rowsinserted = st.executeUpdate();
-            if (rowsinserted > 0) {
-                System.out.println("Thêm sach thành công!");
-            }
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;
@@ -67,10 +64,7 @@ public class SachDAO {
             
             st.setString(1,masach);
             
-            int rowsdeleted = st.executeUpdate();
-            if (rowsdeleted > 0) {
-                System.out.println("Xoa sach thành công!");
-            }
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;
@@ -93,10 +87,7 @@ public class SachDAO {
             st.setInt(8,sach.getSoluongton());
             st.setString(9,sach.getMasach());
             
-            int rowupdate = st.executeUpdate();
-            if(rowupdate > 0){
-                System.out.println("Cap nhat sach thành công!");
-            }
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;

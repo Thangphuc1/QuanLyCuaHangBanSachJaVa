@@ -1,13 +1,87 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package TacGIa;
 
+import java.util.*;
+import java.sql.*;
 /**
  *
- * @author ASUS
+ * @author Quyen
  */
+
 public class TacGiaDAO {
     
+    public ArrayList<TacGia> loadTacGia(){
+        String qry = "select * from tacgia";
+        ArrayList<TacGia> dstg = new ArrayList<TacGia>();
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);
+            ResultSet rs = st.executeQuery();){
+            
+            while(rs.next()){
+                TacGia tg = new TacGia(
+                        rs.getString("MaTacGia"),
+                        rs.getString("TenTacGia"),
+                        rs.getInt("NamSinh"),
+                        rs.getString("GioiTinh"),
+                        rs.getString("QuocTich")
+                );
+                dstg.add(tg);
+            }
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return dstg;
+    }
+    
+    public boolean insertTacGia(TacGia tg){
+        String qry = "insert into tacgia values (?,?,?,?,?)";
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
+            st.setString(1, tg.getMatg());
+            st.setString(2, tg.getTentg());
+            st.setInt(3, tg.getNamsinh());
+            st.setString(4, tg.getGioitinh());
+            st.setString(5, tg.getQuoctich());
+            
+            st.executeUpdate();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean deleteTacGia(String ma){
+        String qry = "Delete from tacgia where MaTacGia = ?";
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
+            st.setString(1, ma);
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    
+    public boolean updateTacGia(TacGia tg){
+        String qry = "update tacgia set MaTacGia = ?, TenTacGia = ?, NamSinh = ?, GioiTinh = ?, QuocTich = ? where MaTacGia = ?";
+        try(Connection conn = DBConnection.getDBConnection();
+            PreparedStatement st = conn.prepareStatement(qry);){
+            
+            st.setString(1, tg.getMatg());
+            st.setString(2, tg.getTentg());
+            st.setInt(3, tg.getNamsinh());
+            st.setString(4, tg.getGioitinh());
+            st.setString(5, tg.getQuoctich());
+            st.setString(6, tg.getMatg());
+            
+        }catch(SQLException ex){
+            ex.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }
