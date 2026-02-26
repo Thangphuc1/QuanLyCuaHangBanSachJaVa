@@ -1,5 +1,6 @@
 package NhaXuatBan;
 
+import Sach.SachBUS;
 import java.util.*;
 import java.sql.*;
 /**
@@ -13,7 +14,7 @@ public class NhaXuatBanBUS {
     public NhaXuatBanBUS(){
         dsnxb = nxbdao.loadNhaXuatBan();
     }
-    
+    //kiem tra
     public boolean ktMaNhaXuatBan(String ma){
         for(NhaXuatBan nxb : dsnxb){
             if(nxb.getManxb().equals(ma)){
@@ -23,6 +24,12 @@ public class NhaXuatBanBUS {
         return false;
     }
     
+    public boolean ktRangBuocNXB(String manxb){
+        SachBUS sach = new SachBUS();
+        return !sach.timSachTheoNhaXuatBan(manxb).isEmpty();
+    }
+    
+    //them sua xoa
     public String themNhaXuatBan(NhaXuatBan nxb){
         if(nxb.getManxb().isEmpty() || nxb.getTennxb().isEmpty() || nxb.getDiachi().isEmpty() || nxb.getSdt().isEmpty() || nxb.getEmail().isEmpty()){
             return "Vui long nhap day du thong tin nha xuat ban";
@@ -71,6 +78,7 @@ public class NhaXuatBanBUS {
         return "Sua thanh cong!";
     }
     
+    //tim kiem
     public NhaXuatBan timNhaXuatBanTheoMa(String ma){
         for(NhaXuatBan nxb : dsnxb){
             if(nxb.getManxb().equals(ma)){
@@ -93,6 +101,11 @@ public class NhaXuatBanBUS {
             return null;
         }
         return dsnxb;
+    }
+    
+    //reload
+    public void nxbreload(){
+        dsnxb = nxbdao.loadNhaXuatBan();
     }
 }
 

@@ -1,5 +1,6 @@
 package TheLoai;
 
+import Sach.SachBUS;
 import java.util.*;
 import java.sql.*;
 /**
@@ -14,6 +15,7 @@ public class TheLoaiBUS {
         dstl = theloaidao.loadTheLoai();
     }
     
+    //kiem tra
     public boolean ktMaTheLoai(String ma){
         for(TheLoai tl : dstl){
             if(tl.getMatl().equals(ma)){
@@ -23,6 +25,12 @@ public class TheLoaiBUS {
         return false;
     }
     
+    public boolean ktRangBuocTheLoai(String matl){
+        SachBUS sach = new SachBUS();
+        return !sach.timSachTheoMaTheLoai(matl).isEmpty();
+    }
+    
+    //them sua xoa
     public String themTheLoai(TheLoai tl){
         if(tl.getMatl().isEmpty() || tl.getTentl().isEmpty()){
             return "Vui long nhap day du thong tin tac gia";
@@ -71,6 +79,7 @@ public class TheLoaiBUS {
         return "Sua thanh cong!";
     }
     
+    //tim kiem
     public TheLoai timTheLoaiTheoMa(String ma){
         for(TheLoai tl : dstl){
             if(tl.getMatl().equals(ma)){
@@ -93,5 +102,10 @@ public class TheLoaiBUS {
             return null;
         }
         return dstl;
+    }
+    
+    //reload
+    public void theloaireload(){
+        dstl = theloaidao.loadTheLoai();
     }
 }

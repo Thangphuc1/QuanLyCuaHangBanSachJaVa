@@ -1,5 +1,6 @@
 package TacGIa;
 
+import Sach.SachBUS;
 import java.util.*;
 import java.sql.*;
 /**
@@ -14,6 +15,7 @@ public class TacGiaBUS {
         dstg = tacgiadao.loadTacGia();
     }
     
+    //kiem tra
     public boolean ktMaTacGia(String ma){
         for(TacGia tg : dstg){
             if(tg.getMatg().equals(ma)){
@@ -23,6 +25,12 @@ public class TacGiaBUS {
         return false;
     }
     
+    public boolean ktRangBuocTacGia(String matg){
+        SachBUS sach = new SachBUS();
+        return !sach.timSachTheoMaTacGia(matg).isEmpty();
+    }
+    
+    //them sua xoa
     public String themTacGia(TacGia tg){
         if(tg.getMatg().isEmpty() || tg.getTentg().isEmpty() || tg.getNamsinh() == 0 || tg.getGioitinh().isEmpty() || tg.getQuoctich().isEmpty()){
             return "Vui long nhap day du thong tin tac gia";
@@ -71,6 +79,7 @@ public class TacGiaBUS {
         return "Sua thanh cong!";
     }
     
+    //tim kiem
     public TacGia timTacGiaTheoMa(String ma){
         for(TacGia tg : dstg){
             if(tg.getMatg().equals(ma)){
@@ -93,5 +102,24 @@ public class TacGiaBUS {
             return null;
         }
         return dstg;
+    }
+    
+    public ArrayList<TacGia> timTacGiaTheoQuocTich(String quoctich){
+        ArrayList<TacGia> dstg = new ArrayList<TacGia>();
+        boolean found = false;
+        for(TacGia tg : dstg){
+            if(tg.getQuoctich().toLowerCase().contains(quoctich.toLowerCase())){
+                dstg.add(tg);
+                found = true;
+            }
+        }
+        if(!found){
+            return null;
+        }
+        return dstg;
+    }
+    
+    public void tacgiareload(){
+        dstg = tacgiadao.loadTacGia();
     }
 }

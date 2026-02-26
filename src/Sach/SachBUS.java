@@ -212,4 +212,8 @@ public class SachBUS {
     public ArrayList<Sach> sachHetHang(){
         return sachSapHet(0);
     }
+    
+    public void sachreload(){
+        dss = sachdao.loadSach();
+    }
 }
