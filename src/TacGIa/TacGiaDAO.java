@@ -59,6 +59,7 @@ public class TacGiaDAO {
             
             st.setString(1, ma);
             
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;
@@ -78,6 +79,7 @@ public class TacGiaDAO {
             st.setString(5, tg.getQuoctich());
             st.setString(6, tg.getMatg());
             
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;

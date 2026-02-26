@@ -59,6 +59,7 @@ public class NhaXuatBanDAO {
             
             st.setString(1, ma);
             
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;
@@ -78,6 +79,7 @@ public class NhaXuatBanDAO {
             st.setString(5, nxb.getEmail());
             st.setString(6, nxb.getManxb());
             
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;

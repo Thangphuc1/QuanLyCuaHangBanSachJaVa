@@ -57,6 +57,7 @@ public class TheLoaiDAO {
             
             st.setString(1, ma);
             
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;
@@ -73,6 +74,7 @@ public class TheLoaiDAO {
             st.setString(2, tl.getTentl());
             st.setString(3, tl.getMatl());
             
+            st.executeUpdate();
         }catch(SQLException ex){
             ex.printStackTrace();
             return false;
