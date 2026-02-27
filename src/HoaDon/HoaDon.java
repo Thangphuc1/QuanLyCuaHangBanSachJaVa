@@ -6,7 +6,6 @@ package HoaDon;
 
 import java.time.LocalDate;
 
-
 public class HoaDon {
     private String maHD;
     private String maKH;
