@@ -61,7 +61,7 @@ public class NhanVien {
     public void setEmail(String email){
         this.email=email;
     }
-    public double getLuong (){
+    public double getLuong(){
         return luong;
     }
     public void setLuong(double luong){
