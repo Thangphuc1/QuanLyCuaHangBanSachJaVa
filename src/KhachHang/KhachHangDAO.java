@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class KhachHangDAO {
         public ArrayList<KhachHang> loadKhachHang(){
-            String qry = "select * from KhachHang";
+            String qry = "select * from khachhang";
             ArrayList<KhachHang> dsKhachHang = new ArrayList();
             try(Connection conn = DBConnection.getDBConnection();
                 PreparedStatement st = conn.prepareStatement(qry);
@@ -28,8 +28,7 @@ public class KhachHangDAO {
                                 rs.getString("HoNhanVien"),
                                 rs.getString("DiaChi"),
                                 rs.getString("SDT"),
-                                rs.getString("Email"),
-                                rs.getDouble("Luong")
+                                rs.getString("Email")
     );
                     dsKhachHang.add(khachHang);
                 }
@@ -40,7 +39,7 @@ public class KhachHangDAO {
             return dsKhachHang;
         } 
         public boolean insertKhachHang(KhachHang khachHang){
-            String qry = "insert into KhachHang values (?,?,?,?,?)";
+            String qry = "insert into khachhang values (?,?,?,?,?)";
             try(Connection conn = DBConnection.getDBConnection();
                 PreparedStatement st = conn.prepareStatement(qry);){
                 
@@ -59,7 +58,7 @@ public class KhachHangDAO {
             return true;
         }
         public boolean deleteKhachHang(String ma){
-            String qry = "Delete from nhaxuatban where MaKH = ?";
+            String qry = "Delete from khachhang where MaKH = ?";
             try(Connection conn = DBConnection.getDBConnection();
                 PreparedStatement st = conn.prepareStatement(qry);){
                 

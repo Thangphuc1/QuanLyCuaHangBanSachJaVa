@@ -60,7 +60,7 @@ public class KhachHang {
         this.email=email;
     }
     
-    public KhachHang(String maKH , String tenKH , String hoKH , String sdt, String diaChi , String email , double luong){
+    public KhachHang(String maKH , String tenKH , String hoKH , String sdt, String diaChi , String email){
         this.maKH=maKH;
         this.tenKH=tenKH;
         this.hoKH=hoKH;

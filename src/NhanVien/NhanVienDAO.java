@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class NhanVienDAO {
     public ArrayList<NhanVien> loadNhanVien(){
-        String qry = "select * from NhanVien";
+        String qry = "select * from nhanvien";
         ArrayList<NhanVien> dsNhanVien = new ArrayList();
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);
@@ -39,7 +39,7 @@ public class NhanVienDAO {
         return dsNhanVien;
     } 
     public boolean insertNhanVien(NhanVien nhanVien){
-        String qry = "insert into NhanVien values (?,?,?,?,?)";
+        String qry = "insert into nhanvien values (?,?,?,?,?)";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -59,7 +59,7 @@ public class NhanVienDAO {
         return true;
     }
     public boolean deleteNhanVien(String ma){
-        String qry = "Delete from nhaxuatban where MaNV = ?";
+        String qry = "Delete from nhanvien where MaNV = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             

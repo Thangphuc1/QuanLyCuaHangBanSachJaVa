@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author ASUS
+ * @author DuyPhuong
  */
 public class KhachHangBUS {
     private KhachHangDAO khDAO = new KhachHangDAO();
