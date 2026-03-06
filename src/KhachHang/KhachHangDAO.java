@@ -3,11 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package KhachHang;
-import java.sql.Connection;
+    import database.DBConnection;
+    import java.sql.Connection;
     import java.sql.PreparedStatement;
     import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
+    import java.sql.SQLException;
+    import java.util.*;
 
 /**
  *

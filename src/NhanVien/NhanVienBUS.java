@@ -5,8 +5,6 @@
 package NhanVien;
     import java.util.*;
 
-import NhaXuatBan.NhaXuatBan;
-
 import java.sql.*;
 /**
  *
@@ -115,4 +113,10 @@ public String suaNhanVien(NhanVien nvMoi) {
         return "Cập nhật thất bại tại cơ sở dữ liệu!";
     }
     }   
+
+    public void timKiemTheoMa(NhanVien maNV){
+        if(maNV==null){
+            System.out.print("Mã sinh viên trống , vui lòng nhập!");
+        }
+    }
 }

@@ -106,4 +106,15 @@ public String suaKhachHang(KhachHang khMoi) {
         return "Cập nhật thất bại tại cơ sở dữ liệu!";
     }
     }   
+
+    public KhachHang timKiemKhachHangTheoMa(KhachHang maKH){
+        if(maKH==null){
+            System.out.println("Vui lòng nhập mã khách hàng cần tìm kiếm!");
+        }
+        for(int i = 0 ; i<dsKhachHang.size() ; i++){
+            if(dsKhachHang.get(i).getMaKH().equals(maKH))
+            return dsKhachHang.get(i);
+        }
+        return null;
+    }
 }
