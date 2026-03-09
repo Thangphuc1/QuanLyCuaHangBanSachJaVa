@@ -8,14 +8,14 @@ package CHiTietKhuyenMaiSP;
  *
  * @author ASUS
  */
-public class CHiTietKhuyenMaiSP {
-    private String maKM;
+public class ChiTietKhuyenMaiSP {
+      private String maKM;
     private String maSP;
     private float Phantramgg; 
     
-    public CHiTietKhuyenMaiSP() {}
+    public ChiTietKhuyenMaiSP() {}
     
-    public CHiTietKhuyenMaiSP(String maKM, String maSP, float Phantramgg) {
+    public ChiTietKhuyenMaiSP(String maKM, String maSP, float Phantramgg) {
         this.maKM = maKM;
         this.maSP = maSP;
         this.Phantramgg = Phantramgg;
@@ -48,7 +48,7 @@ public class CHiTietKhuyenMaiSP {
     //dùng để làm việc với object
     @Override
     public String toString() {
-        return "ChiTietKhuyenMaiSP{" +
+        return "ChiTietKhuyenMaiHD{" +
             "maKM='" + maKM + '\'' +
             ", maSP='" + maSP + '\'' +
             ", phantramgg=" + Phantramgg +
