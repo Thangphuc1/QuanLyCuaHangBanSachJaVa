@@ -7,11 +7,11 @@ package HoaDon;
 import java.time.LocalDate;
 
 public class HoaDon {
-    private String maHD;
-    private String maKH;
-    private String maNV;
-    private LocalDate ngayLap;
-    private Double tongTien;
+    public  String maHD;
+    public String maKH;
+    public String maNV;
+    public LocalDate ngayLap;
+    public Double tongTien;
     public HoaDon() {}
     public HoaDon(String maHD,String maKH,String maNV,LocalDate ngayLap,Double tongTien) {
         this.maHD=maHD;
@@ -21,11 +21,11 @@ public class HoaDon {
         this.tongTien=tongTien;
     }
 
-    public String getMaPN() {
+    public String getMaHD() {
         return maHD;
     }
 
-    public String getMaNCC() {
+    public String getMaKH() {
         return maKH;
     }
 
@@ -41,11 +41,11 @@ public class HoaDon {
         return tongTien;
     }
 
-    public void setMaPN(String maHD) {
+    public void setMaHD(String maHD) {
         this.maHD = maHD;
     }
 
-    public void setMaNCC(String maKH) {
+    public void setMaKH(String maKH) {
         this.maKH = maKH;
     }
 
