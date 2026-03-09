@@ -25,7 +25,7 @@ public class ChiTietKhuyenMaiHD {
         return maKM;
     }
 
-    public String getMaSP() {
+    public String getTTHD() {
         return TTHD;
     }
 
@@ -37,7 +37,7 @@ public class ChiTietKhuyenMaiHD {
         this.maKM = maKM;
     }
 
-    public void setMaSP(String TTHD) {
+    public void setTTHD(String TTHD) {
         this.TTHD = TTHD;
     }
 
