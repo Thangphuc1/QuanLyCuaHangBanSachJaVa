@@ -9,5 +9,39 @@ package ChiTIetKhuyenMaiHD;
  * @author ASUS
  */
 public class ChiTietKhuyenMaiHD {
+    private String maKM;
+    private String TTHD;
+    private float Phantramgg; 
     
+    public ChiTietKhuyenMaiHD() {}
+    
+    public ChiTietKhuyenMaiHD(String maKM, String TTHD, float Phantramgg) {
+        this.maKM = maKM;
+        this.TTHD = TTHD;
+        this.Phantramgg = Phantramgg;
+    }
+    
+    public String getMaKM() {
+        return maKM;
+    }
+
+    public String getMaSP() {
+        return TTHD;
+    }
+
+    public float getPhantramgg() {
+        return Phantramgg;
+    }
+
+    public void setMaKM(String maKM) {
+        this.maKM = maKM;
+    }
+
+    public void setMaSP(String TTHD) {
+        this.TTHD = TTHD;
+    }
+
+    public void setPhantramgg(float Phantramgg) {
+        this.Phantramgg = Phantramgg;
+    }
 }

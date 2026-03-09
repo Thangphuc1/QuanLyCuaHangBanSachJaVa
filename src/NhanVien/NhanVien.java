@@ -8,6 +8,7 @@ import java.util.Objects;
 
 /**
  *
+ 
  * @author DuyPhuong
  */
 public class NhanVien {
@@ -21,10 +22,6 @@ public class NhanVien {
         return Objects.equals(maNV, nv.maNV);
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(maNV);
-    }
     public String getMaNV(){
         return maNV;
     }
@@ -61,7 +58,7 @@ public class NhanVien {
     public void setEmail(String email){
         this.email=email;
     }
-    public double getLuong (){
+    public double getLuong(){
         return luong;
     }
     public void setLuong(double luong){
