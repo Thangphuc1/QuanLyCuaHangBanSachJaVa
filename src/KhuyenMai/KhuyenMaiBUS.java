@@ -44,4 +44,12 @@ public class KhuyenMaiBUS {
 
         return kmDAO.delete(maKM);
     }
+    public ArrayList<KhuyenMai> search(String keyword){
+
+    if(keyword.trim().equals("")){
+        return kmDAO.getAll();
+    }
+
+    return kmDAO.search(keyword);
+}
 }

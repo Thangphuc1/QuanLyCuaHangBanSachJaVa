@@ -115,4 +115,40 @@ public class KhuyenMaiDAO {
 
         return false;
     }
+    // Tìm kiếm khuyến mãi
+public ArrayList<KhuyenMai> search(String keyword) {
+
+    ArrayList<KhuyenMai> list = new ArrayList<>();
+    String sql = "SELECT * FROM KhuyenMai WHERE maKM LIKE ? OR tenKM LIKE ?";
+
+    try {
+
+        conn = DBConnection.getConnection();
+        ps = conn.prepareStatement(sql);
+
+        ps.setString(1, "%" + keyword + "%");
+        ps.setString(2, "%" + keyword + "%");
+
+        rs = ps.executeQuery();
+
+        while (rs.next()) {
+
+            KhuyenMai km = new KhuyenMai(
+                    rs.getString("maKM"),
+                    rs.getString("tenKM"),
+                    rs.getDate("ngayBD").toLocalDate(),
+                    rs.getDate("ngayKT").toLocalDate(),
+                    rs.getInt("DKTT"),
+                    rs.getString("ghichu")
+            );
+
+            list.add(km);
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null,"Lỗi tìm kiếm khuyến mãi");
+    }
+
+    return list;
+}
 }
