@@ -12,8 +12,9 @@ public class ChiTietPhieuNhap {
     private String maPN;
     private String maSach;
     private int soLuong;
-    private double donGia;
-    private double thanhTien;
+    private Double donGia;
+    
+    private Double thanhTien;
     public ChiTietPhieuNhap() {}
     public ChiTietPhieuNhap (String maPN,String maSach,int soLuong,double donGia,double thanhTien) {
         this.maPN=maPN;
