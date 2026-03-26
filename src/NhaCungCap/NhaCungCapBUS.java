@@ -5,6 +5,8 @@
 package NhaCungCap;
 import PhieuNhap.*;
 import java.util.ArrayList;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,21 +24,19 @@ public class NhaCungCapBUS {
     public ArrayList<NhaCungCap> getNhaCungCap() {
         return dsncc;
     }
-    public boolean themNhaCungCap(NhaCungCap ncc) {
-       if(KiemTra(ncc)) {
-           System.out.println("vui long kiem tra da dien du thong tin va nhap du lieu phu hop");
-           return false;
-       }
-  
+    public boolean themNhaCungCap(NhaCungCap ncc,JDialog parentDialog)  {
+        if(!KiemTra(ncc, parentDialog))
+                return false;
+        
 
        if(KiemTraTenTrung(ncc.getTenNCC())) {
-           System.out.println("ten nha cung cap bi trung");
+           JOptionPane.showMessageDialog(parentDialog,"tên nhà cung cấp đã bị trùng!","Lỗi",JOptionPane.ERROR_MESSAGE);
            return false;
         }
        if(KiemTraMaTonTai(ncc.getMaNCC())) {
-           System.out.println("ma nha cung cap da ton tai");
-           return false;
+           JOptionPane.showMessageDialog(parentDialog,"mã nhà cung cấp đã bị trùng!","Lỗi",JOptionPane.ERROR_MESSAGE);    
        }
+       
        boolean KetQua=nhacungcapdao.InsertNhaCungCap(ncc);
        if(KetQua) {
            dsncc.add(ncc);
@@ -58,7 +58,7 @@ public class NhaCungCapBUS {
         if(!KiemTraMaTonTai(ncc.getMaNCC())) {
             System.out.println("ma khong ton tai");
         }
-        KiemTra(ncc);
+//        if(KiemTra(ncc.);
         boolean KetQua=nhacungcapdao.UpdateNhaCungCap(ncc);
         if (KetQua) dsncc = nhacungcapdao.LoadNhaCungCap();
         return KetQua ;
@@ -85,18 +85,18 @@ public class NhaCungCapBUS {
         
     
 //=======================VALIDATION==================    
-    public boolean  KiemTra(NhaCungCap ncc) {
+    public boolean  KiemTra(NhaCungCap ncc, JDialog parentDialog) {
         //kiem tra rong
         if(ncc.getTenNCC()==null||ncc.getMaNCC()==null||ncc.getDiaChi()==null||ncc.getEmail()==null) {
-            System.out.println("vui long dien thong tin day du");
+            JOptionPane.showMessageDialog(parentDialog,"vui lòng điền đầy đủ thông tin!","Lỗi",JOptionPane.ERROR_MESSAGE);
             return false;
         }
         if(ncc.getTenNCC().isEmpty()||ncc.getMaNCC().isEmpty()||ncc.getSoDienThoai().isEmpty()||ncc.getDiaChi().isEmpty()||ncc.getEmail().isEmpty()) {
-            System.out.println("vui long ko de trong");
+            JOptionPane.showMessageDialog(parentDialog,"vui lòng không để trống!","Lỗi",JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if(ncc.getSoDienThoai()==null||ncc.getSoDienThoai().length()!=10) {
-            System.out.println("so dien thoai phai bang 10 so");
+        if(ncc.getSoDienThoai()==null||ncc.getSoDienThoai().length()<10) {
+            JOptionPane.showMessageDialog(parentDialog,"số điện thoại phải có 10 chữ số!","Lỗi",JOptionPane.ERROR_MESSAGE);
             return false;
         }
         
@@ -118,6 +118,10 @@ public class NhaCungCapBUS {
             }
         }
         return false;
+    }
+
+    boolean xoaNhaCungCap(NhaCungCap ncc) {
+        throw new UnsupportedOperationException("Not supported yet."); 
     }
     
     
