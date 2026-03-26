@@ -24,49 +24,49 @@ public class SachBUS {
     }
     
     //them sua xoa
-    public String themSach(Sach sach){
+    public Result themSach(Sach sach){
        if(sach.getMasach().isEmpty() || sach.getTensach().isEmpty() || sach.getMatg().isEmpty() || sach.getMatl().isEmpty() || sach.getNamxuatban() == 0 || sach.getManxb().isEmpty() || sach.getDongia() == 0 || sach.getSoluongton() == 0){
-           return "Vui long nhap day du thong tin sach!";
+           return Result.thieuthongtin;
        }
        if(!ktmasach(sach.getMasach())){
            if(!sachdao.insertSach(sach)){
-               return "Them that bai";
+               return Result.thatbai;
            }
        }else{
-           return "Ma sach trung";
+           return Result.trungma;
        }
        dss.add(sach);
-       return "Them thanh cong";
+       return Result.thanhcong;
     }
     
-    public String xoaSach(String ma){
+    public Result xoaSach(String ma){
         if(ktmasach(ma)){
-            if(sachdao.deleteSach(ma)){
-                return "Xoa that bai";
+            if(!sachdao.deleteSach(ma)){
+                return Result.thatbai;
             }
         }else{
-            return "Khong tim thay ma trong danh sach";
+            return Result.khongtontai;
         }
         Sach s = timSachTheoMa(ma);
         if(s != null){
             dss.remove(s);
         }
-        return "Xoa thanh cong";
+        return Result.thanhcong;
     }
     
-    public String suaSach(Sach sach){
+    public Result suaSach(Sach sach){
         if(ktmasach(sach.getMasach())){
             if(sachdao.updateSach(sach)){
-                return "Sua that bai";
+                return Result.thatbai;
             }
         }else{
-            return "Khong tim thay ma trong danh sach";
+            return Result.khongtontai;
         }
         int i = dss.indexOf(sach);
         if(i != -1){
             dss.set(i,sach);
         }
-        return "sua thanh cong";
+        return Result.thanhcong;
     }
     
     //Tim kiem
@@ -207,6 +207,20 @@ public class SachBUS {
         }
         if(!found)return null;
         return tmp;
+    }
+    
+    public String autoThemMa(){
+        int max = 0;
+        
+        for(Sach s : dss){
+            if(s.getMasach() != null && s.getMasach().matches("S%//d+")){
+                int num = Integer.parseInt(s.getMasach().substring(1));
+                if(num > max && num - max == 1){
+                    max = num;
+                }
+            }
+        }
+        return String.format("S%03d",max + 1);
     }
     
     public ArrayList<Sach> sachHetHang(){

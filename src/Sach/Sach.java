@@ -8,7 +8,6 @@ import java.util.*;
 public class Sach {
     private String masach,tensach,matg,matl,manxb;
     private int dongia,soluongton,namxuatban;
-    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

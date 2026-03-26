@@ -22,7 +22,7 @@ public class SachDAO {
                 rs.getString("MaTacGia"),
                 rs.getString("MaTheLoai"),
                 rs.getInt("NamXuatBan"),
-                rs.getString("MaNXB"),
+                rs.getString("MaNhaXuatBan"),
                 rs.getInt("DonGia"),
                 rs.getInt("SoLuongTon")
                 );
@@ -36,7 +36,7 @@ public class SachDAO {
     }
     
     public static Boolean insertSach(Sach sach){
-        String qry = "insert into Sach values(?,?,?,?,?,?,?,?)";
+        String qry = "insert into sach values(?,?,?,?,?,?,?,?)";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -58,7 +58,7 @@ public class SachDAO {
     }
     
     public static Boolean deleteSach(String masach){
-        String qry = "delete from Sach where MaSach = (?)";
+        String qry = "delete from sach where MaSach = (?)";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -73,7 +73,7 @@ public class SachDAO {
     }
     
     public static Boolean updateSach(Sach sach){
-        String qry = "update Sach set MaSach = ?, TenSach = ?, MaTacGia = ?, MaTheLoai = ?, NamXuatBan = ?, MaNXB = ?, DonGia = ?, SoLuongTon = ? Where MaSach = ?";
+        String qry = "update sach set MaSach = ?, TenSach = ?, MaTacGia = ?, MaTheLoai = ?, NamXuatBan = ?, MaNXB = ?, DonGia = ?, SoLuongTon = ? Where MaSach = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
