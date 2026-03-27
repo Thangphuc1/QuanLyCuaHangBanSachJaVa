@@ -28,7 +28,7 @@ public class ChiTietKhuyenMaiHDBUS {
     // Thêm
     public boolean add(ChiTietKhuyenMaiHD ctkmhd) {
 
-        if (ctkmhd.getMaKM().trim().equals("") || ctkmhd.getTTHD().trim().equals("")) {
+        if (ctkmhd.getMaKM().trim().equals("") || ctkmhd.getMaHD().trim().equals("")) {
             return false;
         }
 
@@ -38,7 +38,7 @@ public class ChiTietKhuyenMaiHDBUS {
     // Sửa
     public boolean update(ChiTietKhuyenMaiHD ctkmhd) {
 
-        if (ctkmhd.getMaKM().trim().equals("") || ctkmhd.getTTHD().trim().equals("")) {
+        if (ctkmhd.getMaKM().trim().equals("") || ctkmhd.getMaHD().trim().equals("")) {
             return false;
         }
 
@@ -48,10 +48,18 @@ public class ChiTietKhuyenMaiHDBUS {
     // Xóa
     public boolean delete(ChiTietKhuyenMaiHD ctkmhd) {
 
-        if (ctkmhd.getMaKM().trim().equals("") || ctkmhd.getTTHD().trim().equals("")) {
+        if (ctkmhd.getMaKM().trim().equals("") || ctkmhd.getMaHD().trim().equals("")) {
             return false;
         }
 
         return ctkmhdDAO.Delete(ctkmhd);
+    }
+    
+    //Tìm kiếm
+    public ArrayList<ChiTietKhuyenMaiHD> search(String keyword){
+        if (keyword == null || keyword.trim().equals("")) {
+            return ctkmhdDAO.getAll();
+        }
+        return ctkmhdDAO.search(keyword);
     }
 }

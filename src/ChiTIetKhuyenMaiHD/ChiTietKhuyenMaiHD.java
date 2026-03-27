@@ -10,13 +10,15 @@ package ChiTIetKhuyenMaiHD;
  */
 public class ChiTietKhuyenMaiHD {
     private String maKM;
-    private String TTHD;
+    private Double TTHD;
     private float Phantramgg; 
+    private String maHD;
     
     public ChiTietKhuyenMaiHD() {}
     
-    public ChiTietKhuyenMaiHD(String maKM, String TTHD, float Phantramgg) {
+    public ChiTietKhuyenMaiHD(String maKM, String maHD, Double TTHD, float Phantramgg) {
         this.maKM = maKM;
+        this.maHD = maHD;
         this.TTHD = TTHD;
         this.Phantramgg = Phantramgg;
     }
@@ -25,7 +27,10 @@ public class ChiTietKhuyenMaiHD {
         return maKM;
     }
 
-    public String getTTHD() {
+    public String getMaHD() {
+        return maKM;
+    }
+    public Double getTTHD() {
         return TTHD;
     }
 
@@ -37,7 +42,11 @@ public class ChiTietKhuyenMaiHD {
         this.maKM = maKM;
     }
 
-    public void setTTHD(String TTHD) {
+    public void setMaHD(String maHD) {
+        this.maHD = maHD;
+    }
+    
+    public void setTTHD(Double TTHD) {
         this.TTHD = TTHD;
     }
 
