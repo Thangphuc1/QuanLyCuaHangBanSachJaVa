@@ -60,12 +60,12 @@ public class NhaCungCapDAO {
             }
         return true;
     }
-    public boolean deleteNhaCungCap(NhaCungCap ncc) {
+    public boolean deleteNhaCungCap(String mancc) {
         String sql="delete from nhacungcap where mancc=?";
         try{
             Connection conn=DBConnection.getDBConnection();
             PreparedStatement pstmt=conn.prepareStatement(sql);
-            pstmt.setString(1, ncc.getMaNCC());
+            pstmt.setString(1, mancc);
             pstmt.executeUpdate();
             conn.close();
             pstmt.close();

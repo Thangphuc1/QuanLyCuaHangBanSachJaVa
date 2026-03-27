@@ -43,22 +43,22 @@ public class NhaCungCapBUS {
        }
        return KetQua;
     }
-    public boolean XoaNhaCungCap (NhaCungCap ncc) {
-        if(!KiemTraMaTonTai(ncc.getMaNCC())) {
-            System.out.println("ma khong ton tai");
-        }
-        if(nhacungcapdao.KiemTraNhaCungCapCoPhieuNhap(ncc.getMaNCC())) {
+    public boolean XoaNhaCungCap (String mancc) {
+        if(nhacungcapdao.KiemTraNhaCungCapCoPhieuNhap(mancc)) {
             System.out.println("khong the xoa nha cung cap vi co phieu nhap ton tai");
         }
-        boolean KetQua=nhacungcapdao.deleteNhaCungCap(ncc);
+        boolean KetQua=nhacungcapdao.deleteNhaCungCap(mancc);
          if (KetQua) dsncc = nhacungcapdao.LoadNhaCungCap();
         return KetQua;
     }
-    public boolean SuaNhaCungCap (NhaCungCap ncc) {
+    public boolean SuaNhaCungCap (NhaCungCap ncc,JDialog parentDialog) {
         if(!KiemTraMaTonTai(ncc.getMaNCC())) {
-            System.out.println("ma khong ton tai");
+            JOptionPane.showMessageDialog(parentDialog,"mã nhà cung cấp không tồn tại!","Lỗi",JOptionPane.ERROR_MESSAGE);
         }
-//        if(KiemTra(ncc.);
+        if(!KiemTra(ncc,parentDialog)) {
+            return false;
+        }
+                
         boolean KetQua=nhacungcapdao.UpdateNhaCungCap(ncc);
         if (KetQua) dsncc = nhacungcapdao.LoadNhaCungCap();
         return KetQua ;

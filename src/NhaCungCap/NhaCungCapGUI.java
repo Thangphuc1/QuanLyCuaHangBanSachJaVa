@@ -17,6 +17,7 @@ public class NhaCungCapGUI extends JPanel{
     private JButton btnThem, btnSua, btnXoa, btnTimKiem, btnLamLai, btnTatCa;
     private JLabel lbtimkiem;
     private JFrame parentFrame;
+    private JTextField tx1,tx2,tx3,tx4,tx5;
 
     public NhaCungCapGUI(JFrame parent) {
         setLayout(new BorderLayout()); // ⭐ Set layout cho panel
@@ -187,7 +188,7 @@ public class NhaCungCapGUI extends JPanel{
         p2.setBackground(new Color(200, 200, 200)); // Màu xám
        p2.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40)); // ⭐ Tăng padding
         JPanel p3=new JPanel();
-         p3.setBackground(new Color(200, 200, 200));
+        p3.setBackground(new Color(200, 200, 200));
         p3.setBackground(new Color(240, 240, 240));
         p3.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         p3.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 10)); // ⭐ Align phải
@@ -350,6 +351,11 @@ public class NhaCungCapGUI extends JPanel{
                 }
             }
         });
+        bt2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
         
         p3.add(bt1);
         p3.add(bt2);
@@ -361,53 +367,242 @@ public class NhaCungCapGUI extends JPanel{
         
         
     }
-    private void NutLuuThem() {
-        
-    }
+    
     
     private void suaNhaCungCap() {
-        if (txtMaNCC.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp để sửa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+       JFrame frame = parentFrame != null ? parentFrame : (JFrame) SwingUtilities.getWindowAncestor(this);
+        
+        if (frame == null) {
+            JOptionPane.showMessageDialog(this, "Lỗi: Không thể tạo dialog!", "Lỗi", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        NhaCungCap ncc = new NhaCungCap(
-            txtMaNCC.getText(),
-            txtTenNCC.getText(),
-            txtSoDienThoai.getText(),
-            txtEmail.getText(),
-            txtDiaChi.getText()
-        );
-
-        if (bus.SuaNhaCungCap(ncc)) {
-            JOptionPane.showMessageDialog(this, "Sửa thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            loadDuLieu();
-            lamLai();
-        } else {
-            JOptionPane.showMessageDialog(this, "Sửa thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-        }
+        
+        int selectedRow = tableNCC.getSelectedRow();
+        if (selectedRow == -1) {
+        JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp để sửa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+        JDialog dialog = new JDialog( frame, "Sửa", true);
+        dialog.setSize(700, 600);
+        dialog.setLocationRelativeTo(this);
+        dialog.setLayout(new BorderLayout());
+        
+        JPanel p1=new JPanel();
+        p1.setBackground(new Color(230, 180, 0)); // Màu vàng đậm
+         p1.setBorder(BorderFactory.createEmptyBorder(12, 20, 12, 20)); // ⭐ Padding nhỏ gọn
+        
+        JPanel p2=new JPanel();
+        p2.setLayout(new GridLayout(10,1));
+        p2.setBackground(new Color(200, 200, 200)); // Màu xám
+        p2.setBorder(BorderFactory.createEmptyBorder(30, 40, 30, 40)); // ⭐ Tăng padding
+        JPanel p3=new JPanel();
+        p3.setBackground(new Color(200, 200, 200));
+        p3.setBackground(new Color(240, 240, 240));
+        p3.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
+        p3.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 10)); // ⭐ Align phải
+        
+        
+        JLabel lbtieude = new JLabel("Sửa Nhà Cung Cấp");
+        lbtieude.setFont(new Font("Arial", Font.BOLD, 16)); // ⭐ Font vừa phải
+        p1.add(lbtieude);
+        
+//        
+        
+        JLabel lb1 = new JLabel("Mã nhà cung cấp *");
+        lb1.setFont(new Font("Arial", Font.BOLD, 15)); // ⭐ Bold, to hơn
+        lb1.setForeground(new Color(50, 50, 50));
+        
+        JLabel lb2 = new JLabel("Tên nhà cung cấp *");
+        lb2.setFont(new Font("Arial", Font.BOLD, 15));
+        lb2.setForeground(new Color(50, 50, 50));
+        
+        JLabel lb3 = new JLabel("Số điện thoại *");
+        lb3.setFont(new Font("Arial", Font.BOLD, 15));
+        lb3.setForeground(new Color(50, 50, 50));
+        
+        JLabel lb4 = new JLabel("Email *");
+        lb4.setFont(new Font("Arial", Font.BOLD, 15));
+        lb4.setForeground(new Color(50, 50, 50));
+        
+        JLabel lb5 = new JLabel("Địa chỉ *");
+        lb5.setFont(new Font("Arial", Font.BOLD, 15));
+        lb5.setForeground(new Color(50, 50, 50));
+        
+        JTextField tx1=new JTextField("");
+        tx1.setPreferredSize(new Dimension(400, 50));
+        tx1.setFont(new Font("Arial", Font.PLAIN, 14));
+        tx1.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
+        tx1.setText(tableModel.getValueAt(selectedRow, 0).toString()); // ⭐ Mã NCC
+        tx1.setEditable(false);
+        
+        JTextField tx2=new JTextField("");
+         tx2.setPreferredSize(new Dimension(400, 50));
+        tx2.setFont(new Font("Arial", Font.PLAIN, 14));
+        tx2.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
+        tx2.setText(tableModel.getValueAt(selectedRow, 1).toString());
+        
+        JTextField tx3=new JTextField("");
+         tx3.setPreferredSize(new Dimension(400, 50));
+        tx3.setFont(new Font("Arial", Font.PLAIN, 14));
+        tx3.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
+        tx3.setText(tableModel.getValueAt(selectedRow, 3).toString());
+        
+        JTextField tx4=new JTextField("");
+        tx4.setPreferredSize(new Dimension(400, 50));
+        tx4.setFont(new Font("Arial", Font.PLAIN, 14));
+        tx4.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
+        tx4.setText(tableModel.getValueAt(selectedRow, 4).toString()); 
+        
+        JTextField tx5 = new JTextField();
+        tx5.setPreferredSize(new Dimension(400, 50));
+        tx5.setFont(new Font("Arial", Font.PLAIN, 14));
+        tx5.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
+        tx5.setText(tableModel.getValueAt(selectedRow, 2).toString());
+        
+        
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+         gbc.insets = new Insets(15, 15, 15, 15); // Tăng khoảng cách giữa rows 
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 0;
+        gbc.weighty = 0;
+        p2.add(lb1, gbc);
+        
+        gbc.gridy = 1;
+        gbc.weightx = 1;
+        p2.add(tx1, gbc);
+        
+        gbc.gridy = 2;
+        gbc.weightx = 0;
+        p2.add(lb2, gbc);
+        
+        gbc.gridy = 3;
+        gbc.weightx = 1;
+        p2.add(tx2, gbc);
+        
+        gbc.gridy = 4;
+        gbc.weightx = 0;
+        p2.add(lb3, gbc);
+        
+        gbc.gridy = 5;
+        gbc.weightx = 1;
+        p2.add(tx3, gbc);
+        
+        gbc.gridy = 6;
+        gbc.weightx = 0;
+        p2.add(lb4, gbc);
+        
+        gbc.gridy = 7;
+        gbc.weightx = 1;
+        p2.add(tx4, gbc);
+        
+        gbc.gridy = 8;
+        gbc.weightx = 0;
+        p2.add(lb5, gbc);
+        
+        gbc.gridy = 9;
+        gbc.weightx = 1;
+        p2.add(tx5, gbc);
+        
+        p2.add(lb1);
+        p2.add(tx1);
+        p2.add(lb2);
+        p2.add(tx2);
+        p2.add(lb3);
+        p2.add(tx3);
+        p2.add(lb4);
+        p2.add(tx4);
+        p2.add(lb5);
+        p2.add(tx5);
+        p2.setLayout(new GridLayout(8, 1));
+        
+        JButton bt1=new JButton("lưu");
+        bt1.setPreferredSize(new Dimension(100, 35));
+        bt1.setBackground(new Color(0, 150, 0));
+        bt1.setForeground(Color.WHITE);
+        bt1.setFont(new Font("Arial", Font.BOLD, 12));
+        bt1.setFocusPainted(false);
+        bt1.setBorder(BorderFactory.createLineBorder(new Color(0, 100, 0), 2));
+        
+        JButton bt2=new JButton("hủy");
+        bt2.setPreferredSize(new Dimension(100, 35));
+        bt2.setBackground(new Color(200, 0, 0));
+        bt2.setForeground(Color.WHITE);
+        bt2.setFont(new Font("Arial", Font.BOLD, 12));
+        bt2.setFocusPainted(false);
+        bt2.setBorder(BorderFactory.createLineBorder(new Color(150, 0, 0), 2)); 
+        
+      
+        bt1.addActionListener(new ActionListener() {
+            public void actionPerformed (ActionEvent e) {
+               NhaCungCap ncc=new NhaCungCap();
+               ncc.setMaNCC(tx1.getText());
+               ncc.setTenNCC(tx2.getText());
+               ncc.setSoDienThoai(tx3.getText());
+               ncc.setEmail(tx4.getText());
+               ncc.setDiaChi(tx5.getText());
+               if(bus.SuaNhaCungCap(ncc,dialog)) {
+                   JOptionPane.showMessageDialog(dialog, "Lưu thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                    loadDuLieu();
+                    tx1.setText("");
+                    tx2.setText("");
+                    tx3.setText("");
+                    tx4.setText("");
+                    tx5.setText("");
+                    dialog.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(dialog, "Lưu thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                    dialog.dispose();
+                }
+               }
+         });           
+        bt2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        
+        p3.add(bt1);
+        p3.add(bt2);
+        
+         dialog.add(p1, BorderLayout.NORTH);
+        dialog.add(p2, BorderLayout.CENTER);
+        dialog.add(p3, BorderLayout.SOUTH);
+        dialog.setVisible(true);
+    
     }
 
     private void xoaNhaCungCap() {
-        if (txtMaNCC.getText().isEmpty()) {
+        int selectedRow = tableNCC.getSelectedRow();
+        if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp để xóa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            return;
         }
-
-        int confirm = JOptionPane.showConfirmDialog(this, "Bạn chắc chắn muốn xóa?", "Xác nhận", JOptionPane.YES_NO_OPTION);
+        String maNCC = tableModel.getValueAt(selectedRow, 0).toString();
+         String tenNCC = tableModel.getValueAt(selectedRow, 1).toString();
+        int confirm = JOptionPane.showConfirmDialog( this, "Bạn chắc chắn muốn xóa nhà cung cấp:\n" + tenNCC + " (" + maNCC + ") ?","Xác nhận xóa",JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE);
         if (confirm == JOptionPane.YES_OPTION) {
-            NhaCungCap ncc = new NhaCungCap();
-            ncc.setMaNCC(txtMaNCC.getText());
-
-            if (bus.xoaNhaCungCap(ncc)) {
-                JOptionPane.showMessageDialog(this, "Xóa thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-                loadDuLieu();
-                lamLai();
-            } else {
-                JOptionPane.showMessageDialog(this, "Xóa thất bại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-            }
+         
+        
+        if(bus.XoaNhaCungCap(maNCC)) { 
+            JOptionPane.showMessageDialog(this, "Xóa thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+            loadDuLieu(); // ⭐ Load lại bảng
+            lamLai(); // ⭐ Clear các textfield
+        } else {
+            JOptionPane.showMessageDialog(this, ketQua, "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
+        }
+         
+         
+        
+        
+     
+            
     }
+    
 
     private void timKiem() {
         String dauvao=txtTimKiem.getText();
