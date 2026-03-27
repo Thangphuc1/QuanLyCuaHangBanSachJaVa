@@ -56,7 +56,7 @@ public class SachBUS {
     
     public Result suaSach(Sach sach){
         if(ktmasach(sach.getMasach())){
-            if(sachdao.updateSach(sach)){
+            if(!sachdao.updateSach(sach)){
                 return Result.thatbai;
             }
         }else{
@@ -81,90 +81,60 @@ public class SachBUS {
     
     public ArrayList<Sach> timSachTheoTen(String ten){
         ArrayList<Sach> rs = new ArrayList<Sach>();
-        boolean found = false;
         for(Sach s : dss){
             if(s.getTensach().toLowerCase().contains(ten.toLowerCase())){
                 rs.add(s);
-                found = true;
             }
-        }
-        if(!found){
-           return null; 
         }
         return rs;
     }
     
     public ArrayList<Sach> timSachTheoMaTacGia(String matg){
         ArrayList<Sach> rs = new ArrayList<Sach>();
-        boolean found = false;
         for(Sach s : dss){
             if(s.getMatg().toLowerCase().contains(matg.toLowerCase())){
                 rs.add(s);
-                found = true;
             }
-        }
-        if(!found){
-            return null;
         }
         return rs;
     }
     
     public ArrayList<Sach> timSachTheoMaTheLoai(String matl){
         ArrayList<Sach> rs = new ArrayList<Sach>();
-        boolean found = false;
         for(Sach s : dss){
             if(s.getMatl().toLowerCase().contains(matl.toLowerCase())){
                 rs.add(s);
-                found = true;
             }
-        }
-        if(!found){
-            return null;
         }
         return rs;
     }
     
     public ArrayList<Sach> timSachTheoNamXuatBan(int nam){
         ArrayList<Sach> rs = new ArrayList<Sach>();
-        boolean found = false;
         for(Sach s : dss){
             if(s.getNamxuatban() == nam){
                 rs.add(s);
-                found = true;
             }
-        }
-        if(!found){
-            return null;
         }
         return rs;
     }
     
     public ArrayList<Sach> timSachTheoNhaXuatBan(String nxb){
         ArrayList<Sach> rs = new ArrayList<Sach>();
-        boolean found = false;
         for(Sach s : dss){
             if(s.getManxb().toLowerCase().contains(nxb.toLowerCase())){
                 rs.add(s);
-                found = true;
             }
-        }
-        if(!found){
-            return null;
         }
         return rs;
     }
     
     public ArrayList<Sach> timSachTheoDonGiaTrongKhoang(int giamin, int giamax){
         ArrayList<Sach> rs = new ArrayList<Sach>();
-        boolean found = false;
         for(Sach s : dss){
             if(s.getDongia() >= giamin && s.getDongia() <= giamax){
                 rs.add(s);
-                found = true;
             }
-        }
-        if(!found){
-            return null;
         }
         return rs;
     }
@@ -213,7 +183,7 @@ public class SachBUS {
         int max = 0;
         
         for(Sach s : dss){
-            if(s.getMasach() != null && s.getMasach().matches("S%//d+")){
+            if(s.getMasach() != null && s.getMasach().matches("S\\d+")){
                 int num = Integer.parseInt(s.getMasach().substring(1));
                 if(num > max && num - max == 1){
                     max = num;

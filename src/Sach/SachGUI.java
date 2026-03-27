@@ -17,22 +17,22 @@ import javax.swing.table.*;
 public class SachGUI extends JPanel{
     
     SachBUS sachbus = new SachBUS(); 
-    JFrame themform,suaform;
+    JFrame themform,suaform; 
     JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle;
     JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu;
-    JTextField txttk,txtma,txttensach,txtmatg,txtmatl,txtnam,txtnxb,txtdongia,txtsoluong;
+    JTextField txttk,txtma,txttensach,txtmatg,txtmatl,txtnam,txtnxb,txtdongia,txtsoluong,txtgiamin,txtgiamax;
     JComboBox cbtk;
     DefaultComboBoxModel cbmdtk;
     JTable tbsach;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbmatg,lbmatl,lbnam,lbnxb,lbdongia,lbtxtsoluong;
+    JLabel lbtitle,lbma,lbten,lbmatg,lbmatl,lbnam,lbnxb,lbdongia,lbtxtsoluong,lbden;
     
     public void loadData(){
         ArrayList<Sach> dstmp = new ArrayList<Sach>();
+        sachbus.sachreload();
         dstmp = sachbus.getSachBUS();
         for(Sach temp : dstmp){
-            tbmodel.setRowCount(0);
             Vector<String> row = new Vector<>();
             row.add(temp.getMasach());
             row.add(temp.getTensach());
@@ -129,6 +129,96 @@ public class SachGUI extends JPanel{
         
     }
     
+    public void timkiemdongia(){
+        cbtk.addItemListener(e -> {
+            if(e.getStateChange() == ItemEvent.SELECTED){
+                boolean isdongia = cbtk.getSelectedIndex() == 6;
+                
+                txttk.setVisible(!isdongia);
+                txtgiamin.setVisible(isdongia);
+                lbden.setVisible(isdongia);
+                txtgiamax.setVisible(isdongia);
+                
+                txttk.setText("");
+                txtgiamin.setText("");
+                txtgiamax.setText("");
+                
+                ptimkiem.revalidate();
+                ptimkiem.repaint();
+            }
+        });
+    }
+    
+    public void timkiem(){
+        ArrayList<Sach> dstemp = new ArrayList<>();
+    tbmodel.setRowCount(0);
+
+    try {
+        int idx = cbtk.getSelectedIndex();
+
+        if (idx == 6) {
+            String minStr = txtgiamin.getText().trim();
+            String maxStr = txtgiamax.getText().trim();
+
+            if (minStr.isEmpty() || maxStr.isEmpty()) {
+                dstemp = sachbus.getSachBUS();
+            } else {
+                int giamin = Integer.parseInt(minStr);
+                int giamax = Integer.parseInt(maxStr);
+
+                if (giamin > giamax) {
+                    int t = giamin; giamin = giamax; giamax = t;
+                }
+
+                dstemp = sachbus.timSachTheoDonGiaTrongKhoang(giamin, giamax);
+            }
+        } else {
+            String text = txttk.getText().trim();
+            if (text.isEmpty()) {
+                dstemp = sachbus.getSachBUS();
+            } else {
+                switch (idx) {
+                    case 0:
+                        Sach s = sachbus.timSachTheoMa(text);
+                        if (s != null) dstemp.add(s);
+                        break;
+                    case 1:
+                        dstemp = sachbus.timSachTheoTen(text);
+                        break;
+                    case 2:
+                        dstemp = sachbus.timSachTheoMaTacGia(text);
+                        break;
+                    case 3:
+                        dstemp = sachbus.timSachTheoMaTheLoai(text);
+                        break;
+                    case 4:
+                        dstemp = sachbus.timSachTheoNamXuatBan(Integer.parseInt(text));
+                        break;
+                    case 5:
+                        dstemp = sachbus.timSachTheoNhaXuatBan(text);
+                        break;
+                }
+            }
+        }
+
+        for (Sach temp : dstemp) {
+            Vector<String> row = new Vector<>();
+            row.add(temp.getMasach());
+            row.add(temp.getTensach());
+            row.add(temp.getMatg());
+            row.add(temp.getMatl());
+            row.add(Integer.toString(temp.getNamxuatban()));
+            row.add(temp.getManxb());
+            row.add(Integer.toString(temp.getDongia()));
+            row.add(Integer.toString(temp.getSoluongton()));
+            tbmodel.addRow(row);
+        }
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập đúng số (năm, giá min, giá max).");
+        }
+    }
+    
     public void suaForm(){
         suaform = new JFrame("Form Them");
         suaform.setSize(500, 500);
@@ -143,7 +233,7 @@ public class SachGUI extends JPanel{
         lbdongia = new JLabel("Đơn giá");
         lbtxtsoluong = new JLabel("Số lượng tồn");
         
-        txtma = new JTextField(sachbus.autoThemMa());
+        txtma = new JTextField(20);
         txtma.setEditable(false);
         txttensach = new JTextField(20);
         txtmatg = new JTextField(20);
@@ -152,6 +242,16 @@ public class SachGUI extends JPanel{
         txtnxb = new JTextField(20);
         txtdongia = new JTextField(20);
         txtsoluong = new JTextField(20);
+        
+        int i = tbsach.getSelectedRow();
+        txtma.setText(tbsach.getValueAt(i, 0).toString());
+        txttensach.setText(tbsach.getValueAt(i, 1).toString());
+        txtmatg.setText(tbsach.getValueAt(i, 2).toString());
+        txtmatl.setText(tbsach.getValueAt(i, 3).toString());
+        txtnam.setText(tbsach.getValueAt(i, 4).toString());
+        txtnxb.setText(tbsach.getValueAt(i, 5).toString());
+        txtdongia.setText(tbsach.getValueAt(i, 6).toString());
+        txtsoluong.setText(tbsach.getValueAt(i, 7).toString());
         
         inputpanel = new JPanel();
         inputpanel.setLayout(new GridLayout(8,2,10,10));
@@ -191,7 +291,6 @@ public class SachGUI extends JPanel{
                 JOptionPane.showMessageDialog(this, suasach.getMessage());
                 
                 if (suasach == Result.thanhcong) {
-                    int i = tbsach.getSelectedRow();
                     if(i >= 0){
                         tbmodel.setValueAt(sach.getTensach(),i,1);
                         tbmodel.setValueAt(sach.getMatg(),i,2);
@@ -211,6 +310,18 @@ public class SachGUI extends JPanel{
         
         suaform.add(btnluu, BorderLayout.SOUTH);
         suaform.setVisible(true);
+    }
+    
+    public void xoa(){
+        int i = tbsach.getSelectedRow();
+        String ma = tbsach.getValueAt(i, 0).toString(); 
+               
+        Result xoasach = sachbus.xoaSach(ma);
+        JOptionPane.showMessageDialog(this, xoasach.getMessage());
+        if(xoasach == Result.thanhcong){
+            tbmodel.removeRow(i);
+            sachbus.sachreload();
+        }
     }
     
     public SachGUI(){
@@ -236,10 +347,21 @@ public class SachGUI extends JPanel{
         cbmdtk.addElement("don gia");
         cbtk = new JComboBox(cbmdtk);
         txttk = new JTextField(25);
+        
+        txtgiamin = new JTextField(10);
+        lbden = new JLabel("đến");
+        txtgiamax = new JTextField(10);
+        txtgiamin.setVisible(false);
+        txtgiamax.setVisible(false);
+        lbden.setVisible(false);
+        
         btntimkiem = new JButton("Tìm kiếm");
         ptimkiem = new JPanel();
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);
+        ptimkiem.add(txtgiamin);
+        ptimkiem.add(lbden);
+        ptimkiem.add(txtgiamax);
         ptimkiem.add(btntimkiem);
         
         //toolbar container
@@ -274,6 +396,9 @@ public class SachGUI extends JPanel{
         add(pcontainer, BorderLayout.CENTER);
         add(ptable, BorderLayout.SOUTH);
         
+        loadData();
+        timkiemdongia();
+        
         btnthem.addActionListener(e -> {
             try{
                 themForm();
@@ -291,70 +416,19 @@ public class SachGUI extends JPanel{
         });
         
         btnxoa.addActionListener(e -> {
-           try{
-               int i = tbsach.getSelectedRow();
-               String ma = tbsach.getValueAt(i, 0).toString(); 
-               
-               Result xoasach = sachbus.xoaSach(ma);
-               JOptionPane.showMessageDialog(this, xoasach.getMessage());
-               if(xoasach == Result.thanhcong){
-                   tbmodel.removeRow(i);
-                   sachbus.sachreload();
-               }
+            try{
+                xoa();
             }catch(Exception ex){
                 ex.printStackTrace();
             } 
         });
         
         btntimkiem.addActionListener(e ->{
-            ArrayList<Sach> dstemp = new ArrayList<Sach>();
             try{
-                String text = txttk.getText();
-                
-                switch(cbtk.getSelectedIndex()){
-                    case 1:
-                        Sach temp = new Sach();
-                        temp = sachbus.timSachTheoMa(text);
-                        if(temp != null){
-                            tbmodel.setRowCount(0);
-                            Vector<String> row = new Vector<>();
-                            row.add(temp.getMasach());
-                            row.add(temp.getTensach());
-                            row.add(temp.getMatg());
-                            row.add(temp.getMatl());
-                            row.add(Integer.toString(temp.getNamxuatban()));
-                            row.add(temp.getManxb());
-                            row.add(Integer.toString(temp.getDongia()));
-                            row.add(Integer.toString(temp.getSoluongton()));
-                            tbmodel.addRow(row);
-                        }else{
-                            tbmodel.setRowCount(0);
-                        }
-                        break;
-                    case 2:
-                        dstemp = sachbus.timSachTheoTen(text);
-                        break;
-                    case 3:
-                        dstemp = sachbus.timSachTheoMaTacGia(text);
-                        break;
-                    case 4:
-                        dstemp = sachbus.timSachTheoMaTheLoai(text);
-                        break;
-                    case 5:
-                        dstemp = sachbus.timSachTheoNamXuatBan(Integer.parseInt(text));
-                        break;
-                    case 6:
-                        dstemp = sachbus.timSachTheoNhaXuatBan(text);
-                        break;
-                    case 7:
-                        //dstemp = sachbus.timSachTheoDonGiaTrongKhoang(text);
-                        break;
-                }
-               
-            }catch(Exception ex){
+                timkiem();
+            }catch (Exception ex) {
                 ex.printStackTrace();
             } 
         });
-        loadData();
     }
 }
