@@ -17,7 +17,7 @@ public class DBConnection {
 
     public static Connection getConnection() {
         try {
-            String url = "jdbc:mysql://localhost:3306/qlsach";
+            String url = "jdbc:mysql://localhost:3306/quanlibansach";
             String user = "root";
             String password = "";
 
