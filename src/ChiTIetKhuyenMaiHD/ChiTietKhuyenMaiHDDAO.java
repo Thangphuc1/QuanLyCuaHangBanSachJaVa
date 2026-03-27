@@ -29,9 +29,10 @@ public class ChiTietKhuyenMaiHDDAO {
             
             while(rs.next()){
                 ChiTietKhuyenMaiHD ctkmhd = new ChiTietKhuyenMaiHD(
-                    rs.getString("maKM"),
-                    rs.getString("TTHD"),
-                    rs.getFloat("Phantramgg")
+                    rs.getString("makm"),
+                    rs.getString("mahoadon"),
+                    rs.getDouble("tongtienHD"),
+                    rs.getFloat("phantramgiamgia")
                 );
                 
                 list.add(ctkmhd);
@@ -45,15 +46,16 @@ public class ChiTietKhuyenMaiHDDAO {
     
     // Thêm
     public boolean insert(ChiTietKhuyenMaiHD ctkmhd){
-        String sql = "Insert into ChiTietKhuyenMaiHD Values(?,?,?)";
+        String sql = "Insert into ChiTietKhuyenMaiHD Values(?,?,?,?)";
         
         try{
             conn = DBConnection.getConnection();
             ps = conn.prepareStatement(sql);
             
             ps.setString(1, ctkmhd.getMaKM());
-            ps.setString(2, ctkmhd.getTTHD());
-            ps.setFloat(3, ctkmhd.getPhantramgg());
+            ps.setString(2, ctkmhd.getMaHD());
+            ps.setDouble(3, ctkmhd.getTTHD());
+            ps.setFloat(4, ctkmhd.getPhantramgg());
             
             return ps.executeUpdate() > 0;
         }catch(SQLException ex){
@@ -64,7 +66,7 @@ public class ChiTietKhuyenMaiHDDAO {
     
     // Sửa
     public boolean Update(ChiTietKhuyenMaiHD ctkmhd){
-        String sql = "Update ChiTietKhuyenMaiHD set Phantramgg=? where maKM=? and TTHD = ?";
+        String sql = "Update ChiTietKhuyenMaiHD set phantramgiamgia =? where makm=? and mahoadon =? and tongtienHD = ? ";
         
         try{
             conn = DBConnection.getConnection();
@@ -72,7 +74,8 @@ public class ChiTietKhuyenMaiHDDAO {
             
             ps.setFloat(1, ctkmhd.getPhantramgg());
             ps.setString(2, ctkmhd.getMaKM());
-            ps.setString(3, ctkmhd.getTTHD());
+            ps.setString(3, ctkmhd.getMaHD());
+            ps.setDouble(4, ctkmhd.getTTHD());
             
             return ps.executeUpdate() >0;
         }catch(SQLException ex){
@@ -83,14 +86,14 @@ public class ChiTietKhuyenMaiHDDAO {
     
 //Xoa
     public boolean Delete(ChiTietKhuyenMaiHD ctkmhd){
-        String sql = "Delete from ChiTietKhuyenMaiHD where maKM=? and TTHD=?";
+        String sql = "Delete from ChiTietKhuyenMaiHD where makm=? and mahoadon=?";
         
         try{
             conn = DBConnection.getConnection();
             ps = conn.prepareStatement(sql);
             
             ps.setString(1, ctkmhd.getMaKM());
-            ps.setString(2, ctkmhd.getTTHD());
+            ps.setString(2, ctkmhd.getMaHD());
             
             return ps.executeUpdate() > 0;
         }
@@ -99,5 +102,24 @@ public class ChiTietKhuyenMaiHDDAO {
         }
         return false;
     }
-    
+
+public ArrayList<ChiTietKhuyenMaiHD> search(String keyword) { 
+        ArrayList<ChiTietKhuyenMaiHD> list = new ArrayList<>();
+        String sql = "SELECT * FROM KhuyenMai WHERE makm LIKE ? OR mahoadon LIKE ?"; 
+        try { 
+            conn = DBConnection.getConnection();
+            ps = conn.prepareStatement(sql); 
+            ps.setString(1, "%" + keyword + "%"); ps.setString(2, "%" + keyword + "%"); 
+            rs = ps.executeQuery();
+            while (rs.next()) { 
+                ChiTietKhuyenMaiHD ctkmhd = new ChiTietKhuyenMaiHD( 
+                        rs.getString("makm"), 
+                        rs.getString("mahoadon"),  
+                        rs.getDouble("tongtienHD"), 
+                        rs.getFloat("phantramgiamgia") );
+                list.add(ctkmhd); 
+            } 
+        } catch (SQLException ex) { 
+            JOptionPane.showMessageDialog(null,"Lỗi tìm kiếm khuyến mãi");
+        } return list; }    
 }

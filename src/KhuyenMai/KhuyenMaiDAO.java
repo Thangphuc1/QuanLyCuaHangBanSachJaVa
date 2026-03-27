@@ -7,6 +7,7 @@ public class KhuyenMaiDAO {
     Connection conn = null;
     PreparedStatement ps = null; 
     ResultSet rs = null; 
+
 // Lấy danh sách khuyến mãi 
     public ArrayList<KhuyenMai> getAll() { 
         ArrayList<KhuyenMai> list = new ArrayList<>();
@@ -31,6 +32,7 @@ public class KhuyenMaiDAO {
         } 
         return list;
     } 
+    
     public String generateMaKM() { 
         String prefix = "KM";
         String sql = "SELECT TOP 1 makm FROM KhuyenMai ORDER BY makm DESC"; 
