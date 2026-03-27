@@ -25,6 +25,7 @@ public class SachBUS {
     
     //them sua xoa
     public String themSach(Sach sach){
+        
        if(sach.getMasach().isEmpty() || sach.getTensach().isEmpty() || sach.getMatg().isEmpty() || sach.getMatl().isEmpty() || sach.getNamxuatban() == 0 || sach.getManxb().isEmpty() || sach.getDongia() == 0 || sach.getSoluongton() == 0){
            return "Vui long nhap day du thong tin sach!";
        }
