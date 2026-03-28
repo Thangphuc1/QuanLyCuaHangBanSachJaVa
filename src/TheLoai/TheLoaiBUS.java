@@ -94,18 +94,13 @@ public class TheLoaiBUS {
     }
     
     public ArrayList<TheLoai> timTheLoaiTheoTen(String ten){
-        ArrayList<TheLoai> dstl = new ArrayList<TheLoai>();
-        boolean found = false;
+        ArrayList<TheLoai> ds = new ArrayList<TheLoai>();
         for(TheLoai tl : dstl){
-            if(tl.getMatl().toLowerCase().contains(ten.toLowerCase())){
-                dstl.add(tl);
-                found = true;
+            if(tl.getTentl().toLowerCase().contains(ten.toLowerCase())){
+                ds.add(tl);
             }
         }
-        if(!found){
-            return null;
-        }
-        return dstl;
+        return ds;
     }
    
     public String autoThemMa(){
