@@ -14,6 +14,11 @@ public class NhaXuatBanBUS {
     public NhaXuatBanBUS(){
         dsnxb = nxbdao.loadNhaXuatBan();
     }
+    
+    public ArrayList<NhaXuatBan> getNhaXuatBanBUS(){
+        return dsnxb;
+    }
+    
     //kiem tra
     public boolean ktMaNhaXuatBan(String ma){
         for(NhaXuatBan nxb : dsnxb){
@@ -30,29 +35,29 @@ public class NhaXuatBanBUS {
     }
     
     //them sua xoa
-    public String themNhaXuatBan(NhaXuatBan nxb){
+    public Result themNhaXuatBan(NhaXuatBan nxb){
         if(nxb.getManxb().isEmpty() || nxb.getTennxb().isEmpty() || nxb.getDiachi().isEmpty() || nxb.getSdt().isEmpty() || nxb.getEmail().isEmpty()){
-            return "Vui long nhap day du thong tin nha xuat ban";
+            return Result.thieuthongtin;
         }
         
         if(ktMaNhaXuatBan(nxb.getManxb())){
-            return "Trung ma nha xuat ban!";
+            return Result.trungma;
         }else{
             if(!nxbdao.insertNhaXuatBan(nxb)){
-                return "Them that bai";
+                return Result.thatbai;
             }
         }
         
         dsnxb.add(nxb);
-        return "Them thanh cong!";
+        return Result.thanhcong;
     }
     
-    public String xoaNhaXuatBan(String ma){
+    public Result xoaNhaXuatBan(String ma){
         if(!ktMaNhaXuatBan(ma)){
-            return "Khong ton tai ma trong danh sach!";
+            return Result.khongtontai;
         }else{
             if(!nxbdao.deleteNhaXuatBan(ma)){
-                return "Xoa that bai!";
+                return Result.thatbai;
             }
         }
         NhaXuatBan nxb = timNhaXuatBanTheoMa(ma);
@@ -60,22 +65,22 @@ public class NhaXuatBanBUS {
         if(i != -1){
             dsnxb.remove(i);
         }
-        return "Xoa thanh cong!";
+        return Result.thanhcong;
     }
     
-    public String suaNhaXuatBan(NhaXuatBan nxb){
+    public Result suaNhaXuatBan(NhaXuatBan nxb){
         if(!ktMaNhaXuatBan(nxb.getManxb())){
-            return "Khong ton tai ma trong danh sach!";
+            return Result.khongtontai;
         }else{
             if(!nxbdao.updateNhaXuatBan(nxb)){
-                return "Sua that bai";
+                return Result.thatbai;
             }
         }
         int i = dsnxb.indexOf(nxb);
         if(i != -1){
             dsnxb.set(i,nxb);
         }
-        return "Sua thanh cong!";
+        return Result.thanhcong;
     }
     
     //tim kiem
@@ -103,8 +108,22 @@ public class NhaXuatBanBUS {
         return dsnxb;
     }
     
+    public String autoThemMa(){
+        int max = 0;
+        
+        for(NhaXuatBan nxb : dsnxb){
+            if(nxb.getManxb() != null && nxb.getManxb().matches("NXB\\d+")){
+                int num = Integer.parseInt(nxb.getManxb().substring(3));
+                if(num > max && num - max == 1){
+                    max = num;
+                }
+            }
+        }
+        return String.format("NXB%02d", max + 1);
+    }
+    
     //reload
-    public void nxbreload(){
+    public void nhaxuatbanreload(){
         dsnxb = nxbdao.loadNhaXuatBan();
     }
 }

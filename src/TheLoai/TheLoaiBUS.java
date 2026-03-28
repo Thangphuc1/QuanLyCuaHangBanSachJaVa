@@ -15,6 +15,10 @@ public class TheLoaiBUS {
         dstl = theloaidao.loadTheLoai();
     }
     
+    public ArrayList<TheLoai> getTheLoaiBUS(){
+        return dstl;
+    }
+    
     //kiem tra
     public boolean ktMaTheLoai(String ma){
         for(TheLoai tl : dstl){
@@ -31,29 +35,29 @@ public class TheLoaiBUS {
     }
     
     //them sua xoa
-    public String themTheLoai(TheLoai tl){
+    public Result themTheLoai(TheLoai tl){
         if(tl.getMatl().isEmpty() || tl.getTentl().isEmpty()){
-            return "Vui long nhap day du thong tin tac gia";
+            return Result.thieuthongtin;
         }
         
         if(ktMaTheLoai(tl.getMatl())){
-            return "Trung ma tac gia!";
+            return Result.trungma;
         }else{
             if(!theloaidao.insertTheLoai(tl)){
-                return "Them that bai";
+                return Result.thatbai;
             }
         }
         
         dstl.add(tl);
-        return "Them thanh cong!";
+        return Result.thanhcong;
     }
     
-    public String xoaTheLoai(String ma){
+    public Result xoaTheLoai(String ma){
         if(!ktMaTheLoai(ma)){
-            return "Khong ton tai ma trong danh sach!";
+            return Result.khongtontai;
         }else{
             if(!theloaidao.deleteTheLoai(ma)){
-                return "Xoa that bai!";
+                return Result.thatbai;
             }
         }
         TheLoai tl = timTheLoaiTheoMa(ma);
@@ -61,22 +65,22 @@ public class TheLoaiBUS {
         if(i != -1){
             dstl.remove(i);
         }
-        return "Xoa thanh cong!";
+        return Result.thanhcong;
     }
     
-    public String suaTheLoai(TheLoai tl){
+    public Result suaTheLoai(TheLoai tl){
         if(!ktMaTheLoai(tl.getMatl())){
-            return "Khong ton tai ma trong danh sach!";
+            return Result.khongtontai;
         }else{
             if(!theloaidao.updateTheLoai(tl)){
-                return "Sua that bai";
+                return Result.thatbai;
             }
         }
         int i = dstl.indexOf(tl);
         if(i != -1){
             dstl.set(i,tl);
         }
-        return "Sua thanh cong!";
+        return Result.thanhcong;
     }
     
     //tim kiem
@@ -102,6 +106,19 @@ public class TheLoaiBUS {
             return null;
         }
         return dstl;
+    }
+   
+    public String autoThemMa(){
+        int max = 0;
+        
+        for(TheLoai tl : dstl){
+            if(tl.getMatl() != null && tl.getMatl().matches("TL\\d+"));
+            int num = Integer.parseInt(tl.getMatl().substring(2));
+            if(num > max && num - max ==1){
+                max = num;
+            }
+        }
+        return String.format("TL%03d", max + 1);
     }
     
     //reload

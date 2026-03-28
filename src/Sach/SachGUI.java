@@ -17,16 +17,17 @@ import javax.swing.table.*;
 public class SachGUI extends JPanel{
     
     SachBUS sachbus = new SachBUS(); 
-    JFrame themform,suaform; 
-    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle;
-    JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu;
+    JFrame themform,suaform;
+    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,ptoolbar,pformtitle,pformbutton;
+    JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu,btnhuy;
     JTextField txttk,txtma,txttensach,txtmatg,txtmatl,txtnam,txtnxb,txtdongia,txtsoluong,txtgiamin,txtgiamax;
     JComboBox cbtk;
     DefaultComboBoxModel cbmdtk;
     JTable tbsach;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbmatg,lbmatl,lbnam,lbnxb,lbdongia,lbtxtsoluong,lbden;
+    JLabel lbtitle,lbma,lbten,lbmatg,lbmatl,lbnam,lbnxb,lbdongia,lbsoluong,lbden,lbformtitle;
+    JTableHeader th;
     
     public void loadData(){
         ArrayList<Sach> dstmp = new ArrayList<Sach>();
@@ -46,19 +47,67 @@ public class SachGUI extends JPanel{
         }
     }
     
+    private void thutLabel(JLabel lb, int left) {
+        lb.setBorder(new EmptyBorder(0, left, 0, 0));
+    }
+    
+    private void styleComboBox(JComboBox cb) {
+        cb.setPreferredSize(new Dimension(110, 38));
+        cb.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        cb.setBackground(Color.WHITE);
+        cb.setForeground(new Color(33, 37, 41));
+        cb.setFocusable(false);
+        cb.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+    }
+    
+    private void styleTextField(JTextField txt) {
+        txt.setPreferredSize(new Dimension(220, 38));
+        txt.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txt.setBackground(Color.WHITE);
+        txt.setForeground(new Color(33, 37, 41));
+        txt.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+            BorderFactory.createEmptyBorder(0, 10, 0, 10)
+        ));
+    }
+    
+    private void styleButton(JButton btn, Color bg) {
+        btn.setPreferredSize(new Dimension(90, 38));
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setBackground(bg);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+    
     public void themForm(){
         themform = new JFrame("Form Them");
         themform.setSize(500, 500);
         themform.setLayout(new BorderLayout());
         
+        pformtitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        lbformtitle = new JLabel("FORM THÊM");
+        pformtitle.add(lbformtitle);
+        lbformtitle.setFont(new Font("Segoe UI",Font.BOLD,30));
+        pformtitle.setBackground(new Color(255, 253, 208));
+        
+        
         lbma = new JLabel("Mã Sách");
+        thutLabel(lbma,15);
         lbten = new JLabel("Tên sách");
+        thutLabel(lbten,15);
         lbmatg = new JLabel("Mã tác giả");
+        thutLabel(lbmatg,15);
         lbmatl = new JLabel("Mã thể loại");
+        thutLabel(lbmatl,15);
         lbnam = new JLabel("Năm xuất bản");
+        thutLabel(lbnam,15);
         lbnxb = new JLabel("Nhà xuất bản");
+        thutLabel(lbnxb,15);
         lbdongia = new JLabel("Đơn giá");
-        lbtxtsoluong = new JLabel("Số lượng tồn");
+        thutLabel(lbdongia,15);
+        lbsoluong = new JLabel("Số lượng tồn");
+        thutLabel(lbsoluong,15);
         
         txtma = new JTextField(sachbus.autoThemMa());
         txtma.setEditable(false);
@@ -86,10 +135,11 @@ public class SachGUI extends JPanel{
         inputpanel.add(txtnxb);
         inputpanel.add(lbdongia);
         inputpanel.add(txtdongia);
-        inputpanel.add(lbtxtsoluong);
+        inputpanel.add(lbsoluong);
         inputpanel.add(txtsoluong);
         
-        themform.add(inputpanel, BorderLayout.CENTER);
+        inputpanel.setBackground(new Color(255, 253, 208));
+        
         btnluu = new JButton("Lưu");
         btnluu.addActionListener(e -> {
             try {
@@ -124,7 +174,26 @@ public class SachGUI extends JPanel{
             }
         });
         
-        themform.add(btnluu, BorderLayout.SOUTH);
+        btnhuy = new JButton("Huỷ");
+        btnhuy.addActionListener(e -> {
+            try{
+                themform.dispose();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        });
+        
+        styleButton(btnluu, new Color(46, 204, 113));
+        styleButton(btnhuy, new Color(231, 76, 60));
+        
+        pformbutton = new JPanel();
+        pformbutton.add(btnluu);
+        pformbutton.add(btnhuy);
+        pformbutton.setBackground(new Color(255, 253, 208));
+        
+        themform.add(pformtitle, BorderLayout.NORTH);
+        themform.add(inputpanel, BorderLayout.CENTER);
+        themform.add(pformbutton, BorderLayout.SOUTH);
         themform.setVisible(true);
         
     }
@@ -151,7 +220,7 @@ public class SachGUI extends JPanel{
     
     public void timkiem(){
         ArrayList<Sach> dstemp = new ArrayList<>();
-    tbmodel.setRowCount(0);
+        tbmodel.setRowCount(0);
 
     try {
         int idx = cbtk.getSelectedIndex();
@@ -220,18 +289,32 @@ public class SachGUI extends JPanel{
     }
     
     public void suaForm(){
-        suaform = new JFrame("Form Them");
+        suaform = new JFrame("Form Sửa");
         suaform.setSize(500, 500);
         suaform.setLayout(new BorderLayout());
         
+        pformtitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        lbformtitle = new JLabel("FORM SỬA");
+        pformtitle.add(lbformtitle);
+        lbformtitle.setFont(new Font("Segoe UI",Font.BOLD,30));
+        pformtitle.setBackground(new Color(255, 253, 208));
+        
         lbma = new JLabel("Mã Sách");
+        thutLabel(lbma,15);
         lbten = new JLabel("Tên sách");
+        thutLabel(lbten,15);
         lbmatg = new JLabel("Mã tác giả");
+        thutLabel(lbmatg,15);
         lbmatl = new JLabel("Mã thể loại");
+        thutLabel(lbmatl,15);
         lbnam = new JLabel("Năm xuất bản");
+        thutLabel(lbnam,15);
         lbnxb = new JLabel("Nhà xuất bản");
+        thutLabel(lbnxb,15);
         lbdongia = new JLabel("Đơn giá");
-        lbtxtsoluong = new JLabel("Số lượng tồn");
+        thutLabel(lbdongia,15);
+        lbsoluong = new JLabel("Số lượng tồn");
+        thutLabel(lbsoluong,15);
         
         txtma = new JTextField(20);
         txtma.setEditable(false);
@@ -269,10 +352,9 @@ public class SachGUI extends JPanel{
         inputpanel.add(txtnxb);
         inputpanel.add(lbdongia);
         inputpanel.add(txtdongia);
-        inputpanel.add(lbtxtsoluong);
+        inputpanel.add(lbsoluong);
         inputpanel.add(txtsoluong);
-        
-        suaform.add(inputpanel, BorderLayout.CENTER);
+        inputpanel.setBackground(new Color(255, 253, 208));
         
         btnluu = new JButton("Lưu");
         btnluu.addActionListener(e -> {
@@ -308,7 +390,26 @@ public class SachGUI extends JPanel{
             }
         });
         
-        suaform.add(btnluu, BorderLayout.SOUTH);
+        btnhuy = new JButton("Huỷ");
+        btnhuy.addActionListener(e -> {
+            try{
+                themform.dispose();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        });
+        
+        styleButton(btnluu, new Color(46, 204, 113));
+        styleButton(btnhuy, new Color(231, 76, 60));
+        
+        pformbutton = new JPanel();
+        pformbutton.add(btnluu);
+        pformbutton.add(btnhuy);
+        pformbutton.setBackground(new Color(255, 253, 208));
+        
+        suaform.add(pformtitle, BorderLayout.NORTH);
+        suaform.add(inputpanel, BorderLayout.CENTER);
+        suaform.add(pformbutton, BorderLayout.SOUTH);
         suaform.setVisible(true);
     }
     
@@ -331,22 +432,27 @@ public class SachGUI extends JPanel{
         btnthem = new JButton("Thêm");
         btnxoa = new JButton("Xoá");
         btnsua = new JButton("Sửa");
+        styleButton(btnthem, new Color(46, 204, 113));
+        styleButton(btnxoa, new Color(231, 76, 60));
+        styleButton(btnsua, new Color(52, 152, 219));
+        
         pbutton = new JPanel();
         pbutton.add(btnthem);
         pbutton.add(btnxoa);
         pbutton.add(btnsua);
+        pbutton.setBackground(new Color(255, 253, 208));
         
         //search panel
         cbmdtk = new DefaultComboBoxModel<>();
-        cbmdtk.addElement("Ma sach");
-        cbmdtk.addElement("Ten sach");
-        cbmdtk.addElement("Ma tac gia");
-        cbmdtk.addElement("Ma the loai");
-        cbmdtk.addElement("Nam xuat ban");
-        cbmdtk.addElement("Nha xuat ban");
-        cbmdtk.addElement("don gia");
+        cbmdtk.addElement("Mã sách");
+        cbmdtk.addElement("Tên sách");
+        cbmdtk.addElement("Mã tác giả");
+        cbmdtk.addElement("Mã thể loại");
+        cbmdtk.addElement("Năm xuất bản");
+        cbmdtk.addElement("Nhà xuất bản");
+        cbmdtk.addElement("Đơn giá");
         cbtk = new JComboBox(cbmdtk);
-        txttk = new JTextField(25);
+        txttk = new JTextField(50);
         
         txtgiamin = new JTextField(10);
         lbden = new JLabel("đến");
@@ -355,7 +461,7 @@ public class SachGUI extends JPanel{
         txtgiamax.setVisible(false);
         lbden.setVisible(false);
         
-        btntimkiem = new JButton("Tìm kiếm");
+        btntimkiem = new JButton("Tìm");
         ptimkiem = new JPanel();
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);
@@ -363,38 +469,66 @@ public class SachGUI extends JPanel{
         ptimkiem.add(lbden);
         ptimkiem.add(txtgiamax);
         ptimkiem.add(btntimkiem);
+        styleButton(btntimkiem, new Color(241, 196, 15));
+        ptimkiem.setBackground(new Color(255, 253, 208));
+        
+        styleComboBox(cbtk);
+        styleTextField(txttk);
+        styleTextField(txtgiamin);
+        styleTextField(txtgiamax);
         
         //toolbar container
-        pcontainer = new JPanel();
-        pcontainer.setLayout(new BorderLayout());
-        pcontainer.add(pbutton, BorderLayout.WEST);
-        pcontainer.add(ptimkiem, BorderLayout.EAST);
-        pcontainer.setBorder(new EmptyBorder(40, 0, 8, 0));
-        
+        ptoolbar = new JPanel();
+        ptoolbar.setLayout(new BorderLayout());
+        ptoolbar.add(pbutton, BorderLayout.WEST);
+        ptoolbar.add(ptimkiem, BorderLayout.EAST);
+        ptoolbar.setBorder(new EmptyBorder(30, 0, 8, 0));
+        ptoolbar.setBackground(new Color(255, 253, 208));
         //table
         header = new Vector<>();
-        header.add("Ma sach");
-        header.add("Ten sach");
-        header.add("Ma tac gia");
-        header.add("Ma the loai");
-        header.add("Nam xuat ban");
-        header.add("Ma nha xuat ban");
-        header.add("Don gia");
-        header.add("So luong ton");
+        header.add("Mã sách");
+        header.add("Tên sách");
+        header.add("Mã tác giả");
+        header.add("Mã thể loại");
+        header.add("Năm xuất bản");
+        header.add("Mã nhà xuất bản");
+        header.add("Đơn giá");
+        header.add("Số lượng tồn");
         tbmodel = new DefaultTableModel(header,0);
         tbsach = new JTable(tbmodel);
+        tbsach.setFillsViewportHeight(true);
+        tbsach.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tbsach.setForeground(Color.BLACK);
+        tbsach.setBackground(Color.WHITE);
+        tbsach.setGridColor(new Color(120, 120, 120));
+        tbsach.setShowGrid(true);
+        tbsach.setBackground(new Color(255, 253, 240));
+        tbsach.setForeground(Color.BLACK);
+        
+        th = tbsach.getTableHeader();
+        th.setBackground(new Color(255, 224, 178));
+        th.setForeground(Color.BLACK);
+        th.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        th.setReorderingAllowed(false);
+        
         ptable = new JPanel();
         ptable.setLayout(new BorderLayout());
-        JScrollPane sptbsach = new JScrollPane(tbsach);
-        ptable.add(sptbsach);
         
-        ptitle = new JPanel();
+        JScrollPane sptbsach = new JScrollPane(tbsach);
+        ptable.add(sptbsach, BorderLayout.CENTER);
+        
+        ptitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        ptitle.setBackground(new Color(255, 253, 208));
         lbtitle = new JLabel("QUẢN LÝ SÁCH");
+        lbtitle.setFont(new Font("Segoe UI",Font.BOLD,50));
         ptitle.add(lbtitle);
+        
+        pcontainer = new JPanel(new BorderLayout());
+        pcontainer.add(ptoolbar, BorderLayout.NORTH);
+        pcontainer.add(ptable, BorderLayout.CENTER);
         
         add(ptitle, BorderLayout.NORTH);
         add(pcontainer, BorderLayout.CENTER);
-        add(ptable, BorderLayout.SOUTH);
         
         loadData();
         timkiemdongia();

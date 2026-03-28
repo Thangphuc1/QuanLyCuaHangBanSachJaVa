@@ -1,6 +1,7 @@
 package TacGIa;
 
 import Sach.SachBUS;
+import java.util.ArrayList;
 import java.util.*;
 import java.sql.*;
 /**
@@ -13,6 +14,10 @@ public class TacGiaBUS {
     
     public TacGiaBUS(){
         dstg = tacgiadao.loadTacGia();
+    }
+    
+    public ArrayList<TacGia> getTacGiaBUS(){
+        return dstg;
     }
     
     //kiem tra
@@ -31,29 +36,29 @@ public class TacGiaBUS {
     }
     
     //them sua xoa
-    public String themTacGia(TacGia tg){
+    public Result themTacGia(TacGia tg){
         if(tg.getMatg().isEmpty() || tg.getTentg().isEmpty() || tg.getNamsinh() == 0 || tg.getGioitinh().isEmpty() || tg.getQuoctich().isEmpty()){
-            return "Vui long nhap day du thong tin tac gia";
+            return Result.thieuthongtin;
         }
         
         if(ktMaTacGia(tg.getMatg())){
-            return "Trung ma tac gia!";
+            return Result.khongtontai;
         }else{
             if(!tacgiadao.insertTacGia(tg)){
-                return "Them that bai";
+                return Result.thatbai;
             }
         }
         
         dstg.add(tg);
-        return "Them thanh cong!";
+        return Result.thanhcong;
     }
     
-    public String xoaTacGia(String ma){
+    public Result xoaTacGia(String ma){
         if(!ktMaTacGia(ma)){
-            return "Khong ton tai ma trong danh sach!";
+            return Result.khongtontai;
         }else{
             if(!tacgiadao.deleteTacGia(ma)){
-                return "Xoa that bai!";
+                return Result.thatbai;
             }
         }
         TacGia tg = timTacGiaTheoMa(ma);
@@ -61,22 +66,22 @@ public class TacGiaBUS {
         if(i != -1){
             dstg.remove(i);
         }
-        return "Xoa thanh cong!";
+        return Result.thanhcong;
     }
     
-    public String suaTacGia(TacGia tg){
+    public Result suaTacGia(TacGia tg){
         if(!ktMaTacGia(tg.getMatg())){
-            return "Khong ton tai ma trong danh sach!";
+            return Result.khongtontai;
         }else{
             if(!tacgiadao.updateTacGia(tg)){
-                return "Sua that bai";
+                return Result.thatbai;
             }
         }
         int i = dstg.indexOf(tg);
         if(i != -1){
             dstg.set(i,tg);
         }
-        return "Sua thanh cong!";
+        return Result.thanhcong;
     }
     
     //tim kiem
@@ -90,36 +95,41 @@ public class TacGiaBUS {
     }
     
     public ArrayList<TacGia> timTacGiaTheoTen(String ten){
-        ArrayList<TacGia> dstg = new ArrayList<TacGia>();
-        boolean found = false;
+        ArrayList<TacGia> ds = new ArrayList<TacGia>();
         for(TacGia tg : dstg){
-            if(tg.getMatg().toLowerCase().contains(ten.toLowerCase())){
-                dstg.add(tg);
-                found = true;
+            if(tg.getTentg().toLowerCase().contains(ten.toLowerCase())){
+                ds.add(tg);
             }
         }
-        if(!found){
-            return null;
+        return ds;
+    }
+    
+    public ArrayList<TacGia> timTacGiaTheoQuocTich(String quoctich){
+        ArrayList<TacGia> ds = new ArrayList<TacGia>();
+        for(TacGia tg : dstg ){
+            if(tg.getQuoctich().toLowerCase().contains(quoctich.toLowerCase())){
+                ds.add(tg);
+            }
         }
         return dstg;
     }
     
-    public ArrayList<TacGia> timTacGiaTheoQuocTich(String quoctich){
-        ArrayList<TacGia> dstg = new ArrayList<TacGia>();
-        boolean found = false;
+    public String autoThemMa(){
+        int max = 0;
+        
         for(TacGia tg : dstg){
-            if(tg.getQuoctich().toLowerCase().contains(quoctich.toLowerCase())){
-                dstg.add(tg);
-                found = true;
+            if(tg.getMatg() != null && tg.getMatg().matches("TG\\d+")){
+                int num = Integer.parseInt(tg.getMatg().substring(2));
+                if(num > max && num - max == 1){
+                    max = num;
+                }
             }
         }
-        if(!found){
-            return null;
-        }
-        return dstg;
+        return String.format("TG%03d", max + 1);
     }
     
     public void tacgiareload(){
         dstg = tacgiadao.loadTacGia();
     }
 }
+

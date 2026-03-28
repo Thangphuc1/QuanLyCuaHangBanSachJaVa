@@ -40,8 +40,8 @@ public class TacGiaDAO {
             
             st.setString(1, tg.getMatg());
             st.setString(2, tg.getTentg());
-            st.setInt(3, tg.getNamsinh());
-            st.setString(4, tg.getGioitinh());
+            st.setString(3, tg.getGioitinh());
+            st.setInt(4, tg.getNamsinh());
             st.setString(5, tg.getQuoctich());
             
             st.executeUpdate();
@@ -68,14 +68,14 @@ public class TacGiaDAO {
     }
     
     public boolean updateTacGia(TacGia tg){
-        String qry = "update tacgia set MaTacGia = ?, TenTacGia = ?, NamSinh = ?, GioiTinh = ?, QuocTich = ? where MaTacGia = ?";
+        String qry = "update tacgia set MaTacGia = ?, TenTacGia = ?, GioiTinh = ?, NamSinh = ?,  QuocTich = ? where MaTacGia = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
             st.setString(1, tg.getMatg());
             st.setString(2, tg.getTentg());
-            st.setInt(3, tg.getNamsinh());
-            st.setString(4, tg.getGioitinh());
+            st.setString(3, tg.getGioitinh());
+            st.setInt(4, tg.getNamsinh());
             st.setString(5, tg.getQuoctich());
             st.setString(6, tg.getMatg());
             

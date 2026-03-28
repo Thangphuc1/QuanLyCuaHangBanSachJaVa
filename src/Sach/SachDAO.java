@@ -73,7 +73,7 @@ public class SachDAO {
     }
     
     public static Boolean updateSach(Sach sach){
-        String qry = "update sach set MaSach = ?, TenSach = ?, MaTacGia = ?, MaTheLoai = ?, NamXuatBan = ?, MaNXB = ?, DonGia = ?, SoLuongTon = ? Where MaSach = ?";
+        String qry = "update sach set MaSach = ?, TenSach = ?, MaTacGia = ?, MaTheLoai = ?, NamXuatBan = ?, MaNhaXuatBan = ?, DonGia = ?, SoLuongTon = ? Where MaSach = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
