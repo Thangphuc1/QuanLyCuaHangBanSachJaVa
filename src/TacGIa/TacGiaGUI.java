@@ -19,17 +19,18 @@ public class TacGiaGUI extends JPanel{
     
     TacGiaBUS tacgiabus = new TacGiaBUS(); 
     JFrame themform,suaform;
-    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,pradio;
-    JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu;
+    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,pradio,ptoolbar,pformtitle,pformbutton;
+    JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu,btnhuy;
     JTextField txttk,txtma,txttentg,txtquoctich,txtnamsinh;
     JComboBox cbtk;
     DefaultComboBoxModel cbmdtk;
     JTable tbtacgia;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbgioitinh,lbquoctich,lbnamsinh;
+    JLabel lbtitle,lbma,lbten,lbgioitinh,lbquoctich,lbnamsinh,lbformtitle;
     JRadioButton btnam,btnu;
     ButtonGroup g;
+    JTableHeader th;
     
     public void loadData(){
         ArrayList<TacGia> dstmp = new ArrayList<TacGia>();
@@ -46,16 +47,60 @@ public class TacGiaGUI extends JPanel{
         }
     }
     
+    private void thutLabel(JLabel lb, int left) {
+        lb.setBorder(new EmptyBorder(0, left, 0, 0));
+    }
+    
+    private void styleComboBox(JComboBox cb) {
+        cb.setPreferredSize(new Dimension(110, 38));
+        cb.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        cb.setBackground(Color.WHITE);
+        cb.setForeground(new Color(33, 37, 41));
+        cb.setFocusable(false);
+        cb.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+    }
+    
+    private void styleTextField(JTextField txt) {
+        txt.setPreferredSize(new Dimension(220, 38));
+        txt.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txt.setBackground(Color.WHITE);
+        txt.setForeground(new Color(33, 37, 41));
+        txt.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+            BorderFactory.createEmptyBorder(0, 10, 0, 10)
+        ));
+    }
+    
+    private void styleButton(JButton btn, Color bg) {
+        btn.setPreferredSize(new Dimension(90, 38));
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setBackground(bg);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+    
     public void themForm(){
         themform = new JFrame("Form Them");
         themform.setSize(500, 500);
         themform.setLayout(new BorderLayout());
         
+        pformtitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        lbformtitle = new JLabel("FORM THÊM");
+        pformtitle.add(lbformtitle);
+        lbformtitle.setFont(new Font("Segoe UI",Font.BOLD,30));
+        pformtitle.setBackground(new Color(255, 253, 208));
+        
         lbma = new JLabel("Mã tác giả");
+        thutLabel(lbma,15);
         lbten = new JLabel("Tên tác giả");
+        thutLabel(lbten,15);
         lbnamsinh = new JLabel("Năm sinh");
+        thutLabel(lbnamsinh,15);
         lbgioitinh = new JLabel("Giới tính");
+        thutLabel(lbgioitinh,15);
         lbquoctich = new JLabel("Quốc tịch");
+        thutLabel(lbquoctich,15);
         
         txtma = new JTextField(tacgiabus.autoThemMa());
         txtma.setEditable(false);
@@ -74,7 +119,7 @@ public class TacGiaGUI extends JPanel{
         pradio.add(btnu);
         
         inputpanel = new JPanel();
-        inputpanel.setLayout(new GridLayout(5,2));
+        inputpanel.setLayout(new GridLayout(5,2,10,10));
         inputpanel.add(lbma);
         inputpanel.add(txtma);
         inputpanel.add(lbten);
@@ -86,7 +131,8 @@ public class TacGiaGUI extends JPanel{
         inputpanel.add(lbquoctich);
         inputpanel.add(txtquoctich);
         
-        themform.add(inputpanel, BorderLayout.CENTER);
+        inputpanel.setBackground(new Color(255, 253, 208));
+        
         btnluu = new JButton("Lưu");
         btnluu.addActionListener(e -> {
             try {
@@ -121,13 +167,31 @@ public class TacGiaGUI extends JPanel{
             }
         });
         
-        themform.add(btnluu, BorderLayout.SOUTH);
-        themform.setVisible(true);
+        btnhuy = new JButton("Huỷ");
+        btnhuy.addActionListener(e -> {
+            try{
+                themform.dispose();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        });
         
+        styleButton(btnluu, new Color(46, 204, 113));
+        styleButton(btnhuy, new Color(231, 76, 60));
+        
+        pformbutton = new JPanel();
+        pformbutton.add(btnluu);
+        pformbutton.add(btnhuy);
+        pformbutton.setBackground(new Color(255, 253, 208));
+        
+        themform.add(pformtitle, BorderLayout.NORTH);
+        themform.add(inputpanel, BorderLayout.CENTER);
+        themform.add(pformbutton, BorderLayout.SOUTH);
+        themform.setVisible(true);
     }  
     
     public void timkiem(){
-        ArrayList<TacGia> dstemp = new ArrayList<>();
+        ArrayList<TacGia> dstemp = new ArrayList<TacGia>();
         tbmodel.setRowCount(0);
 
         try {
@@ -169,19 +233,32 @@ public class TacGiaGUI extends JPanel{
         suaform.setSize(500, 500);
         suaform.setLayout(new BorderLayout());
         
-        lbma = new JLabel("Mã Sách");
-        lbten = new JLabel("Tên sách");
+        pformtitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        lbformtitle = new JLabel("FORM SỬA");
+        pformtitle.add(lbformtitle);
+        lbformtitle.setFont(new Font("Segoe UI",Font.BOLD,30));
+        pformtitle.setBackground(new Color(255, 253, 208));
+        
+        lbma = new JLabel("Mã tác giả");
+        thutLabel(lbma,15);
+        lbten = new JLabel("Tên tác giả");
+        thutLabel(lbten,15);
+        lbnamsinh = new JLabel("Năm sinh");
+        thutLabel(lbnamsinh,15);
         lbgioitinh = new JLabel("Giới tính");
+        thutLabel(lbgioitinh,15);
         lbquoctich = new JLabel("Quốc tịch");
+        thutLabel(lbquoctich,15);
 
         
         txtma = new JTextField(20);
         txtma.setEditable(false);
         txttentg = new JTextField(20);
+        txtnamsinh = new JTextField(20);
         txtquoctich = new JTextField(20);
         
         btnam = new JRadioButton("Nam");
-        btnu = new JRadioButton("Nam");
+        btnu = new JRadioButton("Nu");
         g = new ButtonGroup();
         g.add(btnam);
         g.add(btnu);
@@ -193,26 +270,27 @@ public class TacGiaGUI extends JPanel{
         int i = tbtacgia.getSelectedRow();
         txtma.setText(tbtacgia.getValueAt(i, 0).toString());
         txttentg.setText(tbtacgia.getValueAt(i, 1).toString());
-        if(tbtacgia.getValueAt(i, 2).toString() == "Nam"){
+        txtnamsinh.setText(tbtacgia.getValueAt(i, 2).toString());
+        if(tbtacgia.getValueAt(i, 3).toString().equals("Nam")){
             btnam.setSelected(true);
         }else{
             btnu.setSelected(true);
         }
-        txtnamsinh.setText(tbtacgia.getValueAt(i, 3).toString());
         txtquoctich.setText(tbtacgia.getValueAt(i, 4).toString());
         
         inputpanel = new JPanel();
-        inputpanel.setLayout(new GridLayout(8,2,10,10));
+        inputpanel.setLayout(new GridLayout(5,2,10,10));
         inputpanel.add(lbma);
         inputpanel.add(txtma);
         inputpanel.add(lbten);
         inputpanel.add(txttentg);
+        inputpanel.add(lbnamsinh);
+        inputpanel.add(txtnamsinh);
         inputpanel.add(lbgioitinh);
         inputpanel.add(pradio);
         inputpanel.add(lbquoctich);
         inputpanel.add(txtquoctich);
-        
-        suaform.add(inputpanel, BorderLayout.CENTER);
+        inputpanel.setBackground(new Color(255, 253, 208));
         
         btnluu = new JButton("Lưu");
         btnluu.addActionListener(e -> {
@@ -248,7 +326,26 @@ public class TacGiaGUI extends JPanel{
             }
         });
         
-        suaform.add(btnluu, BorderLayout.SOUTH);
+        btnhuy = new JButton("Huỷ");
+        btnhuy.addActionListener(e -> {
+            try{
+                themform.dispose();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        });
+        
+        styleButton(btnluu, new Color(46, 204, 113));
+        styleButton(btnhuy, new Color(231, 76, 60));
+        
+        pformbutton = new JPanel();
+        pformbutton.add(btnluu);
+        pformbutton.add(btnhuy);
+        pformbutton.setBackground(new Color(255, 253, 208));
+        
+        suaform.add(pformtitle, BorderLayout.NORTH);
+        suaform.add(inputpanel, BorderLayout.CENTER);
+        suaform.add(pformbutton, BorderLayout.SOUTH);
         suaform.setVisible(true);
     }
     
@@ -271,10 +368,15 @@ public class TacGiaGUI extends JPanel{
         btnthem = new JButton("Thêm");
         btnxoa = new JButton("Xoá");
         btnsua = new JButton("Sửa");
+        styleButton(btnthem, new Color(46, 204, 113));
+        styleButton(btnxoa, new Color(231, 76, 60));
+        styleButton(btnsua, new Color(52, 152, 219));
+        
         pbutton = new JPanel();
         pbutton.add(btnthem);
         pbutton.add(btnxoa);
         pbutton.add(btnsua);
+        pbutton.setBackground(new Color(255, 253, 208));
         
         //search panel
         cbmdtk = new DefaultComboBoxModel<>();
@@ -289,13 +391,19 @@ public class TacGiaGUI extends JPanel{
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);
         ptimkiem.add(btntimkiem);
+        styleButton(btntimkiem, new Color(241, 196, 15));
+        ptimkiem.setBackground(new Color(255, 253, 208));
+        
+        styleComboBox(cbtk);
+        styleTextField(txttk);
         
         //toolbar container
-        pcontainer = new JPanel();
-        pcontainer.setLayout(new BorderLayout());
-        pcontainer.add(pbutton, BorderLayout.WEST);
-        pcontainer.add(ptimkiem, BorderLayout.EAST);
-        pcontainer.setBorder(new EmptyBorder(40, 0, 8, 0));
+        ptoolbar = new JPanel();
+        ptoolbar.setLayout(new BorderLayout());
+        ptoolbar.add(pbutton, BorderLayout.WEST);
+        ptoolbar.add(ptimkiem, BorderLayout.EAST);
+        ptoolbar.setBorder(new EmptyBorder(30, 0, 8, 0));
+        ptoolbar.setBackground(new Color(255, 253, 208));
         
         //table
         header = new Vector<>();
@@ -306,18 +414,38 @@ public class TacGiaGUI extends JPanel{
         header.add("Quốc tịch");
         tbmodel = new DefaultTableModel(header,0);
         tbtacgia = new JTable(tbmodel);
+        tbtacgia.setFillsViewportHeight(true);
+        tbtacgia.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tbtacgia.setForeground(Color.BLACK);
+        tbtacgia.setBackground(Color.WHITE);
+        tbtacgia.setGridColor(new Color(120, 120, 120));
+        tbtacgia.setShowGrid(true);
+        tbtacgia.setBackground(new Color(255, 253, 240));
+        tbtacgia.setForeground(Color.BLACK);
+        
+        th = tbtacgia.getTableHeader();
+        th.setBackground(new Color(255, 224, 178));
+        th.setForeground(Color.BLACK);
+        th.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        th.setReorderingAllowed(false);
+        
         ptable = new JPanel();
         ptable.setLayout(new BorderLayout());
         JScrollPane sptbtacgia = new JScrollPane(tbtacgia);
-        ptable.add(sptbtacgia);
+        ptable.add(sptbtacgia, BorderLayout.CENTER);
         
-        ptitle = new JPanel();
+        ptitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        ptitle.setBackground(new Color(255, 253, 208));
         lbtitle = new JLabel("QUẢN LÝ TÁC GIẢ");
+        lbtitle.setFont(new Font("Segoe UI",Font.BOLD,50));
         ptitle.add(lbtitle);
+        
+        pcontainer = new JPanel(new BorderLayout());
+        pcontainer.add(ptoolbar, BorderLayout.NORTH);
+        pcontainer.add(ptable, BorderLayout.CENTER);
         
         add(ptitle, BorderLayout.NORTH);
         add(pcontainer, BorderLayout.CENTER);
-        add(ptable, BorderLayout.SOUTH);
         
         loadData();
         
