@@ -116,10 +116,15 @@ public String suaNhanVien(NhanVien nvMoi) {
     }
     }   
 
-    public void timKiemTheoMa(NhanVien maNV){
+    public NhanVien timKiemNhanVienTheoMa(String maNV){
         if(maNV==null){
-            System.out.print("Mã sinh viên trống , vui lòng nhập!");
+            System.out.println("Vui lòng nhập mã nhân viên cần tìm kiếm!");
         }
+        for(int i = 0 ; i<dsNhanVien.size() ; i++){
+            if(dsNhanVien.get(i).getMaNV().equals(maNV))
+            return dsNhanVien.get(i);
+        }
+        return null;
     }
     public ArrayList<NhanVien> getDsNhanVien() {
         return dsNhanVien;
