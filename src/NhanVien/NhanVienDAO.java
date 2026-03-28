@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package NhanVien;
+    import database.DBConnection;
     import java.sql.Connection;
     import java.sql.PreparedStatement;
-    import java.sql.ResultSet;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import database.DBConnection;
 /**
  *
  * @author ASUS
@@ -23,13 +23,13 @@ public class NhanVienDAO {
             
             while(rs.next()){
                         NhanVien nhanVien = new NhanVien(
-                            rs.getString("MaNhanVien"),
-                            rs.getString("TenNhanVien"),
-                            rs.getString("HoNhanVien"),
+                            rs.getString("manv"),
+                            rs.getString("tennv"),
+                            rs.getString("honv"),
                             rs.getString("DiaChi"),
-                            rs.getString("SDT"),
-                            rs.getString("Email"),
-                            rs.getDouble("Luong")
+                            rs.getString("sdt"),
+                            rs.getString("email"),
+                            rs.getDouble("luong")
 );
                 dsNhanVien.add(nhanVien);
             }
@@ -40,15 +40,15 @@ public class NhanVienDAO {
         return dsNhanVien;
     } 
     public boolean insertNhanVien(NhanVien nhanVien){
-        String qry = "insert into nhanvien values (?,?,?,?,?)";
+        String qry = "insert into nhanvien values (?,?,?,?,?,?,?)";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
             st.setString(1, nhanVien.getMaNV());
-            st.setString(2, nhanVien.getTenNV());
-            st.setString(3, nhanVien.getHoNV());
-            st.setString(4, nhanVien.getDiaChi());
-            st.setString(5, nhanVien.getSDT());
+            st.setString(2, nhanVien.getHoNV());
+            st.setString(3, nhanVien.getTenNV());
+            st.setString(4, nhanVien.getSDT());
+            st.setString(5, nhanVien.getDiaChi());
             st.setString(6, nhanVien.getEmail());
             st.setDouble(7, nhanVien.getLuong());
             
@@ -60,7 +60,7 @@ public class NhanVienDAO {
         return true;
     }
     public boolean deleteNhanVien(String ma){
-        String qry = "Delete from nhanvien where MaNV = ?";
+        String qry = "Delete from nhanvien where manv = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -74,17 +74,17 @@ public class NhanVienDAO {
         return true;
     }
     public boolean updateNhanVien(NhanVien nhanVien){
-        String qry = "update hhanhanvien set maNV = ?, TenNV = ?, DiaChi = ?, SDT = ?, Email = ? where MaNV = ?";
+        String qry = "UPDATE nhanvien SET honv=?, tennv=?, DiaChi=?, sdt=?, Email=?, Luong=? WHERE manv=?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
-            st.setString(1, nhanVien.getMaNV());
+            st.setString(1, nhanVien.getHoNV());
             st.setString(2, nhanVien.getTenNV());
-            st.setString(3, nhanVien.getHoNV());
-            st.setString(4, nhanVien.getDiaChi());
-            st.setString(5, nhanVien.getSDT());
-            st.setString(6, nhanVien.getEmail());
-            st.setDouble(7, nhanVien.getLuong());
+            st.setString(3, nhanVien.getDiaChi());
+            st.setString(4, nhanVien.getSDT());
+            st.setString(5, nhanVien.getEmail());
+            st.setDouble(6, nhanVien.getLuong());
+            st.setString(7, nhanVien.getMaNV());
             
             st.executeUpdate();
         }catch(SQLException ex){

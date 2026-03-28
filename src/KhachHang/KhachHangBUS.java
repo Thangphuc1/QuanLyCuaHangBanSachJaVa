@@ -58,7 +58,7 @@ public class KhachHangBUS {
     return "Đã thêm thành công khách hàng: " + kh.getTenKH();
     }
 
-    public String xoaKhachHanh(String maKH) {
+    public String xoaKhachHang(String maKH) {
     if (maKH.isEmpty()) {
         return "Vui lòng nhập mã khách hàng cần xóa!";
     }
@@ -107,7 +107,7 @@ public String suaKhachHang(KhachHang khMoi) {
     }
     }   
 
-    public KhachHang timKiemKhachHangTheoMa(KhachHang maKH){
+    public KhachHang timKiemKhachHangTheoMa(String maKH){
         if(maKH==null){
             System.out.println("Vui lòng nhập mã khách hàng cần tìm kiếm!");
         }
@@ -116,5 +116,8 @@ public String suaKhachHang(KhachHang khMoi) {
             return dsKhachHang.get(i);
         }
         return null;
+    }
+    public ArrayList<KhachHang> getDsKhachHang() {
+        return dsKhachHang;
     }
 }

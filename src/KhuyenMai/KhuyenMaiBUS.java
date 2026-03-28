@@ -10,46 +10,40 @@ public class KhuyenMaiBUS {
         kmDAO = new KhuyenMaiDAO();
     }
 
-    // Lấy danh sách khuyến mãi
+    // Lấy danh sách
     public ArrayList<KhuyenMai> getAll() {
         return kmDAO.getAll();
     }
 
-    // Thêm khuyến mãi
+    // Thêm
     public boolean add(KhuyenMai km) {
-
-        if (km.getMaKM().trim().equals("")) {
-            return false;
-        }
-
         return kmDAO.insert(km);
     }
 
-    // Sửa khuyến mãi
+    // Sửa
     public boolean update(KhuyenMai km) {
-
-        if (km.getMaKM().trim().equals("")) {
-            return false;
-        }
-
         return kmDAO.update(km);
     }
 
-    // Xóa khuyến mãi
+    // Xóa
     public boolean delete(String maKM) {
-
-        if (maKM.trim().equals("")) {
+        if (maKM == null || maKM.trim().equals("")) {
             return false;
         }
-
         return kmDAO.delete(maKM);
     }
-    public ArrayList<KhuyenMai> search(String keyword){
 
-    if(keyword.trim().equals("")){
-        return kmDAO.getAll();
+    // Tìm kiếm
+    public ArrayList<KhuyenMai> search(String keyword) {
+        if (keyword == null || keyword.trim().equals("")) {
+            return kmDAO.getAll();
+        }
+        return kmDAO.search(keyword);
     }
 
-    return kmDAO.search(keyword);
+    // Thống kê
+    public KhuyenMaiDAO.ThongKeKM thongKe(){
+        return kmDAO.thongKeTongHop();
+    }
 }
-}
+
