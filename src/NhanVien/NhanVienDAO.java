@@ -3,12 +3,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package NhanVien;
+    import database.DBConnection;
     import java.sql.Connection;
     import java.sql.PreparedStatement;
-    import java.sql.ResultSet;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import database.DBConnection;
 /**
  *
  * @author ASUS
@@ -23,13 +23,13 @@ public class NhanVienDAO {
             
             while(rs.next()){
                         NhanVien nhanVien = new NhanVien(
-                            rs.getString("MaNhanVien"),
-                            rs.getString("TenNhanVien"),
-                            rs.getString("HoNhanVien"),
+                            rs.getString("manv"),
+                            rs.getString("tennv"),
+                            rs.getString("honv"),
                             rs.getString("DiaChi"),
-                            rs.getString("SDT"),
-                            rs.getString("Email"),
-                            rs.getDouble("Luong")
+                            rs.getString("sdt"),
+                            rs.getString("email"),
+                            rs.getDouble("luong")
 );
                 dsNhanVien.add(nhanVien);
             }
@@ -40,7 +40,7 @@ public class NhanVienDAO {
         return dsNhanVien;
     } 
     public boolean insertNhanVien(NhanVien nhanVien){
-        String qry = "insert into nhanvien values (?,?,?,?,?)";
+        String qry = "insert into nhanvien values (?,?,?,?,?,?,?)";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -60,7 +60,7 @@ public class NhanVienDAO {
         return true;
     }
     public boolean deleteNhanVien(String ma){
-        String qry = "Delete from nhanvien where MaNV = ?";
+        String qry = "Delete from nhanvien where manv = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -74,7 +74,7 @@ public class NhanVienDAO {
         return true;
     }
     public boolean updateNhanVien(NhanVien nhanVien){
-        String qry = "update hhanhanvien set maNV = ?, TenNV = ?, DiaChi = ?, SDT = ?, Email = ? where MaNV = ?";
+        String qry = "update hhanhanvien set manv = ?, tennv = ?, DiaChi = ?, sdt = ?, email = ? where manv = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             

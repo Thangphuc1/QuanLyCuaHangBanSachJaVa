@@ -4,6 +4,8 @@
  */
 package NhanVien;
     import java.util.*;
+    
+    import KhachHang.KhachHang;
 
 import java.sql.*;
 /**
@@ -118,5 +120,8 @@ public String suaNhanVien(NhanVien nvMoi) {
         if(maNV==null){
             System.out.print("Mã sinh viên trống , vui lòng nhập!");
         }
+    }
+    public ArrayList<NhanVien> getDsNhanVien() {
+        return dsNhanVien;
     }
 }
