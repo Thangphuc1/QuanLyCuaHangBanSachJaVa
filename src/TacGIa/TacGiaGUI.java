@@ -109,7 +109,7 @@ public class TacGiaGUI extends JPanel{
         txtquoctich = new JTextField(20);
         
         btnam = new JRadioButton("Nam");
-        btnu = new JRadioButton("Nụ");
+        btnu = new JRadioButton("Nu");
         g = new ButtonGroup();
         g.add(btnam);
         g.add(btnu);
@@ -386,7 +386,7 @@ public class TacGiaGUI extends JPanel{
         cbtk = new JComboBox(cbmdtk);
         txttk = new JTextField(25);
         
-        btntimkiem = new JButton("Tìm kiếm");
+        btntimkiem = new JButton("Tìm");
         ptimkiem = new JPanel();
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);

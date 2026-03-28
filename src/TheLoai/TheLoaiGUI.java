@@ -301,7 +301,7 @@ public class TheLoaiGUI extends JPanel{
         cbtk = new JComboBox(cbmdtk);
         txttk = new JTextField(25);
         
-        btntimkiem = new JButton("Tìm kiếm");
+        btntimkiem = new JButton("Tìm");
         ptimkiem = new JPanel();
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);

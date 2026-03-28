@@ -19,15 +19,16 @@ public class NhaXuatBanGUI extends JPanel{
     
     NhaXuatBanBUS nhaxuatbanbus = new NhaXuatBanBUS(); 
     JFrame themform,suaform;
-    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,pradio;
-    JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu;
+    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,ptoolbar,pformtitle,pformbutton;
+    JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu,btnhuy;
     JTextField txttk,txtma,txttennxb,txtdiachi,txtsdt,txtemail;
     JComboBox cbtk;
     DefaultComboBoxModel cbmdtk;
     JTable tbnhaxuatban;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbdiachi,lbemail,lbsdt;
+    JLabel lbtitle,lbma,lbten,lbdiachi,lbemail,lbsdt,lbformtitle;
+    JTableHeader th;
     
     public void loadData(){
         ArrayList<NhaXuatBan> dstmp = new ArrayList<NhaXuatBan>();
@@ -44,19 +45,62 @@ public class NhaXuatBanGUI extends JPanel{
         }
     }
     
+    private void thutLabel(JLabel lb, int left) {
+        lb.setBorder(new EmptyBorder(0, left, 0, 0));
+    }
+    
+    private void styleComboBox(JComboBox cb) {
+        cb.setPreferredSize(new Dimension(110, 38));
+        cb.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        cb.setBackground(Color.WHITE);
+        cb.setForeground(new Color(33, 37, 41));
+        cb.setFocusable(false);
+        cb.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+    }
+    
+    private void styleTextField(JTextField txt) {
+        txt.setPreferredSize(new Dimension(220, 38));
+        txt.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        txt.setBackground(Color.WHITE);
+        txt.setForeground(new Color(33, 37, 41));
+        txt.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(200, 200, 200), 1),
+            BorderFactory.createEmptyBorder(0, 10, 0, 10)
+        ));
+    }
+    
+    private void styleButton(JButton btn, Color bg) {
+        btn.setPreferredSize(new Dimension(90, 38));
+        btn.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        btn.setBackground(bg);
+        btn.setForeground(Color.WHITE);
+        btn.setFocusPainted(false);
+        btn.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }
+    
     public void themForm(){
         themform = new JFrame("Form Them");
         themform.setSize(500, 500);
         themform.setLayout(new BorderLayout());
         
-        lbma = new JLabel("Mã nhà xuất bản");
-        lbten = new JLabel("Tên nhà xuất bản");
-        lbsdt = new JLabel("Số điện thoại");
-        lbdiachi = new JLabel("Địa chỉ");
-        lbemail = new JLabel("Email");
-
+        pformtitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        lbformtitle = new JLabel("FORM THÊM");
+        pformtitle.add(lbformtitle);
+        lbformtitle.setFont(new Font("Segoe UI",Font.BOLD,30));
+        pformtitle.setBackground(new Color(255, 253, 208));
         
-        txtma = new JTextField(20);
+        lbma = new JLabel("Mã nhà xuất bản");
+        thutLabel(lbma,15);
+        lbten = new JLabel("Tên nhà xuất bản");
+        thutLabel(lbten,15);
+        lbsdt = new JLabel("Số điện thoại");
+        thutLabel(lbsdt,15);
+        lbdiachi = new JLabel("Địa chỉ");
+        thutLabel(lbdiachi,15);
+        lbemail = new JLabel("Email");
+        thutLabel(lbemail,15);
+        
+        txtma = new JTextField(nhaxuatbanbus.autoThemMa());
         txtma.setEditable(false);
         txttennxb = new JTextField(20);
         txtsdt = new JTextField(20);
@@ -70,12 +114,13 @@ public class NhaXuatBanGUI extends JPanel{
         inputpanel.add(lbten);
         inputpanel.add(txttennxb);
         inputpanel.add(lbsdt);
+        inputpanel.add(txtsdt);
         inputpanel.add(lbdiachi);
         inputpanel.add(txtdiachi);
         inputpanel.add(lbemail);
         inputpanel.add(txtemail);
+        inputpanel.setBackground(new Color(255, 253, 208));
         
-        themform.add(inputpanel, BorderLayout.CENTER);
         btnluu = new JButton("Lưu");
         btnluu.addActionListener(e -> {
             try {
@@ -104,9 +149,27 @@ public class NhaXuatBanGUI extends JPanel{
             }
         });
         
-        themform.add(btnluu, BorderLayout.SOUTH);
-        themform.setVisible(true);
+        btnhuy = new JButton("Huỷ");
+        btnhuy.addActionListener(e -> {
+            try{
+                themform.dispose();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        });
         
+        styleButton(btnluu, new Color(46, 204, 113));
+        styleButton(btnhuy, new Color(231, 76, 60));
+        
+        pformbutton = new JPanel();
+        pformbutton.add(btnluu);
+        pformbutton.add(btnhuy);
+        pformbutton.setBackground(new Color(255, 253, 208));
+        
+        themform.add(pformtitle, BorderLayout.NORTH);
+        themform.add(inputpanel, BorderLayout.CENTER);
+        themform.add(pformbutton, BorderLayout.SOUTH);
+        themform.setVisible(true);
     }  
     
     public void timkiem(){
@@ -149,12 +212,22 @@ public class NhaXuatBanGUI extends JPanel{
         suaform.setSize(500, 500);
         suaform.setLayout(new BorderLayout());
         
+        pformtitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        lbformtitle = new JLabel("FORM SỬA");
+        pformtitle.add(lbformtitle);
+        lbformtitle.setFont(new Font("Segoe UI",Font.BOLD,30));
+        pformtitle.setBackground(new Color(255, 253, 208));
+        
         lbma = new JLabel("Mã nhà xuất bản");
+        thutLabel(lbma,15);
         lbten = new JLabel("Tên nhà xuất bản");
+        thutLabel(lbten,15);
         lbsdt = new JLabel("Số điện thoại");
+        thutLabel(lbsdt,15);
         lbdiachi = new JLabel("Địa chỉ");
+        thutLabel(lbdiachi,15);
         lbemail = new JLabel("Email");
-
+        thutLabel(lbemail,15);
         
         txtma = new JTextField(20);
         txtma.setEditable(false);
@@ -177,13 +250,12 @@ public class NhaXuatBanGUI extends JPanel{
         inputpanel.add(lbten);
         inputpanel.add(txttennxb);
         inputpanel.add(lbsdt);
+        inputpanel.add(txtsdt);
         inputpanel.add(lbdiachi);
         inputpanel.add(txtdiachi);
         inputpanel.add(lbemail);
         inputpanel.add(txtemail);
-        
-        
-        suaform.add(inputpanel, BorderLayout.CENTER);
+        inputpanel.setBackground(new Color(255, 253, 208));
         
         btnluu = new JButton("Lưu");
         btnluu.addActionListener(e -> {
@@ -214,7 +286,26 @@ public class NhaXuatBanGUI extends JPanel{
             }
         });
         
-        suaform.add(btnluu, BorderLayout.SOUTH);
+        btnhuy = new JButton("Huỷ");
+        btnhuy.addActionListener(e -> {
+            try{
+                themform.dispose();
+            }catch(Exception ex){
+                ex.printStackTrace();
+            }
+        });
+        
+        styleButton(btnluu, new Color(46, 204, 113));
+        styleButton(btnhuy, new Color(231, 76, 60));
+        
+        pformbutton = new JPanel();
+        pformbutton.add(btnluu);
+        pformbutton.add(btnhuy);
+        pformbutton.setBackground(new Color(255, 253, 208));
+        
+        suaform.add(pformtitle, BorderLayout.NORTH);
+        suaform.add(inputpanel, BorderLayout.CENTER);
+        suaform.add(pformbutton, BorderLayout.SOUTH);
         suaform.setVisible(true);
     }
     
@@ -237,10 +328,15 @@ public class NhaXuatBanGUI extends JPanel{
         btnthem = new JButton("Thêm");
         btnxoa = new JButton("Xoá");
         btnsua = new JButton("Sửa");
+        styleButton(btnthem, new Color(46, 204, 113));
+        styleButton(btnxoa, new Color(231, 76, 60));
+        styleButton(btnsua, new Color(52, 152, 219));
+        
         pbutton = new JPanel();
         pbutton.add(btnthem);
         pbutton.add(btnxoa);
         pbutton.add(btnsua);
+        pbutton.setBackground(new Color(255, 253, 208));
         
         //search panel
         cbmdtk = new DefaultComboBoxModel<>();
@@ -249,18 +345,21 @@ public class NhaXuatBanGUI extends JPanel{
         cbtk = new JComboBox(cbmdtk);
         txttk = new JTextField(25);
         
-        btntimkiem = new JButton("Tìm kiếm");
+        btntimkiem = new JButton("Tìm");
         ptimkiem = new JPanel();
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);
         ptimkiem.add(btntimkiem);
+        styleButton(btntimkiem, new Color(241, 196, 15));
+        ptimkiem.setBackground(new Color(255, 253, 208));
         
         //toolbar container
-        pcontainer = new JPanel();
-        pcontainer.setLayout(new BorderLayout());
-        pcontainer.add(pbutton, BorderLayout.WEST);
-        pcontainer.add(ptimkiem, BorderLayout.EAST);
-        pcontainer.setBorder(new EmptyBorder(40, 0, 8, 0));
+        ptoolbar = new JPanel();
+        ptoolbar.setLayout(new BorderLayout());
+        ptoolbar.add(pbutton, BorderLayout.WEST);
+        ptoolbar.add(ptimkiem, BorderLayout.EAST);
+        ptoolbar.setBorder(new EmptyBorder(30, 0, 8, 0));
+        ptoolbar.setBackground(new Color(255, 253, 208));
         
         //table
         header = new Vector<>();
@@ -271,18 +370,38 @@ public class NhaXuatBanGUI extends JPanel{
         header.add("Email");
         tbmodel = new DefaultTableModel(header,0);
         tbnhaxuatban = new JTable(tbmodel);
+        tbnhaxuatban.setFillsViewportHeight(true);
+        tbnhaxuatban.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tbnhaxuatban.setForeground(Color.BLACK);
+        tbnhaxuatban.setBackground(Color.WHITE);
+        tbnhaxuatban.setGridColor(new Color(120, 120, 120));
+        tbnhaxuatban.setShowGrid(true);
+        tbnhaxuatban.setBackground(new Color(255, 253, 240));
+        tbnhaxuatban.setForeground(Color.BLACK);
+        
+        th = tbnhaxuatban.getTableHeader();
+        th.setBackground(new Color(255, 224, 178));
+        th.setForeground(Color.BLACK);
+        th.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        th.setReorderingAllowed(false);
+        
         ptable = new JPanel();
         ptable.setLayout(new BorderLayout());
         JScrollPane sptbnhaxuatban = new JScrollPane(tbnhaxuatban);
-        ptable.add(sptbnhaxuatban);
+        ptable.add(sptbnhaxuatban, BorderLayout.CENTER);
         
-        ptitle = new JPanel();
-        lbtitle = new JLabel("QUẢN LÝ NHÀ XUẤT BẢN");
+        ptitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        ptitle.setBackground(new Color(255, 253, 208));
+        lbtitle = new JLabel("QUẢN LÝ SÁCH");
+        lbtitle.setFont(new Font("Segoe UI",Font.BOLD,50));
         ptitle.add(lbtitle);
+        
+        pcontainer = new JPanel(new BorderLayout());
+        pcontainer.add(ptoolbar, BorderLayout.NORTH);
+        pcontainer.add(ptable, BorderLayout.CENTER);
         
         add(ptitle, BorderLayout.NORTH);
         add(pcontainer, BorderLayout.CENTER);
-        add(ptable, BorderLayout.SOUTH);
         
         loadData();
         
