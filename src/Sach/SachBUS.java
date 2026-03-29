@@ -24,7 +24,11 @@ public class SachBUS {
     }
     
     //them sua xoa
+
+        
+
     public Result themSach(Sach sach){
+
        if(sach.getMasach().isEmpty() || sach.getTensach().isEmpty() || sach.getMatg().isEmpty() || sach.getMatl().isEmpty() || sach.getNamxuatban() == 0 || sach.getManxb().isEmpty() || sach.getDongia() == 0 || sach.getSoluongton() == 0){
            return Result.thieuthongtin;
        }
@@ -205,4 +209,7 @@ public class SachBUS {
     public void sachreload(){
         dss = sachdao.loadSach();
     }
+    public boolean CongSoLuongTon(String maSach, int soLuong) {
+    return sachdao.UpdateSoLuongTon(maSach, soLuong);
+}
 }

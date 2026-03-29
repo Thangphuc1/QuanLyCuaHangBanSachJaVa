@@ -43,6 +43,9 @@ public class ChiTietPhieuNhap {
     public double getThanhTien() {
         return thanhTien;
     }
+    public void setThanhTien(Double thanhTien) {
+        this.thanhTien=thanhTien;
+    }
 
     public void setMaPN(String maPN) {
         this.maPN = maPN;

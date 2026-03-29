@@ -19,6 +19,9 @@ public class NhanVienBUS {
     public NhanVienBUS(){
         dsNhanVien = nvDAO.loadNhanVien();
     }
+    public ArrayList<NhanVien> GetNhanVien() {
+        return dsNhanVien;
+    }
 
     //Check điều kiện
     public boolean ktMaNhanVien(String id){

@@ -38,6 +38,31 @@ public class PhieuNhapDAO {
         }
         return dspn;
     }
+    public PhieuNhap GetPhieuNhapByMa(String mapn) {
+        String sql="select * from phieunhap where maphieunhap = ?";
+        PhieuNhap pn=null;
+        try {
+            Connection conn=DBConnection.getDBConnection();
+            PreparedStatement pstmt=conn.prepareStatement(sql);
+            pstmt.setString(1,mapn);
+            ResultSet rs=pstmt.executeQuery();
+            if(rs.next()) {
+                 pn=new PhieuNhap(
+                       rs.getString("maphieunhap"),
+                       rs.getString("manv"),
+                       rs.getString("mancc"),
+                       rs.getDate("thoigiantao").toLocalDate(),
+                       rs.getDouble("tongtien"));
+                       
+            }
+                conn.close();
+                pstmt.close();
+                rs.close();
+            }catch(SQLException e) {
+                e.printStackTrace();    
+        }
+        return pn; 
+    }
     public boolean InSertPhieuNhap(PhieuNhap pn) {
         String sql="insert into phieunhap (maphieunhap,manv,mancc,thoigiantao,tongtien) values (?,?,?,?,?)";
         try {
@@ -62,7 +87,7 @@ public class PhieuNhapDAO {
         try {
             Connection conn=DBConnection.getDBConnection();
             PreparedStatement pstmt=conn.prepareStatement(sql);
-            pstmt.setString(1,pn.getMaNCC());
+            pstmt.setString(1,pn.getMaPN());
             pstmt.executeUpdate();
             conn.close();
             pstmt.close();
@@ -73,17 +98,18 @@ public class PhieuNhapDAO {
        return true;
     }
     public boolean UpdatePhieuNhap(PhieuNhap pn) {
-        String sql="update phieunhap set manv= ?, mancc= ?, thoigiantao = ?,";
-        if(KtraTrungMa(pn.getMaPN())) {
-            System.out.println("ma da bi trung");
-            return false;
-        }
+        String sql="update phieunhap set manv= ?, mancc= ?, thoigiantao = ? where maphieunhap = ? ";
+//        if(KtraTrungMa(pn.getMaPN())) {
+//            System.out.println("ma da bi trung");
+//            return false;
+//        }
         try {
             Connection conn=DBConnection.getDBConnection();
             PreparedStatement pstmt=conn.prepareStatement(sql);
             pstmt.setString(1,pn.getMaNV());
             pstmt.setString(2,pn.getMaNCC() );
             pstmt.setDate(3,java.sql.Date.valueOf(pn.getNgayLap()) );
+            pstmt.setString(4,pn.getMaPN());
             pstmt.executeUpdate();
         }catch(SQLException e) {
             e.printStackTrace();
@@ -91,7 +117,7 @@ public class PhieuNhapDAO {
         }
         return true;
     }
-    public  void UpdateTongTienPN(String mapn) {
+    public  boolean UpdateTongTienPN(String mapn) {
         String sql = "UPDATE phieunhap SET tongtien = (" +
              "SELECT IFNULL(SUM(thanhtien),0) " +
              "FROM chitietphieunhap WHERE maphieunhap = ?" +
@@ -103,10 +129,13 @@ public class PhieuNhapDAO {
             pstmt.setString(2, mapn);
             pstmt.executeUpdate();
             conn.close();
-            pstmt.close();     
+            pstmt.close();    
+            return true;
         }catch(SQLException e) {
             e.printStackTrace();
+            return false;
         }
+        
     }
     //validate kiem tra trung phieu
     public boolean KtraTrungMa(String mapn) {
@@ -126,3 +155,4 @@ public class PhieuNhapDAO {
         return false;
     }
 }
+

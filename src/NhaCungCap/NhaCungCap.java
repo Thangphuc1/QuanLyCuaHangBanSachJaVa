@@ -12,7 +12,7 @@ public class NhaCungCap {
     private String email;
     private String diaChi; 
     public NhaCungCap() {}
-    public NhaCungCap(String maNCC,String tenNCC,String soDienThoai,String email,String diaChi) {
+    public NhaCungCap(String maNCC,String tenNCC,String diaChi,String soDienThoai,String email) {
         this.maNCC=maNCC;
         this.tenNCC=tenNCC;
         this.soDienThoai=soDienThoai;

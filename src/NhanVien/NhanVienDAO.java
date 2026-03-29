@@ -24,12 +24,21 @@ public class NhanVienDAO {
             while(rs.next()){
                         NhanVien nhanVien = new NhanVien(
                             rs.getString("manv"),
+<<<<<<< HEAD
                             rs.getString("tennv"),
                             rs.getString("honv"),
                             rs.getString("DiaChi"),
                             rs.getString("sdt"),
                             rs.getString("email"),
                             rs.getDouble("luong")
+=======
+                            rs.getString("honv"),
+                            rs.getString("tennv"),
+                            rs.getString("sdt"),
+                            rs.getString("DiaChi"),
+                            rs.getString("Email"),
+                            rs.getDouble("Luong")
+>>>>>>> 1fbc4f3405acfdac1729fb75f06fadb6bfde3621
 );
                 dsNhanVien.add(nhanVien);
             }

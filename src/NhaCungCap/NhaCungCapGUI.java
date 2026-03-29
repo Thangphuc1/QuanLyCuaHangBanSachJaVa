@@ -13,11 +13,11 @@ public class NhaCungCapGUI extends JPanel{
     private NhaCungCapBUS bus = new NhaCungCapBUS();
     private JTable tableNCC;
     private DefaultTableModel tableModel;
-    private JTextField txtMaNCC, txtTenNCC, txtDiaChi, txtSoDienThoai, txtEmail, txtTimKiem;
-    private JButton btnThem, btnSua, btnXoa, btnTimKiem, btnLamLai, btnTatCa;
-    private JLabel lbtimkiem;
+     private JTextField  txtTimKiem;
+    private JButton btnThem, btnSua, btnXoa, btnTimKiem, btnTatCa;
+    private JLabel lbtimkiem;       
     private JFrame parentFrame;
-    private JTextField tx1,tx2,tx3,tx4,tx5;
+    
 
     public NhaCungCapGUI(JFrame parent) {
         setLayout(new BorderLayout()); // ⭐ Set layout cho panel
@@ -27,7 +27,7 @@ public class NhaCungCapGUI extends JPanel{
         JPanel panelNhapLieu = taoPanel();
        
         add(panelNhapLieu, BorderLayout.NORTH);
-
+        
         // Panel bảng
         JPanel panelBang = taoPanelBang();
         add(panelBang, BorderLayout.CENTER);
@@ -40,28 +40,28 @@ public class NhaCungCapGUI extends JPanel{
         loadDuLieu();
         
     }
-    public NhaCungCapGUI() {
-        this(null);
-    }
+//    public NhaCungCapGUI() {
+//        this(null);
+//    }
 //    private JPanel MenuPanel() {
 //        
 //    }
     private JPanel taoPanel() {
     JPanel panel = new JPanel(new BorderLayout());
      panel.setBackground(new Color(255, 250, 205)); // Màu vàng nhạt
-         panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
+     panel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
    
     JPanel leftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
      leftPanel.setBackground(new Color(255, 250, 205));
      
     lbtimkiem = new JLabel("Tìm kiếm");
-     lbtimkiem.setFont(new Font("Arial", Font.BOLD, 13));
+    lbtimkiem.setFont(new Font("Arial", Font.BOLD, 13));
     txtTimKiem = new JTextField(15);
-     txtTimKiem.setPreferredSize(new Dimension(200, 30));
+    txtTimKiem.setPreferredSize(new Dimension(200, 30));
      
     leftPanel.add(lbtimkiem);
     leftPanel.add(txtTimKiem);
-
+    
     
     JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
     rightPanel.setBackground(new Color(255, 250, 205)); // ⭐ Thêm: Màu nền cho right panel
@@ -69,11 +69,10 @@ public class NhaCungCapGUI extends JPanel{
     btnThem = new JButton("Thêm");
     btnSua = new JButton("Sửa");
     btnXoa = new JButton("Xóa");
-    btnTimKiem = new JButton("Tìm Kiếm");
-    btnLamLai = new JButton("Làm Lại");
+    btnTimKiem = new JButton("Tìm Kiếm"); 
     btnTatCa = new JButton("Tất Cả");
     
-    JButton[] buttons = {btnThem, btnSua, btnXoa, btnTimKiem, btnLamLai, btnTatCa};
+    JButton[] buttons = {btnThem, btnSua, btnXoa, btnTimKiem,btnTatCa};
     for (JButton btn : buttons) {
         btn.setPreferredSize(new Dimension(100, 35));
         btn.setBackground(new Color(230, 180, 0)); // Màu vàng đậm
@@ -87,7 +86,6 @@ public class NhaCungCapGUI extends JPanel{
     rightPanel.add(btnSua);
     rightPanel.add(btnXoa);
     rightPanel.add(btnTimKiem);
-    rightPanel.add(btnLamLai);
     rightPanel.add(btnTatCa);
 
     
@@ -99,7 +97,6 @@ public class NhaCungCapGUI extends JPanel{
     btnSua.addActionListener(e -> suaNhaCungCap());
     btnXoa.addActionListener(e -> xoaNhaCungCap());
     btnTimKiem.addActionListener(e -> timKiem());
-    btnLamLai.addActionListener(e -> lamLai());
     btnTatCa.addActionListener(e -> loadDuLieu());
 
     return panel;
@@ -107,11 +104,7 @@ public class NhaCungCapGUI extends JPanel{
 
     private JPanel taoPanelBang() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createTitledBorder(
-            BorderFactory.createLineBorder(new Color(200, 150, 0), 3),
-            "Danh Sách Nhà Cung Cấp",
-            javax.swing.border.TitledBorder.LEFT,
-            javax.swing.border.TitledBorder.TOP,
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(new Color(200, 150, 0), 3),"Danh Sách Nhà Cung Cấp",javax.swing.border.TitledBorder.LEFT,javax.swing.border.TitledBorder.TOP,
             new Font("Arial", Font.BOLD, 14),
             new Color(80, 80, 80)
         ));
@@ -136,19 +129,19 @@ public class NhaCungCapGUI extends JPanel{
         panel.add(scrollPane, BorderLayout.CENTER);
 
         // Bắt sự kiện click vào bảng
-        tableNCC.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                int row = tableNCC.getSelectedRow();
-                if (row != -1) {
-                    txtMaNCC.setText(tableModel.getValueAt(row, 0).toString());
-                    txtTenNCC.setText(tableModel.getValueAt(row, 1).toString());
-                    txtDiaChi.setText(tableModel.getValueAt(row, 2).toString());
-                    txtSoDienThoai.setText(tableModel.getValueAt(row, 3).toString());
-                    txtEmail.setText(tableModel.getValueAt(row, 4).toString());
-                }
-            }
-        });
+//        tableNCC.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                int row = tableNCC.getSelectedRow();
+//                if (row != -1) {
+//                    txtMaNCC.setText(tableModel.getValueAt(row, 0).toString());
+//                    txtTenNCC.setText(tableModel.getValueAt(row, 1).toString());
+//                    txtDiaChi.setText(tableModel.getValueAt(row, 2).toString());
+//                    txtSoDienThoai.setText(tableModel.getValueAt(row, 3).toString());
+//                    txtEmail.setText(tableModel.getValueAt(row, 4).toString());
+//                }
+//            }
+//        });
 
         return panel;
     }
@@ -381,7 +374,7 @@ public class NhaCungCapGUI extends JPanel{
         if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp để sửa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return;
-    }
+        }
         JDialog dialog = new JDialog( frame, "Sửa", true);
         dialog.setSize(700, 600);
         dialog.setLocationRelativeTo(this);
@@ -400,6 +393,7 @@ public class NhaCungCapGUI extends JPanel{
         p3.setBackground(new Color(240, 240, 240));
         p3.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         p3.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 10)); // ⭐ Align phải
+        
         
         
         JLabel lbtieude = new JLabel("Sửa Nhà Cung Cấp");
@@ -590,9 +584,9 @@ public class NhaCungCapGUI extends JPanel{
         if(bus.XoaNhaCungCap(maNCC)) { 
             JOptionPane.showMessageDialog(this, "Xóa thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
             loadDuLieu(); // ⭐ Load lại bảng
-            lamLai(); // ⭐ Clear các textfield
+             // ⭐ Clear các textfield
         } else {
-            JOptionPane.showMessageDialog(this, ketQua, "Lỗi", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "xóa thất bại", "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
         }
          
@@ -623,13 +617,13 @@ public class NhaCungCapGUI extends JPanel{
         }
     }
 
-    private void lamLai() {
-        txtMaNCC.setText("");
-        txtTenNCC.setText("");
-        txtDiaChi.setText("");
-        txtSoDienThoai.setText("");
-        txtEmail.setText("");
-    }
+//    private void lamLai() {
+//        txtMaNCC.setText("");
+//        txtTenNCC.setText("");
+//        txtDiaChi.setText("");
+//        txtSoDienThoai.setText("");
+//        txtEmail.setText("");
+//    }
 
     
 }
