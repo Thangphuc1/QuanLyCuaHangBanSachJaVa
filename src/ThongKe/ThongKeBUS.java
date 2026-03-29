@@ -14,3 +14,4 @@ public class ThongKeBUS {
         return thongKeDAO.getDoanhThuThang(thang, nam);
     }
 }
+    

@@ -353,7 +353,7 @@ public class NhaXuatBanGUI extends JPanel{
         cbtk = new JComboBox(cbmdtk);
         txttk = new JTextField(25);
         
-        btntimkiem = new JButton("Tìm kiếm");
+        btntimkiem = new JButton("Tìm");
         ptimkiem = new JPanel();
         ptimkiem.add(psoluong);
         ptimkiem.add(cbtk);
@@ -401,7 +401,7 @@ public class NhaXuatBanGUI extends JPanel{
         
         ptitle = new JPanel(new FlowLayout(FlowLayout.CENTER));
         ptitle.setBackground(new Color(255, 253, 208));
-        lbtitle = new JLabel("QUẢN LÝ SÁCH");
+        lbtitle = new JLabel("QUẢN LÝ NHÀ XUẤT BẢN");
         lbtitle.setFont(new Font("Segoe UI",Font.BOLD,50));
         ptitle.add(lbtitle);
         

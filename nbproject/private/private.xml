@@ -2,19 +2,11 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< HEAD
-        <group/>
-=======
         <group>
-
-            <file>file:/C:/Users/ASUS/Documents/GitHub/QuanLyCuaHangBanSachJaVa/src/NhaCungCap/NhaCungCapGUI.java</file>
-            <file>file:/C:/Users/ASUS/Documents/GitHub/QuanLyCuaHangBanSachJaVa/src/PhieuNhap/PhieuNhapGUI.java</file>
-            <file>file:/C:/Users/ASUS/Documents/GitHub/QuanLyCuaHangBanSachJaVa/src/Sach/SachDAO.java</file>
-            <file>file:/C:/Users/ASUS/Documents/GitHub/QuanLyCuaHangBanSachJaVa/src/HoaDon/ThemHoaDonGUI.java</file>
-            <file>file:/C:/Users/ASUS/Documents/GitHub/QuanLyCuaHangBanSachJaVa/src/MAIN/Main.java</file>
-
-
+            <file>file:/D:/DoAnJava/JavaApplication3/src/ThongKe/ThongKe.java</file>
+            <file>file:/D:/DoAnJava/JavaApplication3/src/ThongKe/ThongKeDAO.java</file>
+            <file>file:/D:/DoAnJava/JavaApplication3/src/ThongKe/ThongKeBUS.java</file>
+            <file>file:/D:/DoAnJava/JavaApplication3/src/MAIN/Main.java</file>
         </group>
->>>>>>> 1fbc4f3405acfdac1729fb75f06fadb6bfde3621
     </open-files>
 </project-private>
