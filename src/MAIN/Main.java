@@ -36,12 +36,12 @@ public class Main extends JFrame {
         // ===== ADD PANEL =====
         contentPanel.add(new ThongKeGUI(), "THONGKE");
         contentPanel.add(new NhaCungCapGUI(this), "NHACUNGCAP");
-        contentPanel.add(new NhanVienGUI(), "NHANVIEN");
-        contentPanel.add(new KhachHangGUI(), "KHACHHANG");
+        //contentPanel.add(new NhanVienGUI(), "NHANVIEN");
+        //contentPanel.add(new KhachHangGUI(), "KHACHHANG");
         contentPanel.add(new SachGUI(), "SACH");
-        contentPanel.add(new HoaDonGUI(), "HOADON");
-        contentPanel.add(new PhieuNhapGUI(), "PHIEUNHAP");
-        contentPanel.add(new KhuyenMaiGUI(), "KHUYENMAI");
+        //contentPanel.add(new HoaDonGUI(), "HOADON");
+        //contentPanel.add(new PhieuNhapGUI(), "PHIEUNHAP");
+        //contentPanel.add(new KhuyenMaiGUI(), "KHUYENMAI");
 
         // ===== DEFAULT =====
         cardLayout.show(contentPanel, "THONGKE");
