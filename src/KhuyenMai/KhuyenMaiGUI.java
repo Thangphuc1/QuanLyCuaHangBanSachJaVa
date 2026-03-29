@@ -14,7 +14,7 @@ public class KhuyenMaiGUI extends JPanel {
     JTextField txtSearch; 
     JTable table; 
     DefaultTableModel model; 
-    JButton btnThem, btnSua, btnXoa, btnLoad, btnSearch, btnThongke; 
+    JButton btnThem, btnSua, btnXoa, btnLoad, btnSearch, btnThongke, btnClearForm; 
     
     public KhuyenMaiGUI() { 
         init(); 
@@ -24,8 +24,13 @@ public class KhuyenMaiGUI extends JPanel {
     private void init(){ 
         setLayout(new BorderLayout());
 
-    // ===== PANEL INPUT ===== 
-        JPanel pInput = new JPanel(new GridLayout(6,2,5,5)); 
+        Color vangNhat = new Color(255, 255, 204);
+        setBackground(vangNhat);
+
+        // ===== PANEL INPUT ===== 
+        JPanel pInput = new JPanel(new GridLayout(6,2,5,5));
+        pInput.setBackground(vangNhat);
+
         txtMa = new JTextField();
         txtMa.setEditable(false);
         txtTen = new JTextField();
@@ -33,7 +38,7 @@ public class KhuyenMaiGUI extends JPanel {
         txtKT = new JTextField(); 
         txtDK = new JTextField(); 
         txtPtgg = new JTextField(); 
-        
+
         pInput.add(new JLabel("Mã KM")); 
         pInput.add(txtMa); 
         pInput.add(new JLabel("Tên KM")); 
@@ -46,60 +51,53 @@ public class KhuyenMaiGUI extends JPanel {
         pInput.add(txtDK); 
         pInput.add(new JLabel("Phần trăm giảm")); 
         pInput.add(txtPtgg); 
+
         add(pInput,BorderLayout.NORTH); 
 
-    // ===== TABLE ===== 
+        // ===== TABLE ===== 
         model = new DefaultTableModel(); 
         model.setColumnIdentifiers(new String[]{ 
-            "makm",
-            "tenkm",
-            "ngaybatdau",
-            "ngayketthuc",
-            "dieukientoithieu",
-            "phantramgiam" 
+            "makm","tenkm","ngaybatdau","ngayketthuc","dieukientoithieu","phantramgiam"
         }); 
-        
-        table = new JTable(model); 
-        add(new JScrollPane(table),BorderLayout.CENTER); 
 
-    // ===== SEARCH ===== 
+        table = new JTable(model); 
+        JScrollPane scroll = new JScrollPane(table);
+        scroll.getViewport().setBackground(vangNhat); // nền bảng
+        add(scroll,BorderLayout.CENTER); 
+
+        // ===== SEARCH ===== 
         JPanel pSearch = new JPanel(); 
+        pSearch.setBackground(vangNhat);
+
         txtSearch = new JTextField(20);
         btnSearch = new JButton("Tìm"); 
+
         pSearch.add(new JLabel("Tìm kiếm")); 
         pSearch.add(txtSearch); 
         pSearch.add(btnSearch); 
+
         add(pSearch,BorderLayout.WEST); 
 
-    // ===== BUTTON ===== 
+        // ===== BUTTON ===== 
         JPanel pButton = new JPanel(); 
+        pButton.setBackground(vangNhat);
+
         btnThem = new JButton("Thêm"); 
         btnSua = new JButton("Sửa"); 
         btnXoa = new JButton("Xóa"); 
         btnLoad = new JButton("Load"); 
         btnThongke = new JButton("Thống kê"); 
-        
+        btnClearForm = new JButton("ClearForm");
+
         pButton.add(btnThem);
         pButton.add(btnSua); 
         pButton.add(btnXoa);
         pButton.add(btnLoad); 
         pButton.add(btnThongke); 
-        add(pButton,BorderLayout.SOUTH); 
+        pButton.add(btnClearForm);
 
-    // ===== EVENT ===== 
-        btnThem.addActionListener(e -> them()); 
-        btnSua.addActionListener(e -> sua()); 
-        btnXoa.addActionListener(e -> xoa()); 
-        btnLoad.addActionListener(e -> loadTable()); 
-        btnSearch.addActionListener(e -> search()); 
-        btnThongke.addActionListener(e -> thongke()); 
-        
-        table.addMouseListener(new java.awt.event.MouseAdapter() { 
-            public void mouseClicked(java.awt.event.MouseEvent evt){ 
-                fill();
-            } 
-        }); 
-    }
+        add(pButton,BorderLayout.SOUTH); 
+}
 
     // ===== LOAD TABLE ===== 
     private void loadTable(){ 
@@ -190,6 +188,7 @@ public class KhuyenMaiGUI extends JPanel {
         txtPtgg.setText(model.getValueAt(row,5).toString()); 
     } 
     
+    //ClearForm
     private void clearForm(){
         txtMa.setText("");
         txtTen.setText("");
@@ -216,6 +215,7 @@ public class KhuyenMaiGUI extends JPanel {
         } 
     } 
     
+    //Thống kê
     private void thongke(){ 
         KhuyenMaiDAO.ThongKeKM tk = kmBUS.thongKe();
         StringBuilder sb = new StringBuilder();
@@ -231,4 +231,5 @@ public class KhuyenMaiGUI extends JPanel {
 
         JOptionPane.showMessageDialog(this, sb.toString(), "Thống kê", JOptionPane.INFORMATION_MESSAGE);
     }  
+    
 }
