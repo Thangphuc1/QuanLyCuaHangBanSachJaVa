@@ -1,5 +1,6 @@
 package TacGIa;
 
+import database.DBConnection;
 import java.util.*;
 import java.sql.*;
 /**

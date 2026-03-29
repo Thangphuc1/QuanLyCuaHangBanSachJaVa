@@ -1,9 +1,6 @@
 package TheLoai;
 
-/**
- *
- * @author ASUS
- */
+import database.DBConnection;
 import java.util.*;
 import java.sql.*;
 /**

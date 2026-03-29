@@ -1,5 +1,6 @@
 package Sach;
 
+import database.DBConnection;
 import java.util.*;
 import java.sql.*;
 /**
@@ -10,7 +11,7 @@ public class SachDAO {
     
     public static ArrayList<Sach> loadSach(){
         ArrayList<Sach> dss = new ArrayList<Sach>();
-        String qry = "select * from sach";
+        String qry = "SELECT masach, tensach, matacgia, matheloai, namxuatban, manxb, dongia, soluongton FROM sach";
         try ( Connection conn = DBConnection.getDBConnection();
               PreparedStatement st = conn.prepareStatement(qry);
               ResultSet rs = st.executeQuery()){
