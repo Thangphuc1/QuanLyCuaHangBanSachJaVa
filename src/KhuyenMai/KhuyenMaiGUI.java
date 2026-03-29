@@ -88,6 +88,21 @@ public class KhuyenMaiGUI extends JPanel {
         btnLoad = new JButton("Load"); 
         btnThongke = new JButton("Thống kê"); 
         btnClearForm = new JButton("ClearForm");
+        Color mauBtn = new Color(255, 204, 102); // vàng đậm hơn nền
+
+        btnThem.setBackground(mauBtn);
+        btnSua.setBackground(mauBtn);
+        btnXoa.setBackground(mauBtn);
+        btnLoad.setBackground(mauBtn);
+        btnThongke.setBackground(mauBtn);
+        btnClearForm.setBackground(mauBtn);
+
+        btnThem.setForeground(Color.BLACK);
+        btnSua.setForeground(Color.BLACK);
+        btnXoa.setForeground(Color.BLACK);
+        btnLoad.setForeground(Color.BLACK);
+        btnThongke.setForeground(Color.BLACK);
+        btnClearForm.setForeground(Color.BLACK);
 
         pButton.add(btnThem);
         pButton.add(btnSua); 
