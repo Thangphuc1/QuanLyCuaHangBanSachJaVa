@@ -12,13 +12,17 @@ import HoaDon.HoaDonGUI;
 import NhaCungCap.NhaCungCapGUI;
 import PhieuNhap.PhieuNhapGUI;
 import KhuyenMai.KhuyenMaiGUI;
+import TacGIa.TacGiaGUI;
+import TheLoai.TheLoaiGUI;
+import NhaXuatBan.NhaXuatBanGUI;
 
 public class Main extends JFrame {
 
     private JPanel contentPanel;
     private CardLayout cardLayout;
     private JButton selectedButton = null;
-
+    private PhieuNhapGUI panelphieunhap;
+    
     public Main() {
         setTitle("Quản Lý Kho");
         setSize(1400, 800);
@@ -30,16 +34,19 @@ public class Main extends JFrame {
 
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
-
+        
         // ⭐ ADD TOÀN BỘ GUI VÀO ĐÂY
         contentPanel.add(new ThongKeGUI(), "TongQuan");
         contentPanel.add(new SachGUI(), "Sach");
         contentPanel.add(new KhachHangGUI(), "KhachHang");
         contentPanel.add(new NhanVienGUI(), "NhanVien");
-       // contentPanel.add(new HoaDonGUI(), "HoaDon");
+        // contentPanel.add(new HoaDonGUI(), "HoaDon");
         contentPanel.add(new NhaCungCapGUI(this), "NhaCungCap");
-       // contentPanel.add(new PhieuNhapGUI(), "NhapHang");
-       // contentPanel.add(new KhuyenMaiGUI(), "KhuyenMai");
+        //contentPanel.add(new PhieuNhapGUI(), "NhapHang");
+        contentPanel.add(new TacGiaGUI(),"TacGia");
+        contentPanel.add(new TheLoaiGUI(),"TheLoai");
+        contentPanel.add(new NhaXuatBanGUI(),"NhaXuatBan");
+        // contentPanel.add(new KhuyenMaiGUI(), "KhuyenMai");
 
         add(contentPanel, BorderLayout.CENTER);
         cardLayout.show(contentPanel, "TongQuan"); // mac dinh hien overview
@@ -68,8 +75,11 @@ public class Main extends JFrame {
         JButton btnKhach = createMenuButton("Khách hàng");
         JButton btnNhanVien = createMenuButton("Nhân viên");
         JButton btnKM = createMenuButton("Khuyến mãi");
+        JButton btnTacGia = createMenuButton("Tác giả");
+        JButton btnTheLoai = createMenuButton("Thể loại");
+        JButton btnNhaXuatBan = createMenuButton("Nhà xuất bản");
         JButton btnNCC = createMenuButton("Nhà cung cấp");
-
+        
         // ACTION
         btnTongQuan.addActionListener(e -> switchPanel(btnTongQuan, "TongQuan"));
         btnSach.addActionListener(e -> switchPanel(btnSach, "Sach"));
@@ -78,6 +88,9 @@ public class Main extends JFrame {
         btnKhach.addActionListener(e -> switchPanel(btnKhach, "KhachHang"));
         btnNhanVien.addActionListener(e -> switchPanel(btnNhanVien, "NhanVien"));
         btnKM.addActionListener(e -> switchPanel(btnKM, "KhuyenMai"));
+        btnTacGia.addActionListener(e -> switchPanel(btnTacGia, "TacGia"));
+        btnTheLoai.addActionListener(e -> switchPanel(btnTheLoai, "TheLoai"));
+        btnNhaXuatBan.addActionListener(e -> switchPanel(btnNhaXuatBan, "NhaXuatBan"));
         btnNCC.addActionListener(e -> switchPanel(btnNCC, "NhaCungCap"));
 
         sidebar.add(btnTongQuan);
@@ -87,6 +100,9 @@ public class Main extends JFrame {
         sidebar.add(btnKhach);
         sidebar.add(btnNhanVien);
         sidebar.add(btnKM);
+        sidebar.add(btnTacGia);
+        sidebar.add(btnTheLoai);
+        sidebar.add(btnNhaXuatBan);
         sidebar.add(btnNCC);
 
         setActiveButton(btnTongQuan);
