@@ -21,13 +21,13 @@ public class TacGiaGUI extends JPanel{
     JFrame themform,suaform;
     JPanel pbutton,psoluong,ptimkiem,pcontainer,inputpanel,ptable,ptitle,pradio,ptoolbar,pformtitle,pformbutton;
     JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu,btnhuy;
-    JTextField txttk,txtma,txttentg,txtquoctich,txtnamsinh;
+    JTextField txttk,txtma,txthotg,txttentg,txtquoctich,txtnamsinh;
     JComboBox cbtk;
     DefaultComboBoxModel cbmdtk;
     JTable tbtacgia;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbgioitinh,lbquoctich,lbnamsinh,lbformtitle,lbtksoluong;
+    JLabel lbtitle,lbma,lbho,lbten,lbgioitinh,lbquoctich,lbnamsinh,lbformtitle,lbtksoluong;
     JRadioButton btnam,btnu;
     ButtonGroup g;
     JTableHeader th;
@@ -39,6 +39,7 @@ public class TacGiaGUI extends JPanel{
         for(TacGia temp : dstmp){
             Vector<String> row = new Vector<>();
             row.add(temp.getMatg());
+            row.add(temp.getHotg());
             row.add(temp.getTentg());
             row.add(Integer.toString(temp.getNamsinh()));
             row.add(temp.getGioitinh());
@@ -93,6 +94,8 @@ public class TacGiaGUI extends JPanel{
         
         lbma = new JLabel("Mã tác giả");
         thutLabel(lbma,15);
+        lbho = new JLabel("Họ tác giả");
+        thutLabel(lbho,15);
         lbten = new JLabel("Tên tác giả");
         thutLabel(lbten,15);
         lbnamsinh = new JLabel("Năm sinh");
@@ -104,6 +107,7 @@ public class TacGiaGUI extends JPanel{
         
         txtma = new JTextField(tacgiabus.autoThemMa());
         txtma.setEditable(false);
+        txthotg = new JTextField(20);
         txttentg = new JTextField(20);
         txtnamsinh = new JTextField(20);
         txtquoctich = new JTextField(20);
@@ -126,9 +130,11 @@ public class TacGiaGUI extends JPanel{
         pradio.add(btnu);
         
         inputpanel = new JPanel();
-        inputpanel.setLayout(new GridLayout(5,2,10,10));
+        inputpanel.setLayout(new GridLayout(6,2,10,10));
         inputpanel.add(lbma);
         inputpanel.add(txtma);
+        inputpanel.add(lbho);
+        inputpanel.add(txthotg);
         inputpanel.add(lbten);
         inputpanel.add(txttentg);
         inputpanel.add(lbnamsinh);
@@ -149,18 +155,21 @@ public class TacGiaGUI extends JPanel{
                 }else{
                     gt = "Nữ";
                 }
-                TacGia tacgia = new TacGia();
-                tacgia.setMatg(txtma.getText());
-                tacgia.setTentg(txttentg.getText());
-                tacgia.setGioitinh(gt);
-                tacgia.setNamsinh(Integer.parseInt(txtnamsinh.getText()));
-                tacgia.setQuoctich(txtquoctich.getText());
+                TacGia tacgia = new TacGia(
+                        txtma.getText(),
+                        txthotg.getText(),
+                        txttentg.getText(),
+                        gt,
+                        Integer.parseInt(txtnamsinh.getText()),
+                        txtquoctich.getText()
+                );
                 
                 Result themtacgia = tacgiabus.themTacGia(tacgia);
                 JOptionPane.showMessageDialog(this, themtacgia.getMessage());
                 if (themtacgia == Result.thanhcong) {
                     Vector<String> row = new Vector<>();
                     row.add(txtma.getText());
+                    row.add(txthotg.getText());
                     row.add(txttentg.getText());
                     row.add(txtnamsinh.getText());
                     row.add(gt);
@@ -225,6 +234,7 @@ public class TacGiaGUI extends JPanel{
             for (TacGia temp : dstemp) {
                 Vector<String> row = new Vector<>();
                 row.add(temp.getMatg());
+                row.add(temp.getHotg());
                 row.add(temp.getTentg());
                 row.add(Integer.toString(temp.getNamsinh()));
                 row.add(temp.getGioitinh());
@@ -237,7 +247,7 @@ public class TacGiaGUI extends JPanel{
     }
     
     public void suaForm(){
-        suaform = new JFrame("Form Them");
+        suaform = new JFrame("Form Sua");
         suaform.setSize(500, 500);
         suaform.setLayout(new BorderLayout());
         
@@ -249,6 +259,8 @@ public class TacGiaGUI extends JPanel{
         
         lbma = new JLabel("Mã tác giả");
         thutLabel(lbma,15);
+        lbho = new JLabel("Họ tác giả");
+        thutLabel(lbho,15);
         lbten = new JLabel("Tên tác giả");
         thutLabel(lbten,15);
         lbnamsinh = new JLabel("Năm sinh");
@@ -257,10 +269,10 @@ public class TacGiaGUI extends JPanel{
         thutLabel(lbgioitinh,15);
         lbquoctich = new JLabel("Quốc tịch");
         thutLabel(lbquoctich,15);
-
         
         txtma = new JTextField(20);
         txtma.setEditable(false);
+        txthotg = new JTextField(20);
         txttentg = new JTextField(20);
         txtnamsinh = new JTextField(20);
         txtquoctich = new JTextField(20);
@@ -283,19 +295,22 @@ public class TacGiaGUI extends JPanel{
         
         int i = tbtacgia.getSelectedRow();
         txtma.setText(tbtacgia.getValueAt(i, 0).toString());
-        txttentg.setText(tbtacgia.getValueAt(i, 1).toString());
-        txtnamsinh.setText(tbtacgia.getValueAt(i, 2).toString());
-        if(tbtacgia.getValueAt(i, 3).toString().equals("Nam")){
+        txthotg.setText(tbtacgia.getValueAt(i, 1).toString());
+        txttentg.setText(tbtacgia.getValueAt(i, 2).toString());
+        txtnamsinh.setText(tbtacgia.getValueAt(i, 3).toString());
+        if(tbtacgia.getValueAt(i, 4).toString().equals("Nam")){
             btnam.setSelected(true);
         }else{
             btnu.setSelected(true);
         }
-        txtquoctich.setText(tbtacgia.getValueAt(i, 4).toString());
+        txtquoctich.setText(tbtacgia.getValueAt(i, 5).toString());
         
         inputpanel = new JPanel();
-        inputpanel.setLayout(new GridLayout(5,2,10,10));
+        inputpanel.setLayout(new GridLayout(6,2,10,10));
         inputpanel.add(lbma);
         inputpanel.add(txtma);
+        inputpanel.add(lbho);
+        inputpanel.add(txthotg);
         inputpanel.add(lbten);
         inputpanel.add(txttentg);
         inputpanel.add(lbnamsinh);
@@ -304,6 +319,7 @@ public class TacGiaGUI extends JPanel{
         inputpanel.add(pradio);
         inputpanel.add(lbquoctich);
         inputpanel.add(txtquoctich);
+        
         inputpanel.setBackground(new Color(255, 253, 208));
         
         btnluu = new JButton("Lưu");
@@ -318,6 +334,7 @@ public class TacGiaGUI extends JPanel{
                 
                 TacGia tacgia = new TacGia();
                 tacgia.setMatg(txtma.getText());
+                tacgia.setHotg(txthotg.getText());
                 tacgia.setTentg(txttentg.getText());
                 tacgia.setGioitinh(gt);
                 tacgia.setQuoctich(txtquoctich.getText());
@@ -327,10 +344,11 @@ public class TacGiaGUI extends JPanel{
                 
                 if (suatacgia == Result.thanhcong) {
                     if(i >= 0){
-                        tbmodel.setValueAt(tacgia.getTentg(),i,1);
-                        tbmodel.setValueAt(gt,i,2);
-                        tbmodel.setValueAt(tacgia.getGioitinh(),i,3);
-                        tbmodel.setValueAt(tacgia.getQuoctich(),i,4);
+                        tbmodel.setValueAt(tacgia.getHotg(),i,1);
+                        tbmodel.setValueAt(tacgia.getTentg(),i,2);
+                        tbmodel.setValueAt(gt,i,3);
+                        tbmodel.setValueAt(tacgia.getNamsinh(),i,4);
+                        tbmodel.setValueAt(tacgia.getQuoctich(),i,5);
                     }
                     tacgiabus.tacgiareload();
                     suaform.dispose();
@@ -402,6 +420,7 @@ public class TacGiaGUI extends JPanel{
         
         cbmdtk = new DefaultComboBoxModel<>();
         cbmdtk.addElement("Mã tác giả");
+        cbmdtk.addElement("Họ tác giả");
         cbmdtk.addElement("Tên tác giả");
         cbmdtk.addElement("Quốc tịch");
         cbtk = new JComboBox(cbmdtk);
@@ -430,6 +449,7 @@ public class TacGiaGUI extends JPanel{
         //table
         header = new Vector<>();
         header.add("Mã tác giả");
+        header.add("Họ tác giả");
         header.add("Tên tác giả");
         header.add("Năm sinh");
         header.add("Giới tính");

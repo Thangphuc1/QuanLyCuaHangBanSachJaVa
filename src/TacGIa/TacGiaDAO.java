@@ -20,9 +20,10 @@ public class TacGiaDAO {
             while(rs.next()){
                 TacGia tg = new TacGia(
                         rs.getString("matacgia"),
-                        rs.getString("tentacgia"),
-                        rs.getInt("namsinh"),
+                        rs.getString("ho"),
+                        rs.getString("ten"),
                         rs.getString("gioitinh"),
+                        rs.getInt("namsinh"),
                         rs.getString("quoctich")
                 );
                 dstg.add(tg);
@@ -35,15 +36,16 @@ public class TacGiaDAO {
     }
     
     public boolean insertTacGia(TacGia tg){
-        String qry = "insert into tacgia values (?,?,?,?,?)";
+        String qry = "insert into tacgia values (?,?,?,?,?,?)";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
             st.setString(1, tg.getMatg());
-            st.setString(2, tg.getTentg());
-            st.setString(3, tg.getGioitinh());
-            st.setInt(4, tg.getNamsinh());
-            st.setString(5, tg.getQuoctich());
+            st.setString(2,tg.getHotg());
+            st.setString(3, tg.getTentg());
+            st.setString(4, tg.getGioitinh());
+            st.setInt(5, tg.getNamsinh());
+            st.setString(6, tg.getQuoctich());
             
             st.executeUpdate();
         }catch(SQLException ex){
@@ -69,16 +71,17 @@ public class TacGiaDAO {
     }
     
     public boolean updateTacGia(TacGia tg){
-        String qry = "update tacgia set matacgia = ?, tentacgia = ?, gioitinh = ?, namsinh = ?,  quoctich = ? where matacgia = ?";
+        String qry = "update tacgia set matacgia = ?, ho = ? ,ten = ?, gioitinh = ?, namsinh = ?,  quoctich = ? where matacgia = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
             st.setString(1, tg.getMatg());
-            st.setString(2, tg.getTentg());
-            st.setString(3, tg.getGioitinh());
-            st.setInt(4, tg.getNamsinh());
-            st.setString(5, tg.getQuoctich());
-            st.setString(6, tg.getMatg());
+            st.setString(2, tg.getHotg());
+            st.setString(3, tg.getTentg());
+            st.setString(4, tg.getGioitinh());
+            st.setInt(5, tg.getNamsinh());
+            st.setString(6, tg.getQuoctich());
+            st.setString(7, tg.getMatg());
             
             st.executeUpdate();
         }catch(SQLException ex){

@@ -6,7 +6,7 @@ import java.util.*;
  * @author Quyen
  */
 public class TacGia {
-    private String matg, tentg, gioitinh, quoctich;
+    private String matg, hotg, tentg, gioitinh, quoctich;
     private int namsinh;
     
     @Override
@@ -22,12 +22,13 @@ public class TacGia {
     }
     
     public TacGia(){
-        matg = tentg = gioitinh = quoctich = null;
+        matg = hotg = tentg = gioitinh = quoctich = null;
         namsinh = 0;
     }
     
-    public TacGia(String matg, String tentg, int namsinh, String gioitinh, String quoctich) {
+    public TacGia(String matg, String hotg, String tentg, String gioitinh, int namsinh, String quoctich) {
         this.matg = matg;
+        this.hotg = hotg;
         this.tentg = tentg;
         this.gioitinh = gioitinh;
         this.quoctich = quoctich;
@@ -36,6 +37,7 @@ public class TacGia {
     
     public TacGia(TacGia tg){
         matg = tg.matg;
+        hotg = tg.hotg;
         tentg = tg.tentg;
         gioitinh = tg.gioitinh;
         quoctich = tg.quoctich;
@@ -50,6 +52,14 @@ public class TacGia {
         this.matg = matg;
     }
 
+    public String getHotg() {
+        return hotg;
+    }
+
+    public void setHotg(String hotg) {
+        this.hotg = hotg;
+    }
+    
     public String getTentg() {
         return tentg;
     }

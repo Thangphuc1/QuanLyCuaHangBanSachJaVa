@@ -76,7 +76,7 @@ public class SachGUI extends JPanel{
     }
     
     private void styleTextField(JTextField txt) {
-        txt.setPreferredSize(new Dimension(220, 38));
+        txt.setPreferredSize(new Dimension(170, 38));
         txt.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         txt.setBackground(Color.WHITE);
         txt.setForeground(new Color(33, 37, 41));
@@ -475,7 +475,7 @@ public class SachGUI extends JPanel{
         cbmdtk.addElement("Nhà xuất bản");
         cbmdtk.addElement("Đơn giá");
         cbtk = new JComboBox(cbmdtk);
-        txttk = new JTextField(50);
+        txttk = new JTextField(30);
         
         txtgiamin = new JTextField(10);
         lbden = new JLabel("đến");

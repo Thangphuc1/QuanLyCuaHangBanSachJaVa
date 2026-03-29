@@ -352,7 +352,6 @@ public class NhaXuatBanGUI extends JPanel{
         cbmdtk.addElement("Tên nhà xuất bản");
         cbtk = new JComboBox(cbmdtk);
         txttk = new JTextField(25);
-        
         btntimkiem = new JButton("Tìm");
         ptimkiem = new JPanel();
         ptimkiem.add(psoluong);
@@ -360,6 +359,8 @@ public class NhaXuatBanGUI extends JPanel{
         ptimkiem.add(txttk);
         ptimkiem.add(btntimkiem);
         styleButton(btntimkiem, new Color(241, 196, 15));
+        styleComboBox(cbtk);
+        styleTextField(txttk);
         ptimkiem.setBackground(new Color(255, 253, 208));
         
         //toolbar container
