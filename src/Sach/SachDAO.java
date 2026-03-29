@@ -22,7 +22,7 @@ public class SachDAO {
                 rs.getString("MaTacGia"),
                 rs.getString("MaTheLoai"),
                 rs.getInt("NamXuatBan"),
-                rs.getString("MaNhaXuatBan"),
+                rs.getString("manxb"),
                 rs.getInt("DonGia"),
                 rs.getInt("SoLuongTon")
                 );
@@ -94,5 +94,25 @@ public class SachDAO {
         }
         return true;
     }
+    public boolean UpdateSoLuongTon(String maSach, int soLuong) {
+    String sql = "UPDATE sach SET soluongton = soluongton + ? WHERE masach = ?";
     
+    try {
+        Connection conn = DBConnection.getDBConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, soLuong);     // ⭐ Cộng thêm
+        pstmt.setString(2, maSach);
+        
+        int result = pstmt.executeUpdate();
+        
+        conn.close();
+        pstmt.close();
+        
+        return result > 0;
+        
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
 }

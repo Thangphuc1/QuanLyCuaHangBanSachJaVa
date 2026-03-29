@@ -54,6 +54,9 @@ public class ChiTietPhieuNhapDAO {
                         rs.getDouble("thanhtien"));
                 dsctpn.add(ctpn);
              }
+             conn.close(); 
+             pstmt.close() ;
+             rs.close();
          }catch(SQLException e) {
              e.printStackTrace();
          }
@@ -96,8 +99,23 @@ public class ChiTietPhieuNhapDAO {
             }
      return true;
     }
+    public boolean DeleteChiTietTheoMaPN(String maPN) {
+        String sql = "delete from chitietphieunhap where maphieunhap = ?";
+        try {
+            Connection conn = DBConnection.getDBConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, maPN);
+            pstmt.executeUpdate();
+            pstmt.close();
+            conn.close();
+            return true;
+        } catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+            }
+    }
    public boolean UpdateChiTietPhieuNhap( ChiTietPhieuNhap ctpn) {
-       String sql="update chitietphieunhap set soluong = ?, dongia = ? where maphieunhap = ? and masach = ?";
+       String sql="update chitietphieunhap set soluong = ?, dongia = ?, thanhtien = ? where maphieunhap = ? and masach = ?";
        Double thanhtien= ctpn.getSoLuong() * ctpn.getDonGia();
        try {
            Connection conn=DBConnection.getDBConnection();
@@ -105,6 +123,8 @@ public class ChiTietPhieuNhapDAO {
            pstmt.setInt(1,ctpn.getSoLuong());
            pstmt.setDouble(2, ctpn.getDonGia());
            pstmt.setDouble(3,thanhtien);
+           pstmt.setString(4,ctpn.getMaPN());
+           pstmt.setString(5,ctpn.getMaSach());
            pstmt.executeUpdate();
            phieunhapdao.UpdateTongTienPN(ctpn.getMaPN());
        }catch(SQLException e) {
@@ -129,5 +149,5 @@ public class ChiTietPhieuNhapDAO {
        }
        return false;
    }
-}
+   }
    

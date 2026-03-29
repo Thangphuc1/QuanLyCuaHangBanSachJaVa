@@ -14,7 +14,7 @@ public class PhieuNhap {
     private LocalDate ngayLap;
     private Double tongTien;
     public PhieuNhap() {}
-    public PhieuNhap(String maPN,String maNCC,String maNV,LocalDate ngayLap,Double tongTien) {
+    public PhieuNhap(String maPN,String maNV,String maNCC,LocalDate ngayLap,Double tongTien) {
         this.maPN=maPN;
         this.maNCC=maNCC;
         this.maNV=maNV;

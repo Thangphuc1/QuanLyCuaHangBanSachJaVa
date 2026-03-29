@@ -27,7 +27,7 @@ public class NhaCungCapGUI extends JPanel{
         JPanel panelNhapLieu = taoPanel();
        
         add(panelNhapLieu, BorderLayout.NORTH);
-
+        
         // Panel bảng
         JPanel panelBang = taoPanelBang();
         add(panelBang, BorderLayout.CENTER);
@@ -374,7 +374,7 @@ public class NhaCungCapGUI extends JPanel{
         if (selectedRow == -1) {
         JOptionPane.showMessageDialog(this, "Vui lòng chọn nhà cung cấp để sửa!", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return;
-    }
+        }
         JDialog dialog = new JDialog( frame, "Sửa", true);
         dialog.setSize(700, 600);
         dialog.setLocationRelativeTo(this);
@@ -393,6 +393,7 @@ public class NhaCungCapGUI extends JPanel{
         p3.setBackground(new Color(240, 240, 240));
         p3.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
         p3.setLayout(new FlowLayout(FlowLayout.RIGHT, 15, 10)); // ⭐ Align phải
+        
         
         
         JLabel lbtieude = new JLabel("Sửa Nhà Cung Cấp");

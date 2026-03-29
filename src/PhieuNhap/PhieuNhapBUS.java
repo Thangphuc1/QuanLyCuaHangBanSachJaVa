@@ -9,6 +9,8 @@ import NhanVien.*;
 import ChiTietPhieuNhap.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,41 +21,46 @@ public class PhieuNhapBUS {
     private NhaCungCapDAO nccdao=new NhaCungCapDAO();
     private NhanVienDAO nvdao = new NhanVienDAO();
     private ChiTietPhieuNhapDAO ctdao=new ChiTietPhieuNhapDAO();
+    private ChiTietPhieuNhapBUS ctbus=new ChiTietPhieuNhapBUS();
     ArrayList<PhieuNhap> dspn=new ArrayList<>();
     ArrayList<NhaCungCap> dsncc=new ArrayList<>();
     ArrayList<NhanVien> dsnv=new ArrayList<>();
     ArrayList<ChiTietPhieuNhap> dsct=new ArrayList<>();
     
    public PhieuNhapBUS() {
-       dspn=pndao.LoadPhieuNhap();
+//       dspn=pndao.LoadPhieuNhap();
        dsncc=nccdao.LoadNhaCungCap();
        dsnv=nvdao.loadNhanVien();
        dsct=ctdao.LoadChiTietPhieuNhap();
    } 
-   public ArrayList<PhieuNhap> getPhieuNhap () {
-       return dspn;
+   public ArrayList<PhieuNhap> getPhieuNhap() {
+    dspn = pndao.LoadPhieuNhap();  // ⭐ Reload từ DB mỗi lần
+    return dspn;
+}
+   public PhieuNhap GetByMaPhieu(String mapn) {
+       return pndao.GetPhieuNhapByMa(mapn);
    }
-   public boolean ThemPhieuNhap(PhieuNhap pn) {
+   public boolean ThemPhieuNhap(PhieuNhap pn,JDialog parentDialog) {
        if(!KiemTra(pn)) {
-           System.out.println("vui long kiem tra da dien du thong tin va nhap du lieu phu hop");   
+             
            return false;
        }
-       if(!KiemTraMaPNTonTai(pn.getMaPN())) {
-           System.out.println("ma phieu nhap ko ton tai");
+       if(KiemTraMaPNTonTai(pn.getMaPN())) {
+           JOptionPane.showMessageDialog(parentDialog,"mã phiếu nhập đã tồn tại!","Lỗi",JOptionPane.ERROR_MESSAGE);
            return false;
        }
        if(!KiemTraManvTonTai(pn.getMaNV())) {
-           System.out.println("ma nhan vien ko ton tai");
+           JOptionPane.showMessageDialog(parentDialog,"mã nhân viên ko tồn tại!","Lỗi",JOptionPane.ERROR_MESSAGE);
            return false;
        }
        if(!KiemTraMaNCCTonTai(pn.getMaNCC())) {
-           System.out.println("ma nha cung cap ko ton tai");
+           JOptionPane.showMessageDialog(parentDialog,"mã nhà cung cấp ko tồn tại!","Lỗi",JOptionPane.ERROR_MESSAGE);
            return false;
        }
-       if(!KiemTraChiTietPN(pn.getMaNCC())) {
-           System.out.println("phieu nhap phai co it nhat 1 phieu nhap");
-           return false;
-       }
+//       if(!KiemTraChiTietPN(pn.getMaPN())) {
+//           JOptionPane.showMessageDialog(parentDialog,"phiếu nhập phải có ít nhất 1 chi tiết!","Lỗi",JOptionPane.ERROR_MESSAGE);
+//           return false;
+//       }
        
        boolean KetQua=pndao.InSertPhieuNhap(pn);
        if(KetQua) {
@@ -61,13 +68,13 @@ public class PhieuNhapBUS {
        }
        return KetQua;
    }
-   public boolean SuaPhieuNhap(PhieuNhap pn) {
+   public boolean SuaPhieuNhap(PhieuNhap pn,JDialog parentDialog) {
        if(!KiemTra(pn)) {
-           System.out.println("vui long kiem tra da dien du thong tin va nhap du lieu phu hop");   
+              
            return false;
        }
        if(!KiemTraManvTonTai(pn.getMaNV())) {
-           System.out.println("ma nhan vien ko ton tai");
+           JOptionPane.showMessageDialog(parentDialog,"mã nhân viên ko tồn tại!","Lỗi",JOptionPane.ERROR_MESSAGE);
            return false;
        }
        if(!KiemTraMaNCCTonTai(pn.getMaNCC())) {
@@ -81,17 +88,25 @@ public class PhieuNhapBUS {
        return KetQua;
        
    }
+//   public boolean XoaPhieuNhap(PhieuNhap pn) {
+//       boolean KetQua=pndao.DeletePhieuNhap(pn);
+//       if(KetQua) {
+//           dspn=pndao.LoadPhieuNhap();
+//       }
+//       return KetQua;
+//   }
    public boolean XoaPhieuNhap(PhieuNhap pn) {
-       if(!KiemTraMaPNTonTai(pn.getMaPN())) {
-           System.out.println("ma phieu nhap ko ton tai");
-           return false;
-       }
-       boolean KetQua=pndao.DeletePhieuNhap(pn);
-       if(KetQua) {
-           dspn=pndao.LoadPhieuNhap();
-       }
-       return KetQua;
-   }
+    // 1) Xóa chi tiết trước
+    ctbus.XoaChiTietTheoMaPN(pn.getMaPN());
+
+    // 2) Xóa phiếu
+    boolean ketQua = pndao.DeletePhieuNhap(pn);
+
+    if (ketQua) {
+        dspn = pndao.LoadPhieuNhap();
+    }
+    return ketQua;
+    }
 //=======================TIMKIEM====================
    public PhieuNhap TimPhieuNhapTheoMa(String mapn) {
        for(PhieuNhap pn :dspn) {
@@ -123,14 +138,13 @@ public class PhieuNhapBUS {
 //===============VALIDATE===========================
     public boolean KiemTra (PhieuNhap pn) {
         if(pn.getMaPN()==null||pn.getMaNCC()==null||pn.getMaNV()==null||pn.getNgayLap()==null) {
+            
             return false;
         }
         if(pn.getMaPN().isEmpty()||pn.getMaNCC().isEmpty()||pn.getMaNV().isEmpty()||pn.getNgayLap().isAfter(LocalDate.now())) {
             return false;
         }
-        if(pn.getTongTien()==null||pn.getTongTien()<0) {
-            return false;
-        }
+        
         return true;
     }
     public boolean KiemTraMaPNTonTai(String mapn) {
@@ -166,8 +180,11 @@ public class PhieuNhapBUS {
         }
         return false;
     }
-    
+    public boolean UpdateTongTienPN(String maPN) {
+        return pndao.UpdateTongTienPN(maPN);
+    }
         
     
     
 }
+

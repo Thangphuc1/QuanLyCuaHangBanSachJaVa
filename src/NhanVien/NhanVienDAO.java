@@ -23,11 +23,11 @@ public class NhanVienDAO {
             
             while(rs.next()){
                         NhanVien nhanVien = new NhanVien(
-                            rs.getString("MaNhanVien"),
-                            rs.getString("TenNhanVien"),
-                            rs.getString("HoNhanVien"),
+                            rs.getString("manv"),
+                            rs.getString("honv"),
+                            rs.getString("tennv"),
+                            rs.getString("sdt"),
                             rs.getString("DiaChi"),
-                            rs.getString("SDT"),
                             rs.getString("Email"),
                             rs.getDouble("Luong")
 );

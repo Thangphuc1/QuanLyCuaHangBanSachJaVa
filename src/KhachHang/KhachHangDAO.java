@@ -24,12 +24,12 @@ public class KhachHangDAO {
                 
                 while(rs.next()){
                             KhachHang khachHang = new KhachHang(
-                                rs.getString("MaNhanVien"),
-                                rs.getString("TenNhanVien"),
-                                rs.getString("HoNhanVien"),
+                                rs.getString("makh"),
+                                rs.getString("tenkhachhang"),
+                                rs.getString("hokhachhang"),
                                 rs.getString("DiaChi"),
-                                rs.getString("SDT"),
-                                rs.getString("Email")
+                                rs.getString("sdt"),
+                                rs.getString("email")
     );
                     dsKhachHang.add(khachHang);
                 }
@@ -40,7 +40,7 @@ public class KhachHangDAO {
             return dsKhachHang;
         } 
         public boolean insertKhachHang(KhachHang khachHang){
-            String qry = "insert into khachhang values (?,?,?,?,?)";
+            String qry = "insert into khachhang values (?,?,?,?,?,?)";
             try(Connection conn = DBConnection.getDBConnection();
                 PreparedStatement st = conn.prepareStatement(qry);){
                 
@@ -59,7 +59,7 @@ public class KhachHangDAO {
             return true;
         }
         public boolean deleteKhachHang(String ma){
-            String qry = "Delete from khachhang where MaKH = ?";
+            String qry = "Delete from khachhang where makh = ?";
             try(Connection conn = DBConnection.getDBConnection();
                 PreparedStatement st = conn.prepareStatement(qry);){
                 
@@ -73,7 +73,7 @@ public class KhachHangDAO {
             return true;
         }
         public boolean updateKhachHang(KhachHang khachHang){
-            String qry = "update hhakhachhang set maKH = ?, TenKH = ?, DiaChi = ?, SDT = ?, Email = ? where MaNV = ?";
+            String qry = "update hhakhachhang set makh = ?, tenkhachhang = ?, hokhachhang = ? , DiaChi = ?, sdt = ?, email = ? where makh = ?";
             try(Connection conn = DBConnection.getDBConnection();
                 PreparedStatement st = conn.prepareStatement(qry);){
                 
@@ -91,4 +91,3 @@ public class KhachHangDAO {
             return true;
         }
     }
-

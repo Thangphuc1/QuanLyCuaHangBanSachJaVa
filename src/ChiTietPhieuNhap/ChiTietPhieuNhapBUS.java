@@ -20,28 +20,29 @@ public class ChiTietPhieuNhapBUS {
     ArrayList<PhieuNhap> dspn=new ArrayList<>();
     ArrayList<Sach> dss=new ArrayList<>();
     
-    public ArrayList<ChiTietPhieuNhap> GetChiTietPhieuNhap(ChiTietPhieuNhap ctpn) {
-        return ctdao.GetByPhieuNhap(ctpn.getMaPN());
+    public ArrayList<ChiTietPhieuNhap> GetChiTietPhieuNhap(String mapn) {
+        return ctdao.GetByPhieuNhap(mapn);
     }
     public boolean ThemChiTietPhieuNhap(ChiTietPhieuNhap ctpn) {
         if(!KiemTra(ctpn)) {
             System.out.println("vui long dien day du thong tin, khong bo trong bat ky o nao !");
             return false;
         }
-        if(!KiemTraMaPNTonTai(ctpn.getMaPN())) {
-            System.out.println("ma phieu nhap ko ton tai");
-            return false;
-        }
-        if(!KiemTraMaSachTonTai(ctpn.getMaSach())) {
-            System.out.println("ma sach ko ton tai");
-            return false;
-        }
+//        if(!KiemTraMaPNTonTai(ctpn.getMaPN())) {
+//            System.out.println("ma phieu nhap ko ton tai");
+//            return false;
+//        }
+//        if(!KiemTraMaSachTonTai(ctpn.getMaSach())) {
+//            System.out.println("ma sach ko ton tai");
+//            return false;
+//        }
         boolean KetQua=ctdao.InsertChiTietPhieuNhap(ctpn);
         if(KetQua) {
             dsctpn=ctdao.LoadChiTietPhieuNhap();
         }
         return KetQua;
     }
+    
     public boolean SuaChiTietPhieuNhap(ChiTietPhieuNhap ctpn) {
         if(!KiemTra(ctpn)) {
             System.out.println("vui long dien day du thong tin, khong bo trong bat ky o nao !");
@@ -59,6 +60,13 @@ public class ChiTietPhieuNhapBUS {
             dsctpn=ctdao.LoadChiTietPhieuNhap();
         }
         return KetQua;
+    }
+    public boolean XoaChiTietTheoMaPN(String maPN) {
+        boolean ketQua = ctdao.DeleteChiTietTheoMaPN(maPN);
+        if (ketQua) {
+            dsctpn = ctdao.LoadChiTietPhieuNhap();
+        }
+    return ketQua;
     }
     
     
