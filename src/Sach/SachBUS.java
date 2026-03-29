@@ -209,7 +209,8 @@ public class SachBUS {
     public void sachreload(){
         dss = sachdao.loadSach();
     }
+    
     public boolean CongSoLuongTon(String maSach, int soLuong) {
-    return sachdao.UpdateSoLuongTon(maSach, soLuong);
-}
+        return sachdao.UpdateSoLuongTon(maSach, soLuong);
+    }
 }
