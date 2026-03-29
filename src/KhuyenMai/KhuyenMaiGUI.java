@@ -6,7 +6,8 @@ import java.awt.*;
 import java.time.LocalDate; 
 import java.util.ArrayList;
 
-public class KhuyenMaiGUI extends JFrame { 
+public class KhuyenMaiGUI extends JPanel {
+
     KhuyenMaiBUS kmBUS = new KhuyenMaiBUS();
     
     JTextField txtMa, txtTen, txtBD, txtKT, txtDK, txtPtgg; 
@@ -16,93 +17,91 @@ public class KhuyenMaiGUI extends JFrame {
     JButton btnThem, btnSua, btnXoa, btnLoad, btnSearch, btnThongke; 
     
     public KhuyenMaiGUI() { 
-        setTitle("Quản lý khuyến mãi");
-        setSize(900,550); 
-        setLocationRelativeTo(null); 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         init(); 
-        loadTable(); } 
+        loadTable(); 
+    } 
+
     private void init(){ 
         setLayout(new BorderLayout());
-    
-// ===== PANEL INPUT ===== 
-    JPanel pInput = new JPanel(new GridLayout(6,2,5,5)); 
-    txtMa = new JTextField();
-    txtMa.setEditable(false);
-    txtTen = new JTextField();
-    txtBD = new JTextField(); 
-    txtKT = new JTextField(); 
-    txtDK = new JTextField(); 
-    txtPtgg = new JTextField(); 
-    
-    pInput.add(new JLabel("Mã KM")); 
-    pInput.add(txtMa); 
-    pInput.add(new JLabel("Tên KM")); 
-    pInput.add(txtTen); 
-    pInput.add(new JLabel("Ngày bắt đầu (yyyy-mm-dd)")); 
-    pInput.add(txtBD); 
-    pInput.add(new JLabel("Ngày kết thúc (yyyy-mm-dd)"));
-    pInput.add(txtKT); 
-    pInput.add(new JLabel("Điều kiện")); 
-    pInput.add(txtDK); 
-    pInput.add(new JLabel("Phần trăm giảm")); 
-    pInput.add(txtPtgg); 
-    add(pInput,BorderLayout.NORTH); 
 
-// ===== TABLE ===== 
-    model = new DefaultTableModel(); 
-    model.setColumnIdentifiers(new String[]{ 
-        "makm",
-        "tenkm",
-        "ngaybatdau",
-        "ngayketthuc",
-        "dieukientoithieu",
-        "phantramgiam" 
-    }); 
-    
-    table = new JTable(model); 
-    add(new JScrollPane(table),BorderLayout.CENTER); 
+    // ===== PANEL INPUT ===== 
+        JPanel pInput = new JPanel(new GridLayout(6,2,5,5)); 
+        txtMa = new JTextField();
+        txtMa.setEditable(false);
+        txtTen = new JTextField();
+        txtBD = new JTextField(); 
+        txtKT = new JTextField(); 
+        txtDK = new JTextField(); 
+        txtPtgg = new JTextField(); 
+        
+        pInput.add(new JLabel("Mã KM")); 
+        pInput.add(txtMa); 
+        pInput.add(new JLabel("Tên KM")); 
+        pInput.add(txtTen); 
+        pInput.add(new JLabel("Ngày bắt đầu (yyyy-mm-dd)")); 
+        pInput.add(txtBD); 
+        pInput.add(new JLabel("Ngày kết thúc (yyyy-mm-dd)"));
+        pInput.add(txtKT); 
+        pInput.add(new JLabel("Điều kiện")); 
+        pInput.add(txtDK); 
+        pInput.add(new JLabel("Phần trăm giảm")); 
+        pInput.add(txtPtgg); 
+        add(pInput,BorderLayout.NORTH); 
 
-// ===== SEARCH ===== JPanel 
-    JPanel pSearch = new JPanel(); 
-    txtSearch = new JTextField(20);
-    btnSearch = new JButton("Tìm"); 
-    pSearch.add(new JLabel("Tìm kiếm")); 
-    pSearch.add(txtSearch); 
-    pSearch.add(btnSearch); 
-    add(pSearch,BorderLayout.WEST); 
+    // ===== TABLE ===== 
+        model = new DefaultTableModel(); 
+        model.setColumnIdentifiers(new String[]{ 
+            "makm",
+            "tenkm",
+            "ngaybatdau",
+            "ngayketthuc",
+            "dieukientoithieu",
+            "phantramgiam" 
+        }); 
+        
+        table = new JTable(model); 
+        add(new JScrollPane(table),BorderLayout.CENTER); 
 
-// ===== BUTTON ===== 
-    JPanel pButton = new JPanel(); 
-    btnThem = new JButton("Thêm"); 
-    btnSua = new JButton("Sửa"); 
-    btnXoa = new JButton("Xóa"); 
-    btnLoad = new JButton("Load"); 
-    btnThongke = new JButton("Thống kê"); 
-    
-    pButton.add(btnThem);
-    pButton.add(btnSua); 
-    pButton.add(btnXoa);
-    pButton.add(btnLoad); 
-    pButton.add(btnThongke); 
-    add(pButton,BorderLayout.SOUTH); 
+    // ===== SEARCH ===== 
+        JPanel pSearch = new JPanel(); 
+        txtSearch = new JTextField(20);
+        btnSearch = new JButton("Tìm"); 
+        pSearch.add(new JLabel("Tìm kiếm")); 
+        pSearch.add(txtSearch); 
+        pSearch.add(btnSearch); 
+        add(pSearch,BorderLayout.WEST); 
 
-// ===== EVENT ===== 
-    btnThem.addActionListener(e -> them()); 
-    btnSua.addActionListener(e -> sua()); 
-    btnXoa.addActionListener(e -> xoa()); 
-    btnLoad.addActionListener(e -> loadTable()); 
-    btnSearch.addActionListener(e -> search()); 
-    btnThongke.addActionListener(e -> thongke()); 
-    
-    table.addMouseListener(new java.awt.event.MouseAdapter() { 
-        public void mouseClicked(java.awt.event.MouseEvent evt){ 
-            fill();
-        } 
-    }); 
+    // ===== BUTTON ===== 
+        JPanel pButton = new JPanel(); 
+        btnThem = new JButton("Thêm"); 
+        btnSua = new JButton("Sửa"); 
+        btnXoa = new JButton("Xóa"); 
+        btnLoad = new JButton("Load"); 
+        btnThongke = new JButton("Thống kê"); 
+        
+        pButton.add(btnThem);
+        pButton.add(btnSua); 
+        pButton.add(btnXoa);
+        pButton.add(btnLoad); 
+        pButton.add(btnThongke); 
+        add(pButton,BorderLayout.SOUTH); 
+
+    // ===== EVENT ===== 
+        btnThem.addActionListener(e -> them()); 
+        btnSua.addActionListener(e -> sua()); 
+        btnXoa.addActionListener(e -> xoa()); 
+        btnLoad.addActionListener(e -> loadTable()); 
+        btnSearch.addActionListener(e -> search()); 
+        btnThongke.addActionListener(e -> thongke()); 
+        
+        table.addMouseListener(new java.awt.event.MouseAdapter() { 
+            public void mouseClicked(java.awt.event.MouseEvent evt){ 
+                fill();
+            } 
+        }); 
     }
-    
-// ===== LOAD TABLE ===== 
+
+    // ===== LOAD TABLE ===== 
     private void loadTable(){ 
         model.setRowCount(0); 
         ArrayList<KhuyenMai> list = kmBUS.getAll(); 
@@ -113,32 +112,34 @@ public class KhuyenMaiGUI extends JFrame {
                 km.getNgayBD(), 
                 km.getNgayKT(), 
                 km.getDKTT(), 
-                km.getPtgg() }); } 
+                km.getPtgg() 
+            }); 
+        } 
     } 
 
-// ===== LẤY DỮ LIỆU FORM ===== 
+    // ===== LẤY DỮ LIỆU FORM ===== 
     private KhuyenMai getForm(){ 
         try {
-        String ma = txtMa.getText();
-        String ten = txtTen.getText();
-        LocalDate bd = LocalDate.parse(txtBD.getText());
-        LocalDate kt = LocalDate.parse(txtKT.getText());
-        int dk = Integer.parseInt(txtDK.getText());
-        int gc = Integer.parseInt(txtPtgg.getText());
+            String ma = txtMa.getText();
+            String ten = txtTen.getText();
+            LocalDate bd = LocalDate.parse(txtBD.getText());
+            LocalDate kt = LocalDate.parse(txtKT.getText());
+            int dk = Integer.parseInt(txtDK.getText());
+            int gc = Integer.parseInt(txtPtgg.getText());
 
-        if(bd.isAfter(kt)){
-            JOptionPane.showMessageDialog(this,"Ngày bắt đầu phải nhỏ hơn ngày kết thúc!");
-            return null;
-        }
-        return new KhuyenMai(ma,ten,bd,kt,dk,gc);
+            if(bd.isAfter(kt)){
+                JOptionPane.showMessageDialog(this,"Ngày bắt đầu phải nhỏ hơn ngày kết thúc!");
+                return null;
+            }
+            return new KhuyenMai(ma,ten,bd,kt,dk,gc);
 
         } catch (Exception e){
             JOptionPane.showMessageDialog(this,"Dữ liệu không hợp lệ!");
             return null;
         }
-        }
+    }
 
-// ===== THÊM ===== 
+    // ===== THÊM ===== 
     private void them(){ 
         KhuyenMai km = getForm();
         if(km == null) return;
@@ -147,9 +148,11 @@ public class KhuyenMaiGUI extends JFrame {
             loadTable();
             clearForm();
         }else{ 
-            JOptionPane.showMessageDialog(this,"Thêm thất bại"); } } 
+            JOptionPane.showMessageDialog(this,"Thêm thất bại"); 
+        } 
+    } 
 
-// ===== SỬA ===== 
+    // ===== SỬA ===== 
     private void sua(){ 
         KhuyenMai km = getForm(); 
         if(km == null) return;
@@ -158,9 +161,11 @@ public class KhuyenMaiGUI extends JFrame {
             loadTable(); 
             clearForm();
         }else{ 
-            JOptionPane.showMessageDialog(this,"Sửa thất bại"); } } 
+            JOptionPane.showMessageDialog(this,"Sửa thất bại"); 
+        } 
+    } 
 
-// ===== XÓA ===== 
+    // ===== XÓA ===== 
     private void xoa(){ 
         String ma = txtMa.getText(); 
         if(kmBUS.delete(ma)){ 
@@ -169,9 +174,10 @@ public class KhuyenMaiGUI extends JFrame {
             clearForm();
         }else{ 
             JOptionPane.showMessageDialog(this,"Xóa thất bại"); 
-        } } 
+        } 
+    } 
 
-// ===== FILL FORM ===== 
+    // ===== FILL ===== 
     private void fill(){ 
         int row = table.getSelectedRow();
         if(row == -1) return;
@@ -181,7 +187,8 @@ public class KhuyenMaiGUI extends JFrame {
         txtBD.setText(model.getValueAt(row,2).toString()); 
         txtKT.setText(model.getValueAt(row,3).toString()); 
         txtDK.setText(model.getValueAt(row,4).toString()); 
-        txtPtgg.setText(model.getValueAt(row,5).toString()); } 
+        txtPtgg.setText(model.getValueAt(row,5).toString()); 
+    } 
     
     private void clearForm(){
         txtMa.setText("");
@@ -190,32 +197,31 @@ public class KhuyenMaiGUI extends JFrame {
         txtKT.setText("");
         txtDK.setText("");
         txtPtgg.setText("");
-}
+    }
     
-// ===== SEARCH ===== 
+    // ===== SEARCH ===== 
     private void search(){ 
         String key = txtSearch.getText(); 
         ArrayList<KhuyenMai> list = kmBUS.search(key); 
         model.setRowCount(0); 
         for(KhuyenMai km : list){ 
             model.addRow(new Object[]{ 
-                km.getMaKM(), km.getTenKM(), 
+                km.getMaKM(), 
+                km.getTenKM(), 
                 km.getNgayBD(), 
                 km.getNgayKT(), 
                 km.getDKTT(), 
-                km.getPtgg() }); } } 
+                km.getPtgg() 
+            }); 
+        } 
+    } 
     
     private void thongke(){ 
         KhuyenMaiDAO.ThongKeKM tk = kmBUS.thongKe();
         StringBuilder sb = new StringBuilder();
 
-        sb.append("Tổng số khuyến mãi: ")
-            .append(tk.getTongKM())
-            .append("\n"); 
-
-        sb.append("Còn hiệu lực: ")
-            .append(tk.getKmConHieuLuc())
-            .append("\n\n"); 
+        sb.append("Tổng số khuyến mãi: ").append(tk.getTongKM()).append("\n"); 
+        sb.append("Còn hiệu lực: ").append(tk.getKmConHieuLuc()).append("\n\n"); 
 
         sb.append("Theo phần trăm giảm:\n"); 
 
@@ -225,7 +231,4 @@ public class KhuyenMaiGUI extends JFrame {
 
         JOptionPane.showMessageDialog(this, sb.toString(), "Thống kê", JOptionPane.INFORMATION_MESSAGE);
     }  
-    
-    public static void main(String[] args) { 
-        new KhuyenMaiGUI().setVisible(true); 
-    } }
+}
