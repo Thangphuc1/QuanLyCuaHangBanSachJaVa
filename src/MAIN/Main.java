@@ -3,13 +3,13 @@ package MAIN;
 import javax.swing.*;
 import java.awt.*;
 
-// ===== IMPORT GUI =====
+// IMPORT GUI của bạn
 import ThongKe.ThongKeGUI;
-import NhaCungCap.NhaCungCapGUI;
-import NhanVien.NhanVienGUI;
-import KhachHang.KhachHangGUI;
 import Sach.SachGUI;
+import KhachHang.KhachHangGUI;
+import NhanVien.NhanVienGUI;
 import HoaDon.HoaDonGUI;
+import NhaCungCap.NhaCungCapGUI;
 import PhieuNhap.PhieuNhapGUI;
 import KhuyenMai.KhuyenMaiGUI;
 
@@ -17,107 +17,129 @@ public class Main extends JFrame {
 
     private JPanel contentPanel;
     private CardLayout cardLayout;
+    private JButton selectedButton = null;
 
     public Main() {
-        setTitle("Quản Lý Cửa Hàng Sách");
-        setSize(1250, 750);
+        setTitle("Quản Lý Kho");
+        setSize(1400, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
 
-        // ===== SIDEBAR =====
+        setLayout(new BorderLayout());
         add(createSidebar(), BorderLayout.WEST);
 
-        // ===== CONTENT =====
         cardLayout = new CardLayout();
         contentPanel = new JPanel(cardLayout);
+
+        // ⭐ ADD TOÀN BỘ GUI VÀO ĐÂY
+        contentPanel.add(new ThongKeGUI(), "TongQuan");
+        contentPanel.add(new SachGUI(), "Sach");
+        contentPanel.add(new KhachHangGUI(), "KhachHang");
+        contentPanel.add(new NhanVienGUI(), "NhanVien");
+       // contentPanel.add(new HoaDonGUI(), "HoaDon");
+        contentPanel.add(new NhaCungCapGUI(this), "NhaCungCap");
+       // contentPanel.add(new PhieuNhapGUI(), "NhapHang");
+       // contentPanel.add(new KhuyenMaiGUI(), "KhuyenMai");
+
         add(contentPanel, BorderLayout.CENTER);
-
-        // ===== ADD PANEL =====
-        contentPanel.add(new ThongKeGUI(), "THONGKE");
-        contentPanel.add(new NhaCungCapGUI(this), "NHACUNGCAP");
-        //contentPanel.add(new NhanVienGUI(), "NHANVIEN");
-        //contentPanel.add(new KhachHangGUI(), "KHACHHANG");
-        contentPanel.add(new SachGUI(), "SACH");
-        //contentPanel.add(new HoaDonGUI(), "HOADON");
-        //contentPanel.add(new PhieuNhapGUI(), "PHIEUNHAP");
-        //contentPanel.add(new KhuyenMaiGUI(), "KHUYENMAI");
-
-        // ===== DEFAULT =====
-        cardLayout.show(contentPanel, "THONGKE");
+        cardLayout.show(contentPanel, "TongQuan"); // mac dinh hien overview
 
         setVisible(true);
     }
 
-    // ===== SIDEBAR =====
+    // ================= SIDEBAR =================
     private JPanel createSidebar() {
         JPanel sidebar = new JPanel();
         sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-        sidebar.setBackground(new Color(43, 43, 43));
+        sidebar.setBackground(new Color(35, 39, 42));
         sidebar.setPreferredSize(new Dimension(220, 0));
-
-        // ===== LOGO =====
-        sidebar.add(Box.createVerticalStrut(20));
 
         JLabel title = new JLabel("BookStore");
         title.setForeground(Color.WHITE);
-        title.setFont(new Font("Noto Sans", Font.BOLD, 22));
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel sub = new JLabel("Quản Lý");
-        sub.setForeground(new Color(180, 180, 180));
-        sub.setFont(new Font("Noto Sans", Font.PLAIN, 14));
-        sub.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setFont(new Font("Arial", Font.BOLD, 20));
+        title.setBorder(BorderFactory.createEmptyBorder(20, 15, 20, 10));
 
         sidebar.add(title);
-        sidebar.add(Box.createVerticalStrut(5));
-        sidebar.add(sub);
-        sidebar.add(Box.createVerticalStrut(30));
 
-        // ===== MENU =====
-        sidebar.add(createMenuButton("Tổng quan", "THONGKE"));
-        sidebar.add(createMenuButton("Sách", "SACH"));
-        sidebar.add(createMenuButton("Hóa đơn", "HOADON"));
-        sidebar.add(createMenuButton("Nhập hàng", "PHIEUNHAP"));
-        sidebar.add(createMenuButton("Khách hàng", "KHACHHANG"));
-        sidebar.add(createMenuButton("Nhân viên", "NHANVIEN"));
-        sidebar.add(createMenuButton("Khuyến mãi", "KHUYENMAI"));
-        sidebar.add(createMenuButton("Nhà cung cấp", "NHACUNGCAP"));
+        JButton btnTongQuan = createMenuButton("Tổng quan");
+        JButton btnSach = createMenuButton("Sách");
+        JButton btnHoaDon = createMenuButton("Hóa đơn");
+        JButton btnNhap = createMenuButton("Nhập hàng");
+        JButton btnKhach = createMenuButton("Khách hàng");
+        JButton btnNhanVien = createMenuButton("Nhân viên");
+        JButton btnKM = createMenuButton("Khuyến mãi");
+        JButton btnNCC = createMenuButton("Nhà cung cấp");
 
-        sidebar.add(Box.createVerticalGlue());
+        // ACTION
+        btnTongQuan.addActionListener(e -> switchPanel(btnTongQuan, "TongQuan"));
+        btnSach.addActionListener(e -> switchPanel(btnSach, "Sach"));
+        btnHoaDon.addActionListener(e -> switchPanel(btnHoaDon, "HoaDon"));
+        btnNhap.addActionListener(e -> switchPanel(btnNhap, "NhapHang"));
+        btnKhach.addActionListener(e -> switchPanel(btnKhach, "KhachHang"));
+        btnNhanVien.addActionListener(e -> switchPanel(btnNhanVien, "NhanVien"));
+        btnKM.addActionListener(e -> switchPanel(btnKM, "KhuyenMai"));
+        btnNCC.addActionListener(e -> switchPanel(btnNCC, "NhaCungCap"));
+
+        sidebar.add(btnTongQuan);
+        sidebar.add(btnSach);
+        sidebar.add(btnHoaDon);
+        sidebar.add(btnNhap);
+        sidebar.add(btnKhach);
+        sidebar.add(btnNhanVien);
+        sidebar.add(btnKM);
+        sidebar.add(btnNCC);
+
+        setActiveButton(btnTongQuan);
 
         return sidebar;
     }
 
-    // ===== BUTTON =====
-    private JButton createMenuButton(String text, String panelName) {
+    // ================= SWITCH PANEL =================
+    private void switchPanel(JButton btn, String name) {
+        setActiveButton(btn);
+        cardLayout.show(contentPanel, name);
+    }
+
+    // ================= STYLE BUTTON =================
+    private JButton createMenuButton(String text) {
         JButton btn = new JButton(text);
-        btn.setMaximumSize(new Dimension(220, 45));
-        btn.setBackground(new Color(43, 43, 43));
+        btn.setMaximumSize(new Dimension(220, 50));
+        btn.setAlignmentX(Component.LEFT_ALIGNMENT);
+        btn.setBackground(new Color(35, 39, 42));
         btn.setForeground(Color.WHITE);
         btn.setFocusPainted(false);
         btn.setBorderPainted(false);
         btn.setHorizontalAlignment(SwingConstants.LEFT);
-        btn.setFont(new Font("Noto Sans", Font.PLAIN, 14));
+        btn.setFont(new Font("Arial", Font.PLAIN, 14));
+        
+        // Fixed padding: 20 pixels from the left side.
+        btn.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 10));
 
-        btn.addActionListener(e -> cardLayout.show(contentPanel, panelName));
-
-        // Hover
         btn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btn.setBackground(new Color(70, 70, 70));
+                if (btn != selectedButton) btn.setBackground(new Color(60, 60, 65));
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                btn.setBackground(new Color(43, 43, 43));
+                if (btn != selectedButton) btn.setBackground(new Color(35, 39, 42));
             }
         });
-
         return btn;
     }
+    // ================= ACTIVE BUTTON =================
+    private void setActiveButton(JButton btn) {
+        // Reset previous button
+        if (selectedButton != null) {
+            selectedButton.setBackground(new Color(35, 39, 42));
+        }
 
+        // Update current button
+        selectedButton = btn;
+        btn.setBackground(new Color(24, 144, 255)); 
+        // Notice: We do NOT set a MatteBorder here anymore.
+    }
+
+    // ================= MAIN =================
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new Main());
+        SwingUtilities.invokeLater(Main::new);
     }
 }
-

@@ -35,7 +35,7 @@ public class KhuyenMaiDAO {
     
     public String generateMaKM() { 
         String prefix = "KM";
-        String sql = "SELECT TOP 1 makm FROM KhuyenMai ORDER BY makm DESC"; 
+        String sql = "SELECT makm FROM KhuyenMai ORDER BY makm DESC LIMIT 1";
         try { 
             conn = DBConnection.getConnection();
             ps = conn.prepareStatement(sql); 
@@ -54,15 +54,15 @@ public class KhuyenMaiDAO {
     
 // Thêm khuyến mãi 
     public boolean insert(KhuyenMai km) { 
-        String sql = "INSERT INTO KhuyenMai VALUES(?,?,?,?,?,?)";
+        String sql = "INSERT INTO KhuyenMai(makm, tenkm, ngaybatdau, ngayketthuc, dieukientoithieu, phantramgiam) VALUES(?,?,?,?,?,?)";
         try { 
             conn = DBConnection.getConnection();
             km.setMaKM(generateMaKM()); 
             ps = conn.prepareStatement(sql); 
             ps.setString(1, km.getMaKM()); 
             ps.setString(2, km.getTenKM()); 
-            ps.setDate(3, Date.valueOf(km.getNgayBD())); 
-            ps.setDate(4, Date.valueOf(km.getNgayKT())); 
+            ps.setDate(3, java.sql.Date.valueOf(km.getNgayBD()));
+            ps.setDate(4, java.sql.Date.valueOf(km.getNgayKT())); 
             ps.setInt(5, km.getDKTT()); 
             ps.setInt(6, km.getPtgg()); 
             return ps.executeUpdate() > 0; 
@@ -163,7 +163,7 @@ public class KhuyenMaiDAO {
                     tk.setTongKM(rs.getInt(1));
                 //  KM còn hiệu lực 
                 }
-                String sql2 = "SELECT COUNT(*) FROM KhuyenMai WHERE NOW() BETWEEN ngaybatdau AND ngayketthuc"; 
+                String sql2 = "SELECT COUNT(*) FROM KhuyenMai WHERE NOW() BETWEEN ngaybatdau AND ngayketthuc";
                 ps = conn.prepareStatement(sql2); 
                 rs = ps.executeQuery(); 
                 if (rs.next()) { 
