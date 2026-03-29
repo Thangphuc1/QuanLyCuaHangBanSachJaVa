@@ -94,6 +94,16 @@ public class TacGiaBUS {
         return null;
     }
     
+    public ArrayList<TacGia> timTacGiaTheoHo(String ho){
+        ArrayList<TacGia> ds = new ArrayList<TacGia>();
+        for(TacGia tg : dstg){
+            if(tg.getHotg().toLowerCase().contains(ho.toLowerCase())){
+                ds.add(tg);
+            }
+        }
+        return ds;
+    }
+    
     public ArrayList<TacGia> timTacGiaTheoTen(String ten){
         ArrayList<TacGia> ds = new ArrayList<TacGia>();
         for(TacGia tg : dstg){

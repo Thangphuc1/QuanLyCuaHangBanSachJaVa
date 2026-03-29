@@ -222,9 +222,12 @@ public class TacGiaGUI extends JPanel{
                     if (s != null) dstemp.add(s);
                     break;
                 case 1:
-                    dstemp = tacgiabus.timTacGiaTheoTen(text);
+                    dstemp = tacgiabus.timTacGiaTheoHo(text);
                     break;
                 case 2:
+                    dstemp = tacgiabus.timTacGiaTheoTen(text);
+                    break;
+                case 3:
                     dstemp = tacgiabus.timTacGiaTheoQuocTich(text);
                     break;
                 }
