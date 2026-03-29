@@ -18,11 +18,11 @@ public class TacGiaDAO {
             
             while(rs.next()){
                 TacGia tg = new TacGia(
-                        rs.getString("MaTacGia"),
-                        rs.getString("TenTacGia"),
-                        rs.getInt("NamSinh"),
-                        rs.getString("GioiTinh"),
-                        rs.getString("QuocTich")
+                        rs.getString("matacgia"),
+                        rs.getString("tentacgia"),
+                        rs.getInt("namsinh"),
+                        rs.getString("gioitinh"),
+                        rs.getString("quoctich")
                 );
                 dstg.add(tg);
             }
@@ -53,7 +53,7 @@ public class TacGiaDAO {
     }
     
     public boolean deleteTacGia(String ma){
-        String qry = "Delete from tacgia where MaTacGia = ?";
+        String qry = "Delete from tacgia where matacgia = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -68,7 +68,7 @@ public class TacGiaDAO {
     }
     
     public boolean updateTacGia(TacGia tg){
-        String qry = "update tacgia set MaTacGia = ?, TenTacGia = ?, GioiTinh = ?, NamSinh = ?,  QuocTich = ? where MaTacGia = ?";
+        String qry = "update tacgia set matacgia = ?, tentacgia = ?, gioitinh = ?, namsinh = ?,  quoctich = ? where matacgia = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             

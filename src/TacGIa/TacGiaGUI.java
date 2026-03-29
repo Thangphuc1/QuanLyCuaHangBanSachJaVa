@@ -19,7 +19,7 @@ public class TacGiaGUI extends JPanel{
     
     TacGiaBUS tacgiabus = new TacGiaBUS(); 
     JFrame themform,suaform;
-    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,pradio,ptoolbar,pformtitle,pformbutton;
+    JPanel pbutton,psoluong,ptimkiem,pcontainer,inputpanel,ptable,ptitle,pradio,ptoolbar,pformtitle,pformbutton;
     JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu,btnhuy;
     JTextField txttk,txtma,txttentg,txtquoctich,txtnamsinh;
     JComboBox cbtk;
@@ -27,7 +27,7 @@ public class TacGiaGUI extends JPanel{
     JTable tbtacgia;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbgioitinh,lbquoctich,lbnamsinh,lbformtitle;
+    JLabel lbtitle,lbma,lbten,lbgioitinh,lbquoctich,lbnamsinh,lbformtitle,lbtksoluong;
     JRadioButton btnam,btnu;
     ButtonGroup g;
     JTableHeader th;
@@ -109,12 +109,19 @@ public class TacGiaGUI extends JPanel{
         txtquoctich = new JTextField(20);
         
         btnam = new JRadioButton("Nam");
-        btnu = new JRadioButton("Nu");
+        btnu = new JRadioButton("Nữ");
         g = new ButtonGroup();
         g.add(btnam);
         g.add(btnu);
         
-        pradio = new JPanel();
+        btnam.setSelected(true);
+        btnu.setBorder(new EmptyBorder(0, 20, 0, 0));
+
+        btnam.setBackground(new Color(255, 253, 208));
+        btnu.setBackground(new Color(255, 253, 208));
+        
+        pradio = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        pradio.setBackground(new Color(255, 253, 208));
         pradio.add(btnam);
         pradio.add(btnu);
         
@@ -140,7 +147,7 @@ public class TacGiaGUI extends JPanel{
                 if(btnam.isSelected()){
                     gt = "Nam";
                 }else{
-                    gt = "Nu";
+                    gt = "Nữ";
                 }
                 TacGia tacgia = new TacGia();
                 tacgia.setMatg(txtma.getText());
@@ -214,6 +221,7 @@ public class TacGiaGUI extends JPanel{
                 }
             }
             
+            lbtksoluong.setText("Số lượng tác giả: " + tacgiabus.thongKeSoLuongTacGia(dstemp));
             for (TacGia temp : dstemp) {
                 Vector<String> row = new Vector<>();
                 row.add(temp.getMatg());
@@ -258,12 +266,18 @@ public class TacGiaGUI extends JPanel{
         txtquoctich = new JTextField(20);
         
         btnam = new JRadioButton("Nam");
-        btnu = new JRadioButton("Nu");
+        btnu = new JRadioButton("Nữ");
         g = new ButtonGroup();
         g.add(btnam);
         g.add(btnu);
         
-        pradio = new JPanel();
+        btnu.setBorder(new EmptyBorder(0, 20, 0, 0));
+
+        btnam.setBackground(new Color(255, 253, 208));
+        btnu.setBackground(new Color(255, 253, 208));
+        
+        pradio = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        pradio.setBackground(new Color(255, 253, 208));
         pradio.add(btnam);
         pradio.add(btnu);
         
@@ -299,7 +313,7 @@ public class TacGiaGUI extends JPanel{
                 if(btnam.isSelected()){
                     gt = "Nam";
                 }else{
-                    gt = "Nu";
+                    gt = "Nữ";
                 }
                 
                 TacGia tacgia = new TacGia();
@@ -379,6 +393,13 @@ public class TacGiaGUI extends JPanel{
         pbutton.setBackground(new Color(255, 253, 208));
         
         //search panel
+        
+        lbtksoluong = new JLabel("Số lượng tác giả: " + tacgiabus.thongKeSoLuongTacGia(tacgiabus.getTacGiaBUS()));
+        lbtksoluong.setFont(new Font("Segoe UI",Font.BOLD,18));
+        psoluong = new JPanel();
+        psoluong.setBackground(new Color(255, 253, 208));
+        psoluong.add(lbtksoluong);
+        
         cbmdtk = new DefaultComboBoxModel<>();
         cbmdtk.addElement("Mã tác giả");
         cbmdtk.addElement("Tên tác giả");
@@ -388,6 +409,7 @@ public class TacGiaGUI extends JPanel{
         
         btntimkiem = new JButton("Tìm");
         ptimkiem = new JPanel();
+        ptimkiem.add(psoluong);
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);
         ptimkiem.add(btntimkiem);

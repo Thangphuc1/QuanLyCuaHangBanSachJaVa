@@ -139,43 +139,40 @@ public class SachBUS {
         return rs;
     }
     
-    //Sap Xep
-    
-    public ArrayList<Sach> sapXepSachTheoGiaGiamDan(){
-        ArrayList<Sach> tmp = new ArrayList<Sach>(dss);
-        tmp.sort((a,b) -> a.getDongia() - b.getDongia());
-        return tmp;
-    }
-    
-    public ArrayList<Sach> sapXepSachTheoGiaTangDan(){
-        ArrayList<Sach> tmp = new ArrayList<Sach>(dss);
-        tmp.sort((a,b) -> b.getDongia() - a.getDongia());
-        return tmp;
-    }
-    
-    //cap nhat
-    public boolean capNhatSoLuongTon(String ma,int soluongban){
-        Sach s = timSachTheoMa(ma);
-        if(s == null){
-            return false;
-        }
-        if(s.getSoluongton() < soluongban){
-            return false;
-        }
-        s.setSoluongton(s.getSoluongton() - soluongban);
-        return sachdao.updateSach(s);
-    }
+//    //Sap Xep
+//    
+//    public ArrayList<Sach> sapXepSachTheoGiaGiamDan(){
+//        ArrayList<Sach> tmp = new ArrayList<Sach>(dss);
+//        tmp.sort((a,b) -> a.getDongia() - b.getDongia());
+//        return tmp;
+//    }
+//    
+//    public ArrayList<Sach> sapXepSachTheoGiaTangDan(){
+//        ArrayList<Sach> tmp = new ArrayList<Sach>(dss);
+//        tmp.sort((a,b) -> b.getDongia() - a.getDongia());
+//        return tmp;
+//    }
+//    
+//    //cap nhat
+//    public boolean capNhatSoLuongTon(String ma,int soluongban){
+//        Sach s = timSachTheoMa(ma);
+//        if(s == null){
+//            return false;
+//        }
+//        if(s.getSoluongton() < soluongban){
+//            return false;
+//        }
+//        s.setSoluongton(s.getSoluongton() - soluongban);
+//        return sachdao.updateSach(s);
+//    }
     
     public ArrayList<Sach> sachSapHet(int minsl){
         ArrayList<Sach> tmp = new ArrayList<Sach>();
-        boolean found = false;
         for(Sach s : dss){
             if(s.getSoluongton() <= minsl){
                 tmp.add(s);
-                found = true;
             }
         }
-        if(!found)return null;
         return tmp;
     }
     
@@ -195,6 +192,14 @@ public class SachBUS {
     
     public ArrayList<Sach> sachHetHang(){
         return sachSapHet(0);
+    }
+    
+    public int thongKeSoLuongSach(ArrayList<Sach> dstemp){
+        int cnt = 0;
+        for(Sach s : dstemp){
+            cnt++;
+        }
+        return cnt;
     }
     
     public void sachreload(){

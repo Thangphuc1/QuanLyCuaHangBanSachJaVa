@@ -116,6 +116,14 @@ public class TheLoaiBUS {
         return String.format("TL%03d", max + 1);
     }
     
+    public int thongKeSoLuongTheLoai(ArrayList<TheLoai> dstemp){
+        int cnt = 0;
+        for(TheLoai tl : dstemp){
+            cnt++;
+        }
+        return cnt;
+    }
+    
     //reload
     public void theloaireload(){
         dstl = theloaidao.loadTheLoai();

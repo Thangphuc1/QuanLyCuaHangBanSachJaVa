@@ -22,8 +22,8 @@ public class TheLoaiDAO {
             
             while(rs.next()){
                 TheLoai tl = new TheLoai(
-                        rs.getString("MaTheLoai"),
-                        rs.getString("TenTheLoai")
+                        rs.getString("matheloai"),
+                        rs.getString("tentheloai")
                 );
                 dstl.add(tl);
             }
@@ -51,7 +51,7 @@ public class TheLoaiDAO {
     }
     
     public boolean deleteTheLoai(String ma){
-        String qry = "Delete from theloai where MaTheLoai = ?";
+        String qry = "Delete from theloai where matheloai = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -66,7 +66,7 @@ public class TheLoaiDAO {
     }
     
     public boolean updateTheLoai(TheLoai tl){
-        String qry = "update theloai set MaTheLoai = ?, TenTheLoai = ? where MaTheLoai = ?";
+        String qry = "update theloai set matheloai = ?, tentheloai = ? where matheloai = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             

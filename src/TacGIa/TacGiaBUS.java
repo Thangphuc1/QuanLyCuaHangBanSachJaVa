@@ -111,7 +111,7 @@ public class TacGiaBUS {
                 ds.add(tg);
             }
         }
-        return dstg;
+        return ds;
     }
     
     public String autoThemMa(){
@@ -127,6 +127,16 @@ public class TacGiaBUS {
         }
         return String.format("TG%03d", max + 1);
     }
+    
+    
+    public int thongKeSoLuongTacGia(ArrayList<TacGia> dstemp){
+        int cnt = 0;
+        for(TacGia tg : dstemp){
+            cnt++;
+        }
+        return cnt;
+    }
+            
     
     public void tacgiareload(){
         dstg = tacgiadao.loadTacGia();

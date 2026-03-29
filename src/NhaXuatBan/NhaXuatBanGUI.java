@@ -19,7 +19,7 @@ public class NhaXuatBanGUI extends JPanel{
     
     NhaXuatBanBUS nhaxuatbanbus = new NhaXuatBanBUS(); 
     JFrame themform,suaform;
-    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,ptoolbar,pformtitle,pformbutton;
+    JPanel pbutton,psoluong,ptimkiem,pcontainer,inputpanel,ptable,ptitle,ptoolbar,pformtitle,pformbutton;
     JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu,btnhuy;
     JTextField txttk,txtma,txttennxb,txtdiachi,txtsdt,txtemail;
     JComboBox cbtk;
@@ -27,7 +27,7 @@ public class NhaXuatBanGUI extends JPanel{
     JTable tbnhaxuatban;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbdiachi,lbemail,lbsdt,lbformtitle;
+    JLabel lbtitle,lbma,lbten,lbdiachi,lbemail,lbsdt,lbformtitle,lbtksoluong;
     JTableHeader th;
     
     public void loadData(){
@@ -193,6 +193,7 @@ public class NhaXuatBanGUI extends JPanel{
                 }
             }
             
+            lbtksoluong.setText("Số lượng nhà xuất bản: " + nhaxuatbanbus.thongKeSoLuongNhaXuatBan(dstemp));
             for (NhaXuatBan temp : dstemp) {
                 Vector<String> row = new Vector<>();
                 row.add(temp.getManxb());
@@ -339,14 +340,22 @@ public class NhaXuatBanGUI extends JPanel{
         pbutton.setBackground(new Color(255, 253, 208));
         
         //search panel
+        
+        lbtksoluong = new JLabel("Số lượng nhà xuất bản: " + nhaxuatbanbus.thongKeSoLuongNhaXuatBan(nhaxuatbanbus.getNhaXuatBanBUS()));
+        lbtksoluong.setFont(new Font("Segoe UI",Font.BOLD,18));
+        psoluong = new JPanel();
+        psoluong.setBackground(new Color(255, 253, 208));
+        psoluong.add(lbtksoluong);
+        
         cbmdtk = new DefaultComboBoxModel<>();
         cbmdtk.addElement("Mã nhà xuất bản");
         cbmdtk.addElement("Tên nhà xuất bản");
         cbtk = new JComboBox(cbmdtk);
         txttk = new JTextField(25);
         
-        btntimkiem = new JButton("Tìm");
+        btntimkiem = new JButton("Tìm kiếm");
         ptimkiem = new JPanel();
+        ptimkiem.add(psoluong);
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);
         ptimkiem.add(btntimkiem);

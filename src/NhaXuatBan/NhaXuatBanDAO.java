@@ -18,11 +18,11 @@ public class NhaXuatBanDAO {
             
             while(rs.next()){
                 NhaXuatBan nxb = new NhaXuatBan(
-                        rs.getString("MaNhaXuatBan"),
-                        rs.getString("TenNhaXuatBan"),
-                        rs.getString("Diachi"),
-                        rs.getString("Sdt"),
-                        rs.getString("Email")
+                        rs.getString("manxb"),
+                        rs.getString("tennxb"),
+                        rs.getString("diachinxb"),
+                        rs.getString("sdt"),
+                        rs.getString("email")
                 );
                 dsnxb.add(nxb);
             }
@@ -53,7 +53,7 @@ public class NhaXuatBanDAO {
     }
     
     public boolean deleteNhaXuatBan(String ma){
-        String qry = "Delete from nhaxuatban where MaNhaXuatBan = ?";
+        String qry = "Delete from nhaxuatban where manxb = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
@@ -68,7 +68,7 @@ public class NhaXuatBanDAO {
     }
     
     public boolean updateNhaXuatBan(NhaXuatBan nxb){
-        String qry = "update hhaxuatban set MaNhaXuatBan = ?, TenNhaXuatBan = ?, DiaChi = ?, Sdt = ?, Email = ? where MaNhaXuatBan = ?";
+        String qry = "update nhaxuatban set manxb = ?, tennxb = ?, diachinxb = ?, sdt = ?, email = ? where manxb = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             

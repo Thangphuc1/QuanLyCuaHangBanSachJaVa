@@ -122,6 +122,14 @@ public class NhaXuatBanBUS {
         return String.format("NXB%02d", max + 1);
     }
     
+    public int thongKeSoLuongNhaXuatBan(ArrayList<NhaXuatBan> dstemp){
+        int cnt = 0;
+        for(NhaXuatBan nxb : dstemp){
+            cnt++;
+        }
+        return cnt;
+    }
+    
     //reload
     public void nhaxuatbanreload(){
         dsnxb = nxbdao.loadNhaXuatBan();

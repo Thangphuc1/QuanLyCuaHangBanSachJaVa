@@ -18,7 +18,7 @@ public class SachGUI extends JPanel{
     
     SachBUS sachbus = new SachBUS(); 
     JFrame themform,suaform;
-    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,ptoolbar,pformtitle,pformbutton;
+    JPanel pbutton,psoluong,ptimkiem,pcontainer,inputpanel,ptable,ptitle,ptoolbar,pformtitle,pformbutton;
     JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu,btnhuy;
     JTextField txttk,txtma,txttensach,txtmatg,txtmatl,txtnam,txtnxb,txtdongia,txtsoluong,txtgiamin,txtgiamax;
     JComboBox cbtk;
@@ -26,7 +26,7 @@ public class SachGUI extends JPanel{
     JTable tbsach;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbmatg,lbmatl,lbnam,lbnxb,lbdongia,lbsoluong,lbden,lbformtitle;
+    JLabel lbtitle,lbma,lbten,lbmatg,lbmatl,lbnam,lbnxb,lbdongia,lbsoluong,lbden,lbformtitle,lbtksoluong;
     JTableHeader th;
     
     public void loadData(){
@@ -44,6 +44,21 @@ public class SachGUI extends JPanel{
             row.add(Integer.toString(temp.getDongia()));
             row.add(Integer.toString(temp.getSoluongton()));
             tbmodel.addRow(row);
+        }
+    }
+    
+    public void canhCaoSachSapHet(){
+        ArrayList<Sach> dstmp = new ArrayList<Sach>();
+        dstmp = sachbus.sachSapHet(10);
+        String masachsaphet = "";
+        for(Sach s : dstmp){
+            masachsaphet += s.getMasach() + ", "; 
+        }
+        if(!masachsaphet.isEmpty()){
+            masachsaphet = masachsaphet.substring(0,masachsaphet.length() - 2);
+            JOptionPane.showMessageDialog(this, "Các mã sách sắp hết hàng tồn: " + masachsaphet);
+        }else{
+            return;
         }
     }
     
@@ -269,7 +284,8 @@ public class SachGUI extends JPanel{
                 }
             }
         }
-
+        
+        lbtksoluong.setText("Số lượng sách: " + sachbus.thongKeSoLuongSach(dstemp));
         for (Sach temp : dstemp) {
             Vector<String> row = new Vector<>();
             row.add(temp.getMasach());
@@ -443,6 +459,13 @@ public class SachGUI extends JPanel{
         pbutton.setBackground(new Color(255, 253, 208));
         
         //search panel
+        
+        lbtksoluong = new JLabel("Số lượng sách: " + sachbus.thongKeSoLuongSach(sachbus.getSachBUS()));
+        lbtksoluong.setFont(new Font("Segoe UI",Font.BOLD,18));
+        psoluong = new JPanel();
+        psoluong.setBackground(new Color(255, 253, 208));
+        psoluong.add(lbtksoluong);
+        
         cbmdtk = new DefaultComboBoxModel<>();
         cbmdtk.addElement("Mã sách");
         cbmdtk.addElement("Tên sách");
@@ -463,6 +486,7 @@ public class SachGUI extends JPanel{
         
         btntimkiem = new JButton("Tìm");
         ptimkiem = new JPanel();
+        ptimkiem.add(psoluong);
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);
         ptimkiem.add(txtgiamin);
@@ -564,5 +588,6 @@ public class SachGUI extends JPanel{
                 ex.printStackTrace();
             } 
         });
+       canhCaoSachSapHet(); 
     }
 }

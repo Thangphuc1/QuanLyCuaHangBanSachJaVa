@@ -18,7 +18,7 @@ public class TheLoaiGUI extends JPanel{
     
     TheLoaiBUS theloaibus = new TheLoaiBUS(); 
     JFrame themform,suaform;
-    JPanel pbutton,ptimkiem,pcontainer,inputpanel,ptable,ptitle,pformtitle,ptoolbar,pformbutton;
+    JPanel pbutton,psoluong,ptimkiem,pcontainer,inputpanel,ptable,ptitle,pformtitle,ptoolbar,pformbutton;
     JButton btnthem,btnxoa,btnsua,btntimkiem,btnluu,btnhuy;
     JTextField txttk,txtmatl,txttentl;
     JComboBox cbtk;
@@ -26,7 +26,7 @@ public class TheLoaiGUI extends JPanel{
     JTable tbtheloai;
     DefaultTableModel tbmodel;
     Vector<String> header;
-    JLabel lbtitle,lbma,lbten,lbformtitle;
+    JLabel lbtitle,lbma,lbten,lbformtitle,lbtksoluong;
     JTableHeader th;
     
     public void loadData(){
@@ -169,7 +169,7 @@ public class TheLoaiGUI extends JPanel{
                     break;
                 }
             }
-            
+            lbtksoluong.setText("Số lượng thể loại: " + theloaibus.thongKeSoLuongTheLoai(dstemp));
             for (TheLoai temp : dstemp) {
                 Vector<String> row = new Vector<>();
                 row.add(temp.getMatl());
@@ -295,14 +295,22 @@ public class TheLoaiGUI extends JPanel{
         pbutton.setBackground(new Color(255, 253, 208));
         
         //search panel
+        
+        lbtksoluong = new JLabel("Số lượng thể loại: " + theloaibus.thongKeSoLuongTheLoai(theloaibus.getTheLoaiBUS()));
+        lbtksoluong.setFont(new Font("Segoe UI",Font.BOLD,18));
+        psoluong = new JPanel();
+        psoluong.setBackground(new Color(255, 253, 208));
+        psoluong.add(lbtksoluong);
+        
         cbmdtk = new DefaultComboBoxModel<>();
         cbmdtk.addElement("Mã thể loại");
         cbmdtk.addElement("Tên thể loại");
         cbtk = new JComboBox(cbmdtk);
         txttk = new JTextField(25);
         
-        btntimkiem = new JButton("Tìm");
+        btntimkiem = new JButton("Tìm kiếm");
         ptimkiem = new JPanel();
+        ptimkiem.add(psoluong);
         ptimkiem.add(cbtk);
         ptimkiem.add(txttk);
         ptimkiem.add(btntimkiem);

@@ -5,13 +5,13 @@ package Sach;
  * @author Quyen
  */
 public enum Result {
-    thanhcong("Thanh cong!"),
-    khongtontai("Khong ton tai!"),
-    loidb("Loi khi thao tac database!"),
-    thieuthongtin("Vui long nhap day du thong tin!"),
-    trungma("Trung ma!"),
-    thatbai("That bai!");
-    
+    thanhcong("thành công!"),
+    khongtontai("không tồn tại!"),
+    loidb("Lỗi khi thao tác database!"),
+    thieuthongtin("Vui lòng nhập đầy đủ thông tin!"),
+    trungma("Trùng mã!"),
+    thatbai("Thất bại!"),
+    dangduocsudung("Đang được sử dụng không thể xoá!");
     
     private final String message;
 

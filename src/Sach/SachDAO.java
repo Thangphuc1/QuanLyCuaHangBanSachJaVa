@@ -17,14 +17,14 @@ public class SachDAO {
             
             while(rs.next()){
                 Sach s = new Sach(
-                rs.getString("MaSach"),
-                rs.getString("TenSach"),
-                rs.getString("MaTacGia"),
-                rs.getString("MaTheLoai"),
-                rs.getInt("NamXuatBan"),
-                rs.getString("MaNhaXuatBan"),
-                rs.getInt("DonGia"),
-                rs.getInt("SoLuongTon")
+                rs.getString("masach"),
+                rs.getString("tensach"),
+                rs.getString("matacgia"),
+                rs.getString("matheloai"),
+                rs.getInt("namxuatban"),
+                rs.getString("manxb"),
+                rs.getInt("dongia"),
+                rs.getInt("soluongton")
                 );
                 dss.add(s);
             }
@@ -73,7 +73,7 @@ public class SachDAO {
     }
     
     public static Boolean updateSach(Sach sach){
-        String qry = "update sach set MaSach = ?, TenSach = ?, MaTacGia = ?, MaTheLoai = ?, NamXuatBan = ?, MaNhaXuatBan = ?, DonGia = ?, SoLuongTon = ? Where MaSach = ?";
+        String qry = "update sach set masach = ?, tensach = ?, matacgia = ?, matheloai = ?, namxuatban = ?, manxb = ?, dongia = ?, soluongton = ? Where masach = ?";
         try(Connection conn = DBConnection.getDBConnection();
             PreparedStatement st = conn.prepareStatement(qry);){
             
