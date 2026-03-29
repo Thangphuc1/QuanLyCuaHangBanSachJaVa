@@ -12,23 +12,20 @@ import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
-public class ThongKeGUI extends JFrame {
+public class ThongKeGUI extends JPanel {
 
-  // Gruvbox https://github.com/morhetz/gruvbox
-  private final Color COLOR_MAIN_BG = new Color(251, 241, 199);      // bg0 (Nền chính - be sáng)
-  private final Color COLOR_SIDEBAR_BG = new Color(235, 219, 178);   // bg1 (Nền sidebar - be đậm hơn)
-  private final Color COLOR_HEADER_BG = new Color(213, 196, 161);    // bg2 (Nền header)
-  private final Color COLOR_MENU_ACTIVE = new Color(131, 165, 152);  // blue/aqua (Menu active)
+  private final Color COLOR_MAIN_BG = new Color(253, 255, 208);      // Nền chính màu vàng kem
+  private final Color COLOR_SIDEBAR_BG = new Color(43, 43, 43);      // Sidebar màu xám đen
+  private final Color COLOR_MENU_ACTIVE = new Color(0, 120, 215);    // Menu active màu xanh dương
+  private final Color COLOR_MENU_HOVER = new Color(70, 70, 70);      // Menu hover màu xám nhạt hơn
   
-  private final Color COLOR_TEXT_MAIN = new Color(60, 56, 54);       // fg1 (Chữ xám đen đậm)
-  private final Color COLOR_TEXT_MUTED = new Color(124, 111, 100);   // gray (Chữ xám nhạt)
+  private final Color COLOR_TEXT_MAIN = new Color(30, 30, 30);       // Chữ phần chính (Đen)
+  private final Color COLOR_TEXT_SIDEBAR = Color.WHITE;              // Chữ phần sidebar (Trắng)
 
-  // Mau chinh cua gruvbox
-  private final Color ORANGE = new Color(215, 95, 0);           // Gruvbox Orange
-  private final Color BLUE = new Color(69, 133, 136);           // Gruvbox Blue
-  private final Color PURPLE = new Color(177, 98, 134);         // Gruvbox Purple
-  private final Color GREEN = new Color(152, 151, 26);          // Gruvbox Green
-  private final Color RED =  new Color(204, 36, 29);          // Gruvbox Red
+  private final Color ORANGE = new Color(239, 131, 84);              
+  private final Color BLUE = new Color(95, 158, 160);                
+  private final Color PURPLE = new Color(163, 116, 166);             
+  private final Color GREEN = new Color(126, 161, 114);              
 
   private CardLayout cardLayout;
   private JPanel centerContentPanel;
@@ -44,14 +41,7 @@ public class ThongKeGUI extends JFrame {
   private DefaultTableModel tableModel;
 
   public ThongKeGUI() {
-    setTitle("Phần mềm quản lý cửa hàng bán sách");
-    setSize(1250, 750);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    setLocationRelativeTo(null);
     setLayout(new BorderLayout());
-
-    add(createHeaderPanel(), BorderLayout.NORTH);
-    add(createSidebarPanel(), BorderLayout.WEST);
 
     cardLayout = new CardLayout();
     centerContentPanel = new JPanel(cardLayout);
@@ -93,93 +83,6 @@ public class ThongKeGUI extends JFrame {
     });
   }
 
-  private JPanel createHeaderPanel() {
-    JPanel header = new JPanel(new BorderLayout());
-    header.setBackground(COLOR_HEADER_BG);
-    header.setPreferredSize(new Dimension(0, 40));
-    header.setBorder(new EmptyBorder(0, 15, 0, 15));
-
-    JLabel lblTitle = new JLabel("PHẦN MỀM QUẢN LÝ CỬA HÀNG BÁN SÁCH", JLabel.CENTER);
-    lblTitle.setForeground(COLOR_TEXT_MAIN);
-    lblTitle.setFont(new Font("Noto Sans", Font.BOLD, 14));
-
-    header.add(lblTitle, BorderLayout.CENTER);
-    return header;
-  }
-
-  private JPanel createSidebarPanel() {
-    JPanel sidebar = new JPanel();
-    sidebar.setLayout(new BoxLayout(sidebar, BoxLayout.Y_AXIS));
-    sidebar.setBackground(COLOR_SIDEBAR_BG);
-    sidebar.setPreferredSize(new Dimension(220, 0));
-
-    JPanel logoPanel = new JPanel();
-    logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
-    logoPanel.setOpaque(false);
-    logoPanel.setPreferredSize(new Dimension(220, 180));
-    logoPanel.setMaximumSize(new Dimension(220, 180));
-
-    // Title
-    JLabel lblTitle = new JLabel("BookStore");
-    lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
-    lblTitle.setForeground(PURPLE);
-    lblTitle.setFont(new Font("Noto Sans", Font.BOLD, 24));
-
-    // Subtitle
-    JLabel lblSub = new JLabel("Quản Lý");
-    lblSub.setAlignmentX(Component.CENTER_ALIGNMENT);
-    lblSub.setForeground(COLOR_TEXT_MUTED); // gray (Chữ xám nhạt)
-    lblSub.setFont(new Font("Noto Sans", Font.PLAIN, 14));
-
-    logoPanel.add(Box.createVerticalGlue());
-    logoPanel.add(lblTitle);
-    logoPanel.add(Box.createVerticalStrut(5));
-    logoPanel.add(lblSub);
-    logoPanel.add(Box.createVerticalGlue());
-
-    sidebar.add(logoPanel);
-
-    sidebar.add(createMenuItem(" Tổng quan", true));
-    sidebar.add(createMenuItem(" Bán hàng", false));
-    sidebar.add(createMenuItem(" Quản lý Sách", false));
-    sidebar.add(createMenuItem(" Nhập hàng", false));
-    sidebar.add(createMenuItem(" Khách hàng", false));
-    sidebar.add(createMenuItem(" Nhân viên", false));
-    sidebar.add(createMenuItem(" Khuyến mãi", false));
-
-    sidebar.add(Box.createVerticalGlue());
-    return sidebar;
-}
-
-  private JPanel createMenuItem(String text, boolean isActive) {
-    JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 20, 12));
-    panel.setMaximumSize(new Dimension(220, 50));
-    if (isActive) panel.setBackground(COLOR_MENU_ACTIVE);
-    else panel.setBackground(COLOR_SIDEBAR_BG);
-
-    JLabel label = new JLabel(text);
-    label.setForeground(isActive ? COLOR_MAIN_BG : COLOR_TEXT_MAIN);
-    label.setFont(new Font("Noto Sans", isActive ? Font.BOLD : Font.PLAIN, 15));
-    panel.add(label);
-
-    if (!isActive) {
-      panel.addMouseListener(new MouseAdapter() {
-        @Override
-        public void mouseEntered(MouseEvent e) { 
-          panel.setBackground(COLOR_HEADER_BG); // Hover dung mau bg2
-          label.setForeground(COLOR_TEXT_MAIN);
-        }
-        @Override
-        public void mouseExited(MouseEvent e) { 
-          panel.setBackground(COLOR_SIDEBAR_BG); 
-          label.setForeground(COLOR_TEXT_MAIN);
-        }
-      });
-      panel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }
-    return panel;
-  }
-
   private JPanel createOverviewPanel() {
     JPanel mainPanel = new JPanel();
     mainPanel.setLayout(new BorderLayout());
@@ -194,7 +97,7 @@ public class ThongKeGUI extends JFrame {
     lblHeader.setFont(new Font("Noto Sans", Font.BOLD, 28));
     
     JLabel lblSubHeader = new JLabel("Dữ liệu hoạt động kinh doanh hiện tại");
-    lblSubHeader.setForeground(COLOR_TEXT_MUTED);
+    lblSubHeader.setForeground(new Color(100, 100, 100));
     lblSubHeader.setFont(new Font("Noto Sans", Font.ITALIC, 14));
     lblSubHeader.setBorder(new EmptyBorder(5, 0, 30, 0));
 
@@ -217,7 +120,6 @@ public class ThongKeGUI extends JFrame {
     
     centerPanel.add(cardsPanel);
     centerPanel.add(Box.createVerticalStrut(40)); 
-
     centerPanel.add(createTableSection());
 
     mainPanel.add(centerPanel, BorderLayout.CENTER);
@@ -233,12 +135,12 @@ public class ThongKeGUI extends JFrame {
     infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
     infoPanel.setOpaque(false);
 
-    lblNumber.setForeground(COLOR_MAIN_BG);
+    lblNumber.setForeground(Color.WHITE); 
     lblNumber.setFont(new Font("Noto Sans", Font.BOLD, 36));
     lblNumber.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
     JLabel lblText = new JLabel(text);
-    lblText.setForeground(COLOR_MAIN_BG);
+    lblText.setForeground(Color.WHITE); 
     lblText.setFont(new Font("Noto Sans", Font.BOLD, 15));
     lblText.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
@@ -250,7 +152,7 @@ public class ThongKeGUI extends JFrame {
 
     card.add(infoPanel, BorderLayout.EAST);
 
-    // hieu ung hover + 15 de doi mau nhe
+    // Hieu ung hover + 15 cho mau no nhat di
     Color hoverColor = new Color(
       Math.min(bgColor.getRed() + 15, 255),
       Math.min(bgColor.getGreen() + 15, 255),
@@ -294,7 +196,7 @@ public class ThongKeGUI extends JFrame {
     yearCombo.setSelectedItem(String.valueOf(currentYear));
     yearCombo.setPreferredSize(new Dimension(120, 32));
     yearCombo.setFont(new Font("Noto Sans", Font.PLAIN, 14));
-    yearCombo.setBackground(COLOR_SIDEBAR_BG);
+    yearCombo.setBackground(Color.WHITE);
     yearCombo.setForeground(COLOR_TEXT_MAIN);
     yearCombo.setFocusable(false); 
     
@@ -313,22 +215,21 @@ public class ThongKeGUI extends JFrame {
     };
     JTable table = new JTable(tableModel);
     
-    table.setBackground(COLOR_MAIN_BG);
+    table.setBackground(Color.WHITE);
     table.setForeground(COLOR_TEXT_MAIN);
-    table.setFont(new Font("Noto Sans", Font.PLAIN, 15));
-    table.setRowHeight(45); 
-    table.setShowVerticalLines(false);
-    table.setGridColor(COLOR_HEADER_BG);
+    table.setFont(new Font("Noto Sans", Font.PLAIN, 14));
+    table.setRowHeight(40); 
+    table.setGridColor(Color.LIGHT_GRAY);
     table.setSelectionBackground(COLOR_MENU_ACTIVE);
-    table.setSelectionForeground(COLOR_MAIN_BG);
+    table.setSelectionForeground(Color.WHITE);
     table.setFocusable(false);
 
     JTableHeader header = table.getTableHeader();
-    header.setBackground(COLOR_SIDEBAR_BG);
-    header.setForeground(COLOR_TEXT_MAIN);
+    header.setBackground(new Color(230, 185, 0)); 
+    header.setForeground(Color.BLACK);
     header.setFont(new Font("Noto Sans", Font.BOLD, 14));
-    header.setPreferredSize(new Dimension(0, 45));
-    header.setBorder(BorderFactory.createEmptyBorder());
+    header.setPreferredSize(new Dimension(0, 35));
+    header.setBorder(BorderFactory.createLineBorder(Color.GRAY));
     
     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
     centerRenderer.setHorizontalAlignment(JLabel.CENTER);
@@ -337,24 +238,11 @@ public class ThongKeGUI extends JFrame {
     }
 
     JScrollPane scrollPane = new JScrollPane(table);
-    scrollPane.getViewport().setBackground(COLOR_MAIN_BG);
-    scrollPane.setBorder(BorderFactory.createLineBorder(COLOR_HEADER_BG, 1, true));
+    scrollPane.getViewport().setBackground(Color.WHITE);
+    scrollPane.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1));
 
     tableSection.add(scrollPane, BorderLayout.CENTER);
     return tableSection;
   }
-
-  public static void main(String[] args) {
-    try {
-      UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    SwingUtilities.invokeLater(() -> {
-      ThongKeGUI dashboard = new ThongKeGUI();
-      dashboard.setVisible(true);
-    });
-  }
-
+  
 }
