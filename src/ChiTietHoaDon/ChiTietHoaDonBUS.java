@@ -2,6 +2,7 @@ package ChiTietHoaDon;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ChiTietHoaDonBUS {
 
@@ -84,8 +85,8 @@ public class ChiTietHoaDonBUS {
 
                 for (int i = 0; i < dscthd.size(); i++) {
 
-                    if (dscthd.get(i).getMaHD().equals(cthd.getMaHD())
-                            && dscthd.get(i).getMaSach().equals(cthd.getMaSach())) {
+                    if (dscthd.get(i).getMahoadon().equals(cthd.getMahoadon())
+                            && dscthd.get(i).getMasach().equals(cthd.getMasach())) {
 
                         dscthd.set(i, cthd);
 
@@ -120,8 +121,8 @@ public class ChiTietHoaDonBUS {
 
                 for (int i = 0; i < dscthd.size(); i++) {
 
-                    if (dscthd.get(i).getMaHD().equals(mahd)
-                            && dscthd.get(i).getMaSach().equals(masach)) {
+                    if (dscthd.get(i).getMahoadon().equals(mahd)
+                            && dscthd.get(i).getMasach().equals(masach)) {
 
                         dscthd.remove(i);
 
@@ -141,6 +142,55 @@ public class ChiTietHoaDonBUS {
 
         return false;
     }
+    
+    // xoa theo ma 
+    
+   public boolean xoaTheoMa(String maHD){
+
+     
+       ChiTietHoaDonDAO data = null;
+
+
+     try {
+    
+         data = new ChiTietHoaDonDAO();
+
+     } catch (SQLException e) {
+    
+         e.printStackTrace();
+
+     }
+
+     // Load dscthd trước để tránh null
+     docDSCTHD(maHD);
+
+    if(data.xoaCTHDTheoMa(maHD)){
+
+        if(dscthd != null){
+
+            Iterator<ChiTietHoaDon> it = dscthd.iterator();
+
+            while(it.hasNext()){
+
+                ChiTietHoaDon ct = it.next();
+
+                if(ct.getMahoadon().equals(maHD)){
+
+                    it.remove();
+
+                }
+
+            }
+
+        }
+
+        return true;
+
+    }
+
+    return false;
+
+}
 
     // ===============================
     // TÍNH TỔNG TIỀN HÓA ĐƠN
@@ -155,7 +205,7 @@ public class ChiTietHoaDonBUS {
 
         for (ChiTietHoaDon ct : dscthd) {
 
-            tong += ct.getSoLuong() * ct.getDonGia();
+            tong += ct.getSoluong() * ct.getDongia();
 
         }
 

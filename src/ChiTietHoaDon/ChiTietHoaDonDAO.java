@@ -7,11 +7,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import java.sql.PreparedStatement;
 
 public class ChiTietHoaDonDAO {
 
     String user = "root";
-    String password = "";
+    String password = "Thang123@";
     String url;
     Connection conn = null;
     Statement st = null;
@@ -19,7 +20,7 @@ public class ChiTietHoaDonDAO {
 
     public ChiTietHoaDonDAO() throws SQLException {
 
-        url = "jdbc:mysql://localhost:3306/quanlibansach3?useUnicode=true&characterEncoding=UTF-8";
+        url = "jdbc:mysql://localhost:3306/quanlibansach?useUnicode=true&characterEncoding=UTF-8";
 
         if (conn == null) {
 
@@ -49,7 +50,7 @@ public class ChiTietHoaDonDAO {
 
         try {
 
-            String qry = "SELECT * FROM chitiethoadon WHERE maHD='"+maHD+"'";
+            String qry = "SELECT * FROM chitiethoadon WHERE mahoadon='"+maHD+"'";
 
             st = conn.createStatement();
             rs = st.executeQuery(qry);
@@ -58,10 +59,10 @@ public class ChiTietHoaDonDAO {
 
                 ChiTietHoaDon cthd = new ChiTietHoaDon();
 
-                cthd.setMaHD(rs.getString("maHD"));
-                cthd.setMaSach(rs.getString("maSach"));
-                cthd.setSoLuong(rs.getInt("soLuong"));
-                cthd.setDonGia(rs.getDouble("donGia"));
+                cthd.setMahoadon(rs.getString("mahoadon"));
+                cthd.setMasach(rs.getString("masach"));
+                cthd.setSoluong(rs.getInt("soluong"));
+                cthd.setDongia(rs.getDouble("dongia"));
 
                 dscthd.add(cthd);
 
@@ -85,18 +86,14 @@ public class ChiTietHoaDonDAO {
 
         try {
 
-            String sql = "INSERT INTO chitiethoadon VALUES("
-                    + "'" + cthd.getMaHD() + "',"
-                    + "'" + cthd.getMaSach() + "',"
-                    + cthd.getSoLuong() + ","
-                    + cthd.getDonGia() + ","
-                    + cthd.getThanhTien() + ")";
-
-            st = conn.createStatement();
-
-            st.executeUpdate(sql);
-
-            return true;
+                String sql = "INSERT INTO chitiethoadon(mahoadon, masach, soluong, dongia) VALUES(?,?,?,?)";
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ps.setString(1, cthd.getMahoadon());
+                ps.setString(2, cthd.getMasach());
+                ps.setInt(3, cthd.getSoluong());
+                ps.setDouble(4, cthd.getDongia());
+                ps.executeUpdate();
+                return true;
 
         } catch (SQLException e) {
 
@@ -116,12 +113,11 @@ public class ChiTietHoaDonDAO {
 
         try {
 
-            String sql = "UPDATE chitiethoadon SET "
-                    + "soLuong=" + cthd.getSoLuong() + ","
-                    + "donGia=" + cthd.getDonGia() + ","
-                    + "thanhTien=" + cthd.getThanhTien()
-                    + " WHERE maHD='" + cthd.getMaHD()
-                    + "' AND maSach='" + cthd.getMaSach() + "'";
+                String sql = "UPDATE chitiethoadon SET "
+                    + "soluong=" + cthd.getSoluong() + ","
+                    + "dongia=" + cthd.getDongia()
+                    + " WHERE mahoadon='" + cthd.getMahoadon()
+                    + "' AND masach='" + cthd.getMasach() + "'";
 
             st = conn.createStatement();
 
@@ -147,9 +143,9 @@ public class ChiTietHoaDonDAO {
 
         try {
 
-            String sql = "DELETE FROM chitiethoadon "
-                    + "WHERE maHD='" + mahd + "' "
-                    + "AND maSach='" + masach + "'";
+                String sql = "DELETE FROM chitiethoadon "
+                    + "WHERE mahoadon='" + mahd + "' "
+                    + "AND masach='" + masach + "'";
 
             st = conn.createStatement();
 
@@ -166,5 +162,27 @@ public class ChiTietHoaDonDAO {
         return false;
 
     }
+    public boolean xoaCTHDTheoMa(String maHD){
+
+    String sql = "DELETE FROM chitiethoadon WHERE mahoadon=?";
+
+    try{
+
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        ps.setString(1, maHD);
+
+        ps.executeUpdate();
+
+        return true;
+
+    }catch(SQLException e){
+
+        JOptionPane.showMessageDialog(null,"Lỗi xóa chi tiết hóa đơn");
+
+    }
+
+    return false;
+}
 
 }

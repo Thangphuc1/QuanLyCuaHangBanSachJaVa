@@ -2,58 +2,44 @@ package ChiTietHoaDon;
 
 public class ChiTietHoaDon {
 
-    private String maHD;
-    private String maSach;
-    private int soLuong;
-    private double donGia;
-    private double thanhTien;
+    private String mahoadon;
+    private String masach;
+    private int soluong;
+    private double dongia;
 
     public ChiTietHoaDon() {}
 
-    // Constructor KHÔNG truyền thanhTien
-    public ChiTietHoaDon(String maHD, String maSach, int soLuong, double donGia) {
-        this.maHD = maHD;
-        this.maSach = maSach;
-        this.soLuong = soLuong;
-        this.donGia = donGia;
-        this.thanhTien = soLuong * donGia;
+    public ChiTietHoaDon(String mahoadon, String masach, int soluong, double dongia) {
+        this.mahoadon = mahoadon;
+        this.masach = masach;
+        this.soluong = soluong;
+        this.dongia = dongia;
     }
 
-    public String getMaHD() {
-        return maHD;
-    }
+    // Xóa getter/setter cũ, chỉ giữ getter/setter mới bên dưới
 
-    public void setMaHD(String maHD) {
-        this.maHD = maHD;
+    public String getMahoadon() {
+        return mahoadon;
     }
-
-    public String getMaSach() {
-        return maSach;
+    public void setMahoadon(String mahoadon) {
+        this.mahoadon = mahoadon;
     }
-
-    public void setMaSach(String maSach) {
-        this.maSach = maSach;
+    public String getMasach() {
+        return masach;
     }
-
-    public int getSoLuong() {
-        return soLuong;
+    public void setMasach(String masach) {
+        this.masach = masach;
     }
-
-    public void setSoLuong(int soLuong) {
-        this.soLuong = soLuong;
-        this.thanhTien = this.soLuong * this.donGia; // tự cập nhật
+    public int getSoluong() {
+        return soluong;
     }
-
-    public double getDonGia() {
-        return donGia;
+    public void setSoluong(int soluong) {
+        this.soluong = soluong;
     }
-
-    public void setDonGia(double donGia) {
-        this.donGia = donGia;
-        this.thanhTien = this.soLuong * this.donGia; // tự cập nhật
+    public double getDongia() {
+        return dongia;
     }
-
-    public double getThanhTien() {
-        return thanhTien;
+    public void setDongia(double dongia) {
+        this.dongia = dongia;
     }
 }

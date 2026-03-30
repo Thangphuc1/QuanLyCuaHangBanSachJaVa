@@ -29,5 +29,9 @@ public class KhuyenMai {
     public void setNgayKT(LocalDate ngayKT) { this.ngayKT = ngayKT;}
     public void setDKTT(int DKTT) { this.DKTT = DKTT;}
     public void setPtgg(int ptgg) { this.ptgg = ptgg;}
+
+    public String getGhichu() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     
 }

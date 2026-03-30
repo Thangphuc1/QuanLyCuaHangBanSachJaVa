@@ -7,58 +7,50 @@ package HoaDon;
 import java.time.LocalDate;
 
 public class HoaDon {
-    public  String maHD;
-    public String maKH;
-    public String maNV;
-    public LocalDate ngayLap;
-    public Double tongTien;
+    public String mahoadon;
+    public String manv;
+    public String makh;
+    public LocalDate thoigiantao;
+    public double tongtien;
+
     public HoaDon() {}
-    public HoaDon(String maHD,String maKH,String maNV,LocalDate ngayLap,Double tongTien) {
-        this.maHD=maHD;
-        this.maKH=maKH;
-        this.maNV=maNV;
-        this.ngayLap=ngayLap;
-        this.tongTien=tongTien;
+
+    public HoaDon(String mahoadon, String manv, String makh, LocalDate thoigiantao, double tongtien) {
+        this.mahoadon = mahoadon;
+        this.manv = manv;
+        this.makh = makh;
+        this.thoigiantao = thoigiantao;
+        this.tongtien = tongtien;
     }
 
-    public String getMaHD() {
-        return maHD;
+    public String getMahoadon() {
+        return mahoadon;
     }
-
-    public String getMaKH() {
-        return maKH;
+    public void setMahoadon(String mahoadon) {
+        this.mahoadon = mahoadon;
     }
-
-    public String getMaNV() {
-        return maNV;
+    public String getManv() {
+        return manv;
     }
-
-    public LocalDate getNgayLap() {
-        return ngayLap;
+    public void setManv(String manv) {
+        this.manv = manv;
     }
-
-    public Double getTongTien() {
-        return tongTien;
+    public String getMakh() {
+        return makh;
     }
-
-    public void setMaHD(String maHD) {
-        this.maHD = maHD;
+    public void setMakh(String makh) {
+        this.makh = makh;
     }
-
-    public void setMaKH(String maKH) {
-        this.maKH = maKH;
+    public LocalDate getThoigiantao() {
+        return thoigiantao;
     }
-
-    public void setMaNV(String maNV) {
-        this.maNV = maNV;
+    public void setThoigiantao(LocalDate thoigiantao) {
+        this.thoigiantao = thoigiantao;
     }
-
-    public void setNgayLap(LocalDate ngayLap) {
-        this.ngayLap = ngayLap;
+    public double getTongtien() {
+        return tongtien;
     }
-
-    public void setTongTien(Double tongTien) {
-        this.tongTien = tongTien;
+    public void setTongtien(double tongtien) {
+        this.tongtien = tongtien;
     }
-    
 }

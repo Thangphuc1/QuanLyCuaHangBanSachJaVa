@@ -34,7 +34,7 @@ public class HoaDonBUS {
     // ktra ma hoa don
     public boolean checkMaHD(String ma){
         for(HoaDon hd: dshd){
-            if(hd.getMaHD().equals(ma)){
+            if(hd.getMahoadon().equals(ma)){
                 return false;
             }
         }
@@ -45,7 +45,7 @@ public class HoaDonBUS {
     public boolean them(HoaDon hd){
         if(dshd == null)
             docDSHD();
-        if(checkMaHD(hd.getMaHD())){
+        if(checkMaHD(hd.getMahoadon())){
         data.them(hd);
         dshd.add(hd);
         return true;
@@ -64,7 +64,7 @@ public class HoaDonBUS {
        }
        
        for(int i=0;i<dshd.size();i++){
-           if(dshd.get(i).getMaHD().equals(ma)){
+           if(dshd.get(i).getMahoadon().equals(ma)){
                data.xoa(ma);
                dshd.remove(i);
                return true;
@@ -83,7 +83,7 @@ public class HoaDonBUS {
         }
         
         for(int i=0;i<dshd.size();i++){
-            if(dshd.get(i).getMaHD().equals(hd.getMaHD())){
+            if(dshd.get(i).getMahoadon().equals(hd.getMahoadon())){
                 data.sua(hd);
                 dshd.set(i, hd);
                 return true;
@@ -104,7 +104,7 @@ public class HoaDonBUS {
         }
         
         for(HoaDon hd: dshd){
-            if(hd.getMaHD().equals(ma)){
+            if(hd.getMahoadon().equals(ma)){
                 return hd;
             }
         }
@@ -119,7 +119,7 @@ public class HoaDonBUS {
         }
         ArrayList<HoaDon> kq= new ArrayList<>();
         for(HoaDon hd: dshd){
-            if(hd.getMaKH().equals(maKH)){
+            if(hd.getMakh().equals(maKH)){
                 
                 kq.add(hd);
             }
@@ -136,7 +136,7 @@ public class HoaDonBUS {
         ArrayList<HoaDon> kq = new ArrayList<>();
 
         for(HoaDon hd : dshd){
-            if(hd.getMaNV().equals(maNV)){
+            if(hd.getManv().equals(maNV)){
                 kq.add(hd);
             }
         }
@@ -167,10 +167,10 @@ public class HoaDonBUS {
 
         for(HoaDon hd : dshd){
 
-            if((hd.getNgayLap().isEqual(tuNgay) || hd.getNgayLap().isAfter(tuNgay)) &&
-               (hd.getNgayLap().isEqual(denNgay) || hd.getNgayLap().isBefore(denNgay)))
+            if((hd.getThoigiantao().isEqual(tuNgay) || hd.getThoigiantao().isAfter(tuNgay)) &&
+               (hd.getThoigiantao().isEqual(denNgay) || hd.getThoigiantao().isBefore(denNgay)))
             {
-                tong += hd.getTongTien();
+                tong += hd.getTongtien();
             }
         }
 
@@ -184,10 +184,10 @@ public class HoaDonBUS {
 
         for(HoaDon hd : dshd){
 
-            if(hd.getNgayLap().getMonthValue() == thang &&
-               hd.getNgayLap().getYear() == nam)
+            if(hd.getThoigiantao().getMonthValue() == thang &&
+               hd.getThoigiantao().getYear() == nam)
             {
-                tong += hd.getTongTien();
+                tong += hd.getTongtien();
             }
         }
 
@@ -201,16 +201,20 @@ public class HoaDonBUS {
 
         for(HoaDon hd : dshd){
 
-            int thang = hd.getNgayLap().getMonthValue();
+            int thang = hd.getThoigiantao().getMonthValue();
 
             if((thang >= (quy-1)*3 + 1) && (thang <= quy*3) &&
-                hd.getNgayLap().getYear() == nam)
+                hd.getThoigiantao().getYear() == nam)
             {
-                tong += hd.getTongTien();
+                tong += hd.getTongtien();
             }
         }
 
         return tong;
+    }
+    
+    public String taoMaHD(){  
+        return data.getMaHDMoi();
     }
 
 }

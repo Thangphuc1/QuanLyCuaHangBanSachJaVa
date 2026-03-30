@@ -69,10 +69,10 @@ public class KhuyenMaiBUS {
             for (CHiTietKhuyenMaiSP km : ctkm)
             {   KhuyenMai kmTong = getKhuyenMaiById(km.getMaKM());
                 if (kmTong == null || !hieuluc(kmTong)) continue;
-                if(cthd.getMaSach().equals(km.getMaSP()))
+                if(cthd.getMasach().equals(km.getMaSP()))
                     {
-                    double giam = cthd.getSoLuong()
-                              * cthd.getDonGia()
+                    double giam = cthd.getSoluong()
+                              * cthd.getDongia()
                               * km.getPhantramgg() / 100.0;
 
                     if (giam > maxGiamSP)
@@ -93,9 +93,9 @@ public class KhuyenMaiBUS {
             for(ChiTietKhuyenMaiHD km : ctkm)
             {   KhuyenMai kmTong = getKhuyenMaiById(km.getMaKM());
                 if (kmTong == null || !hieuluc(kmTong)) continue;
-                if(hd.getTongTien() >= km.getTTHD())
+                if(hd.getTongtien()>= km.getTTHD())
                     {
-                        double giam = hd.getTongTien()*km.getPhantramgg()/100;
+                        double giam = hd.getTongtien()*km.getPhantramgg()/100;
                         if(tinhTong < giam) 
                             tinhTong = giam;
                     }        
