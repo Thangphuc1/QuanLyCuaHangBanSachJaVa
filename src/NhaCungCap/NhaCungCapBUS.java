@@ -64,6 +64,19 @@ public class NhaCungCapBUS {
         return KetQua ;
         
     }
+     public String autoThemMa(){
+        int max = 0;
+        
+        for(NhaCungCap ncc : dsncc){
+            if(ncc.getMaNCC() != null && ncc.getMaNCC() .matches("NCCC\\d+")){
+                int num = Integer.parseInt(ncc.getMaNCC() .substring(3));
+                if(num > max && num - max == 1){
+                    max = num;
+                }
+            }
+        }
+        return String.format("NCC%03d",max + 1);
+    }
  //====================TIM KIEM====================
     public NhaCungCap TimKiemTheoMa(String mancc) {
         for(NhaCungCap ncc : dsncc) {

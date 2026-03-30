@@ -226,7 +226,8 @@ public class PhieuNhapGUI extends JPanel {
     // Mã PN
     JLabel lbMaPN = new JLabel("Mã Phiếu Nhập *");
     lbMaPN.setFont(new Font("Arial", Font.BOLD, 13));
-    JTextField txMaPN = new JTextField();
+    JTextField txMaPN = new JTextField(pnbus.autoThemMa());
+    txMaPN.setEditable(false);
     txMaPN.setFont(new Font("Arial", Font.PLAIN, 12));
     txMaPN.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
     pPhieuInfo.add(lbMaPN);

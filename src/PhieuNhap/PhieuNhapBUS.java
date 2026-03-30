@@ -7,6 +7,7 @@ package PhieuNhap;
 import NhaCungCap.*;
 import NhanVien.*;
 import ChiTietPhieuNhap.*;
+import Sach.Sach;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JDialog;
@@ -134,6 +135,19 @@ public class PhieuNhapBUS {
         }
         return null;
    }
+   public String autoThemMa(){
+        int max = 0;
+        
+        for(PhieuNhap pn : dspn){
+            if(pn.getMaPN() != null && pn.getMaPN() .matches("PN\\d+")){
+                int num = Integer.parseInt(pn.getMaPN() .substring(2));
+                if(num > max && num - max == 1){
+                    max = num;
+                }
+            }
+        }
+        return String.format("PN%03d",max + 1);
+    }
     
 //===============VALIDATE===========================
     public boolean KiemTra (PhieuNhap pn) {

@@ -213,7 +213,8 @@ public class NhaCungCapGUI extends JPanel{
         lb5.setFont(new Font("Arial", Font.BOLD, 15));
         lb5.setForeground(new Color(50, 50, 50));
         
-        JTextField tx1=new JTextField("");
+        JTextField tx1=new JTextField(bus.autoThemMa());
+        tx1.setEditable(false);
         tx1.setPreferredSize(new Dimension(400, 50));
         tx1.setFont(new Font("Arial", Font.PLAIN, 14));
         tx1.setBorder(BorderFactory.createLineBorder(new Color(150, 150, 150), 1));
