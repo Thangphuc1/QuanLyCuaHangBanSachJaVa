@@ -7,9 +7,9 @@ package database;
 import java.sql.*;
 
 public class DBConnection {
-    private final static String url = "jdbc:mysql://localhost:3306/quanlibansach";
+    private final static String url = "jdbc:mysql://localhost:3306/qlisach";
     private final static String user = "root";
-    private final static String password = "0869362313";
+    private final static String password = "quyenthanh1";
     
     public static Connection getDBConnection() throws SQLException{
         try{

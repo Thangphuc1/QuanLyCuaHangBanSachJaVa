@@ -1,5 +1,6 @@
 package KhuyenMai; 
 import java.sql.*; 
+import database.DBConnection;
 import java.util.ArrayList; 
 import java.sql.SQLException; 
 import javax.swing.JOptionPane; 
@@ -13,7 +14,7 @@ public class KhuyenMaiDAO {
         ArrayList<KhuyenMai> list = new ArrayList<>();
         String sql = "SELECT * FROM KhuyenMai"; 
         try { 
-            conn = DBConnection.getConnection();
+            conn = DBConnection.getDBConnection();
             ps = conn.prepareStatement(sql); 
             rs = ps.executeQuery(); 
             while (rs.next()) { 
@@ -37,7 +38,7 @@ public class KhuyenMaiDAO {
         String prefix = "KM";
         String sql = "SELECT makm FROM KhuyenMai ORDER BY makm DESC LIMIT 1";
         try { 
-            conn = DBConnection.getConnection();
+            conn = DBConnection.getDBConnection();
             ps = conn.prepareStatement(sql); 
             rs = ps.executeQuery(); 
             if (rs.next()) { 
@@ -56,7 +57,7 @@ public class KhuyenMaiDAO {
     public boolean insert(KhuyenMai km) { 
         String sql = "INSERT INTO KhuyenMai(makm, tenkm, ngaybatdau, ngayketthuc, dieukientoithieu, phantramgiam) VALUES(?,?,?,?,?,?)";
         try { 
-            conn = DBConnection.getConnection();
+            conn = DBConnection.getDBConnection();
             km.setMaKM(generateMaKM()); 
             ps = conn.prepareStatement(sql); 
             ps.setString(1, km.getMaKM()); 
@@ -78,7 +79,7 @@ public class KhuyenMaiDAO {
     public boolean update(KhuyenMai km) { 
         String sql = "UPDATE KhuyenMai SET tenkm=?, ngaybatdau=?, ngayketthuc=?, dieukientoithieu=?, phantramgiam=? " + "WHERE makm=?";
         try { 
-            conn = DBConnection.getConnection();
+            conn = DBConnection.getDBConnection();
             ps = conn.prepareStatement(sql); 
             ps.setString(1, km.getTenKM()); 
             ps.setDate(2, Date.valueOf(km.getNgayBD())); 
@@ -98,7 +99,7 @@ public class KhuyenMaiDAO {
     public boolean delete(String maKM) { 
         String sql = "DELETE FROM KhuyenMai WHERE makm=?";
         try { 
-            conn = DBConnection.getConnection();
+            conn = DBConnection.getDBConnection();
             ps = conn.prepareStatement(sql); 
             ps.setString(1, maKM); 
             return ps.executeUpdate() > 0; 
@@ -112,7 +113,7 @@ public class KhuyenMaiDAO {
         ArrayList<KhuyenMai> list = new ArrayList<>();
         String sql = "SELECT * FROM KhuyenMai WHERE makm LIKE ? OR tenkm LIKE ?"; 
         try { 
-            conn = DBConnection.getConnection();
+            conn = DBConnection.getDBConnection();
             ps = conn.prepareStatement(sql); 
             ps.setString(1, "%" + keyword + "%"); ps.setString(2, "%" + keyword + "%"); 
             rs = ps.executeQuery();
@@ -153,7 +154,7 @@ public class KhuyenMaiDAO {
             ArrayList<String> list = new ArrayList<>();
             
             try { 
-                conn = DBConnection.getConnection();
+                conn = DBConnection.getDBConnection();
                 // Tổng số KM 
                 String sql1 = "SELECT COUNT(*) FROM KhuyenMai"; 
                 ps = conn.prepareStatement(sql1); 

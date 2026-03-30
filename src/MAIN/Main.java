@@ -42,11 +42,11 @@ public class Main extends JFrame {
         contentPanel.add(new NhanVienGUI(), "NhanVien");
         // contentPanel.add(new HoaDonGUI(), "HoaDon");
         contentPanel.add(new NhaCungCapGUI(this), "NhaCungCap");
-        //contentPanel.add(new PhieuNhapGUI(), "NhapHang");
+        contentPanel.add(new PhieuNhapGUI(this), "NhapHang");
         contentPanel.add(new TacGiaGUI(),"TacGia");
         contentPanel.add(new TheLoaiGUI(),"TheLoai");
         contentPanel.add(new NhaXuatBanGUI(),"NhaXuatBan");
-        // contentPanel.add(new KhuyenMaiGUI(), "KhuyenMai");
+        contentPanel.add(new KhuyenMaiGUI(), "KhuyenMai");
 
         add(contentPanel, BorderLayout.CENTER);
         cardLayout.show(contentPanel, "TongQuan"); // mac dinh hien overview
