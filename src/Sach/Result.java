@@ -10,8 +10,7 @@ public enum Result {
     loidb("Lỗi khi thao tác database!"),
     thieuthongtin("Vui lòng nhập đầy đủ thông tin!"),
     trungma("Trùng mã!"),
-    thatbai("Thất bại!"),
-    dangduocsudung("Đang được sử dụng không thể xoá!");
+    thatbai("Thất bại!");
     
     private final String message;
 

@@ -54,19 +54,23 @@ public class TacGiaBUS {
     }
     
     public Result xoaTacGia(String ma){
-        if(!ktMaTacGia(ma)){
-            return Result.khongtontai;
-        }else{
-            if(!tacgiadao.deleteTacGia(ma)){
-                return Result.thatbai;
+        if(ktMaTacGia(ma)){
+            if(!ktRangBuocTacGia(ma)){
+                if(!tacgiadao.deleteTacGia(ma)){
+                    return Result.thatbai;
+                }
+                TacGia tg = timTacGiaTheoMa(ma);
+                int i = dstg.indexOf(tg);
+                if(i != -1){
+                    dstg.remove(i);
+                }
+                return Result.thanhcong;
+            }else{
+                return Result.dangduocsudung;
             }
+        }else{
+            return Result.khongtontai;
         }
-        TacGia tg = timTacGiaTheoMa(ma);
-        int i = dstg.indexOf(tg);
-        if(i != -1){
-            dstg.remove(i);
-        }
-        return Result.thanhcong;
     }
     
     public Result suaTacGia(TacGia tg){

@@ -10,8 +10,8 @@ public enum Result {
     loidb("Loi khi thao tac database!"),
     thieuthongtin("Vui long nhap day du thong tin!"),
     trungma("Trung ma!"),
-    thatbai("That bai!");
-    
+    thatbai("That bai!"),
+    dangduocsudung("Đang được sử dụng không thể xoá!");
     
     private final String message;
 

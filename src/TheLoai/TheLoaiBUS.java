@@ -54,18 +54,22 @@ public class TheLoaiBUS {
     
     public Result xoaTheLoai(String ma){
         if(!ktMaTheLoai(ma)){
-            return Result.khongtontai;
-        }else{
-            if(!theloaidao.deleteTheLoai(ma)){
-                return Result.thatbai;
+            if(!ktRangBuocTheLoai(ma)){
+                if(!theloaidao.deleteTheLoai(ma)){
+                    return Result.thatbai;
+                }
+                TheLoai tl = timTheLoaiTheoMa(ma);
+                int i = dstl.indexOf(tl);
+                if(i != -1){
+                    dstl.remove(i);
+                }
+                return Result.thanhcong;
+            }else{
+                return Result.dangduocsudung;
             }
+        }else{
+            return Result.khongtontai;
         }
-        TheLoai tl = timTheLoaiTheoMa(ma);
-        int i = dstl.indexOf(tl);
-        if(i != -1){
-            dstl.remove(i);
-        }
-        return Result.thanhcong;
     }
     
     public Result suaTheLoai(TheLoai tl){

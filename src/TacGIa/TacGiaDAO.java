@@ -43,8 +43,8 @@ public class TacGiaDAO {
             st.setString(1, tg.getMatg());
             st.setString(2,tg.getHotg());
             st.setString(3, tg.getTentg());
-            st.setString(4, tg.getGioitinh());
-            st.setInt(5, tg.getNamsinh());
+            st.setInt(4, tg.getNamsinh());
+            st.setString(5, tg.getGioitinh());
             st.setString(6, tg.getQuoctich());
             
             st.executeUpdate();

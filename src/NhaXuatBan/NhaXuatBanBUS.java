@@ -54,18 +54,22 @@ public class NhaXuatBanBUS {
     
     public Result xoaNhaXuatBan(String ma){
         if(!ktMaNhaXuatBan(ma)){
-            return Result.khongtontai;
-        }else{
-            if(!nxbdao.deleteNhaXuatBan(ma)){
-                return Result.thatbai;
+            if(!ktRangBuocNXB(ma)){
+                if(!nxbdao.deleteNhaXuatBan(ma)){
+                    return Result.thatbai;
+                }
+                NhaXuatBan nxb = timNhaXuatBanTheoMa(ma);
+                int i = dsnxb.indexOf(nxb);
+                if(i != -1){
+                    dsnxb.remove(i);
+                }
+                return Result.thanhcong;
+            }else{
+                return Result.dangduocsudung;
             }
+        }else{
+            return Result.khongtontai;
         }
-        NhaXuatBan nxb = timNhaXuatBanTheoMa(ma);
-        int i = dsnxb.indexOf(nxb);
-        if(i != -1){
-            dsnxb.remove(i);
-        }
-        return Result.thanhcong;
     }
     
     public Result suaNhaXuatBan(NhaXuatBan nxb){
